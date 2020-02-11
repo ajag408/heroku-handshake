@@ -9,17 +9,18 @@ import "./App.css";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import CreateStudent from "./components/create-student.component";
+import Main from "./components/Main.components";
 
 function App() {
-  return (<Router>
+  return (
+    //<Router>
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <Navbar bg="dark" variant="dark">
           <Container>
 
             <Navbar.Brand>
-              <Link to={"/create-student"} className="nav-link">
+              <Link to={"/"} className="nav-link">
                 Handshake App
               </Link>
             </Navbar.Brand>
@@ -42,26 +43,29 @@ function App() {
                   Student List
                 </Link>
               </Nav> */}
-            </Nav>
+            {/* </Nav>
 
           </Container>
         </Navbar>
-      </header>
+      </header> */}
 
-      <Container>
+      {/* <Container>
         <Row>
           <Col md={12}>
             <div className="wrapper">
               <Switch>
-                <Route exact path='/' component={CreateStudent} />
+                <Route exact path='/' component={Home} />
                 <Route path="/create-student" component={CreateStudent} />
               </Switch>
             </div>
           </Col>
         </Row>
-      </Container>
-    </div>
-  </Router>);
+      </Container> */}
+       <Navbar />
+      <Main />
+     </div>
+  // </Router> */} */}
+  );
 }
 
 export default App;
