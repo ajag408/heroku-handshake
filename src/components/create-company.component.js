@@ -6,15 +6,15 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
-export default class CreateStudent extends Component {
+export default class CreateCompany extends Component {
   constructor(props) {
     super(props)
 
     // Setting up functions
-    this.onChangeStudentName = this.onChangeStudentName.bind(this);
-    this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
-    this.onChangeStudentPassword = this.onChangeStudentPassword.bind(this);
-    this.onChangeStudentCollegeName = this.onChangeStudentCollegeName.bind(this);
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
+    this.onChangeCompanyEmail = this.onChangeCompanyEmail.bind(this);
+    this.onChangeCompanyPassword = this.onChangeCompanyPassword.bind(this);
+    this.onChangeCompanyLoc = this.onChangeCompanyLoc.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
@@ -22,67 +22,67 @@ export default class CreateStudent extends Component {
       name: '',
       email: '',
       password: '',
-      collegeName: ''
+      loc: ''
     }
   }
 
-  onChangeStudentName(e) {
+  onChangeCompanyName(e) {
     this.setState({name: e.target.value})
   }
 
-  onChangeStudentEmail(e) {
+  onChangeCompanyEmail (e) {
     this.setState({email: e.target.value})
   }
 
-  onChangeStudentPassword(e) {
+  onChangeCompanyPassword(e) {
     this.setState({password: e.target.value})
   }
 
-  onChangeStudentCollegeName(e) {
-    this.setState({collegeName: e.target.value})
+  onChangeCompanyLoc(e) {
+    this.setState({loc: e.target.value})
   }
 
   onSubmit(e) {
     e.preventDefault()
 
-    const studentObject = {
+    const companyObject = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      collegeName: this.state.collegeName
+      loc: this.state.loc
     };
-    axios.post('http://localhost:4000/students/create-student', studentObject)
+    axios.post('http://localhost:4000/companies/create-company', companyObject)
       .then(res => console.log(res.data));
-    this.setState({name: '', email: '', password: '', collegeName: ''})
+    this.setState({name: '', email: '', password: '', loc: ''})
   }
 
   render() {
     return (<div className="form-wrapper">
-      <h1>Student Sign Up</h1>
+      <h1>Company Sign Up</h1>
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" value={this.state.name} onChange={this.onChangeStudentName}/>
+          <Form.Control type="text" value={this.state.name} onChange={this.onChangeCompanyName}/>
         </Form.Group>
 
         <Form.Group controlId="Email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" value={this.state.email} onChange={this.onChangeStudentEmail}/>
+          <Form.Control type="email" value={this.state.email} onChange={this.onChangeCompanyEmail}/>
         </Form.Group>
 
         <Form.Group controlId="Password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="text" value={this.state.password} onChange={this.onChangeStudentPassword}/>
+          <Form.Control type="text" value={this.state.password} onChange={this.onChangeCompanyPassword}/>
         </Form.Group>
 
-        <Form.Group controlId="CollegeName">
-          <Form.Label>College Name</Form.Label>
-          <Form.Control type="text" value={this.state.collegeName} onChange={this.onChangeStudentCollegeName}/>
+        <Form.Group controlId="Loc">
+          <Form.Label>Location</Form.Label>
+          <Form.Control type="text" value={this.state.loc} onChange={this.onChangeCompanyLoc}/>
         </Form.Group>
 
 
         <Button variant="danger" size="lg" block="block" type="submit">
-          Create Student
+          Create Company
         </Button>
         <br></br>
         <Grid container justify="flex-end">
