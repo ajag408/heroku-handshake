@@ -56,10 +56,10 @@ export default function Home() {
         <h1 className={classes.homeTitle}>Get the Job done .</h1>
         <br></br><br></br><br></br>
         <h3 className={classes.homeTitle}>Students</h3>
-        <h5 className={classes.homeTitle}>Launch the next step in your career. <a className = {classes.homeLink} href = "/#">Sign in.</a> <a className = {classes.homeLink} href = "/signup-student">Sign up.</a></h5>
+        <h5 className={classes.homeTitle}>Launch the next step in your career. <a className = {classes.homeLink} href = "/student-signin">Sign in.</a> <a className = {classes.homeLink} href = "/signup-student">Sign up.</a></h5>
         <br></br><br></br>
         <h3 className={classes.homeTitle}>Companies</h3>
-        <h5 className={classes.homeTitle}>Hire the next generation of talent. <a className = {classes.homeLink} href = "/#">Sign in.</a> <a className = {classes.homeLink} href = "/signup-company">Sign up.</a></h5>
+        <h5 className={classes.homeTitle}>Hire the next generation of talent. <a className = {classes.homeLink} href = "/company-signin">Sign in.</a> <a className = {classes.homeLink} href = "/signup-company">Sign up.</a></h5>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>

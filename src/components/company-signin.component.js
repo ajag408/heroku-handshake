@@ -7,28 +7,20 @@ import Grid from '@material-ui/core/Grid';
 
 import axios from 'axios';
 
-export default class CreateCompany extends Component {
+export default class CompanySignin extends Component {
   constructor(props) {
     super(props)
 
     // Setting up functions
-    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
     this.onChangeCompanyEmail = this.onChangeCompanyEmail.bind(this);
     this.onChangeCompanyPassword = this.onChangeCompanyPassword.bind(this);
-    this.onChangeCompanyLoc = this.onChangeCompanyLoc.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
     this.state = {
-      name: '',
       email: '',
       password: '',
-      loc: ''
     }
-  }
-
-  onChangeCompanyName(e) {
-    this.setState({name: e.target.value})
   }
 
   onChangeCompanyEmail (e) {
@@ -39,40 +31,29 @@ export default class CreateCompany extends Component {
     this.setState({password: e.target.value})
   }
 
-  onChangeCompanyLoc(e) {
-    this.setState({loc: e.target.value})
-  }
-
   onSubmit(e) {
     e.preventDefault()
 
     const companyObject = {
-      name: this.state.name,
       email: this.state.email,
       password: this.state.password,
-      loc: this.state.loc
     };
-    axios.post('http://localhost:4000/companies/create-company', companyObject)
+    axios.post('http://localhost:4000/companies/login', companyObject)
     .then(res => {
-        if(res.data.name == "MongoError"){
-          alert("Unsuccessful signup; make sure email is unique");
+        if(res.data.email){
+          window.location.href = "/";
         } else {
-          alert("Successful signup");
+          alert(res.data);
         }
       }
     );
-    this.setState({name: '', email: '', password: '', loc: ''})
   }
 
   render() {
     return (<div className="form-wrapper">
 
-      <h1>Company Sign Up</h1>
+      <h1>Company Sign In</h1>
       <Form onSubmit={this.onSubmit}>
-        <Form.Group controlId="Name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control required type="text" value={this.state.name} onChange={this.onChangeCompanyName}/>
-        </Form.Group>
 
         <Form.Group controlId="Email">
           <Form.Label>Email</Form.Label>
@@ -84,20 +65,14 @@ export default class CreateCompany extends Component {
           <Form.Control required type="password" value={this.state.password} onChange={this.onChangeCompanyPassword}/>
         </Form.Group>
 
-        <Form.Group controlId="Loc">
-          <Form.Label>Location</Form.Label>
-          <Form.Control required type="text" value={this.state.loc} onChange={this.onChangeCompanyLoc}/>
-        </Form.Group>
-
-
         <Button variant="danger" size="lg" block="block" type="submit">
-          Create Company
+          Sign In
         </Button>
         <br></br>
         <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/company-signin" variant="body2">
-                Already have an account? Sign in
+              <Link href="/signup-company" variant="body2">
+                Don't have an account? Sign up
               </Link>
             </Grid>
           </Grid>

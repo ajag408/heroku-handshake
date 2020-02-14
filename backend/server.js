@@ -2,6 +2,7 @@ let express = require('express');
 let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
+var session = require('express-session');
 
 let dbConfig = require('./database/db');
 
@@ -25,6 +26,11 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+app.use(session({
+  secret: 'cmpe_273_secure_string',
+  resave: false,
+  saveUninitialized: true
 }));
 app.use(cors());
 app.use('/students', studentRoute)
