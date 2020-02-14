@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+
 import axios from 'axios';
 
 export default class CreateCompany extends Component {
@@ -52,12 +53,20 @@ export default class CreateCompany extends Component {
       loc: this.state.loc
     };
     axios.post('http://localhost:4000/companies/create-company', companyObject)
-      .then(res => console.log(res.data));
+    .then(res => {
+        if(res.data.name == "MongoError"){
+          alert("Unsuccessful signup; make sure email is unique");
+        } else {
+          alert("Successful signup");
+        }
+      }
+    );
     this.setState({name: '', email: '', password: '', loc: ''})
   }
 
   render() {
     return (<div className="form-wrapper">
+
       <h1>Company Sign Up</h1>
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">

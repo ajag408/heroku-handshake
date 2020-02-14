@@ -15,7 +15,7 @@ router.route('/create-company').post((req, res, next) => {
             req.body.password = hashedPass;
             companySchema.create(req.body, (error, data) => {
                 if (error) {
-                  return next(error)
+                  res.json(error)
                 } else {
                   console.log(data)
                   res.json(data)

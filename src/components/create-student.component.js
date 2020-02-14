@@ -52,7 +52,14 @@ export default class CreateStudent extends Component {
       collegeName: this.state.collegeName
     };
     axios.post('http://localhost:4000/students/create-student', studentObject)
-      .then(res => console.log(res.data));
+      .then(res => {
+          if(res.data.name == "MongoError"){
+            alert("Unsuccessful signup; make sure email is unique");
+          } else {
+            alert("Successful signup");
+          }
+        }
+      );
     this.setState({name: '', email: '', password: '', collegeName: ''})
   }
 
