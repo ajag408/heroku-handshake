@@ -1,20 +1,32 @@
 let mongoose = require('mongoose'),
-  express = require('express'),
-  router = express.Router();
+express = require('express'),
+router = express.Router();
+var bcrypt = require('bcrypt');
 
 // company Model
 let companySchema = require('../models/Company');
 
+var BCRYPT_SALT_ROUNDS = 12;
+
 // CREATE company
 router.route('/create-company').post((req, res, next) => {
-    companySchema.create(req.body, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      console.log(data)
-      res.json(data)
-    }
-  })
+    bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
+        .then((hashedPass) => {
+            req.body.password = hashedPass;
+            companySchema.create(req.body, (error, data) => {
+                if (error) {
+                  return next(error)
+                } else {
+                  console.log(data)
+                  res.json(data)
+                }
+              })
+        })
+        .catch((err) => {
+            console.log("Error saving company: ");
+            console.log(error);
+            next();
+        });
 });
 
 // READ company

@@ -1,20 +1,30 @@
 let mongoose = require('mongoose'),
   express = require('express'),
   router = express.Router();
-
+  var bcrypt = require('bcrypt');
 // Student Model
 let studentSchema = require('../models/Student');
 
+var BCRYPT_SALT_ROUNDS = 12;
 // CREATE Student
 router.route('/create-student').post((req, res, next) => {
-  studentSchema.create(req.body, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      console.log(data)
-      res.json(data)
-    }
+  bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
+  .then((hashedPass) => {
+    req.body.password = hashedPass;
+    studentSchema.create(req.body, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        console.log(data)
+        res.json(data)
+      }
+    })
   })
+  .catch((err) => {
+      console.log("Error saving student: ");
+      console.log(error);
+      next();
+  });
 });
 
 // READ Students

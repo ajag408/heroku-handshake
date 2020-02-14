@@ -62,22 +62,22 @@ export default class CreateCompany extends Component {
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" value={this.state.name} onChange={this.onChangeCompanyName}/>
+          <Form.Control required type="text" value={this.state.name} onChange={this.onChangeCompanyName}/>
         </Form.Group>
 
         <Form.Group controlId="Email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" value={this.state.email} onChange={this.onChangeCompanyEmail}/>
+          <Form.Control required type="email" value={this.state.email} onChange={this.onChangeCompanyEmail}/>
         </Form.Group>
 
         <Form.Group controlId="Password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="text" value={this.state.password} onChange={this.onChangeCompanyPassword}/>
+          <Form.Control required type="password" value={this.state.password} onChange={this.onChangeCompanyPassword}/>
         </Form.Group>
 
         <Form.Group controlId="Loc">
           <Form.Label>Location</Form.Label>
-          <Form.Control type="text" value={this.state.loc} onChange={this.onChangeCompanyLoc}/>
+          <Form.Control required type="text" value={this.state.loc} onChange={this.onChangeCompanyLoc}/>
         </Form.Group>
 
 

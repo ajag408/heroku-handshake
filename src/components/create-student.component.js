@@ -62,22 +62,22 @@ export default class CreateStudent extends Component {
       <Form onSubmit={this.onSubmit}>
         <Form.Group controlId="Name">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" value={this.state.name} onChange={this.onChangeStudentName}/>
+          <Form.Control required type="text" value={this.state.name} onChange={this.onChangeStudentName}/>
         </Form.Group>
 
         <Form.Group controlId="Email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" value={this.state.email} onChange={this.onChangeStudentEmail}/>
+          <Form.Control required type="email" value={this.state.email} onChange={this.onChangeStudentEmail}/>
         </Form.Group>
 
         <Form.Group controlId="Password">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="text" value={this.state.password} onChange={this.onChangeStudentPassword}/>
+          <Form.Control required type="password" value={this.state.password} onChange={this.onChangeStudentPassword}/>
         </Form.Group>
 
         <Form.Group controlId="CollegeName">
           <Form.Label>College Name</Form.Label>
-          <Form.Control type="text" value={this.state.collegeName} onChange={this.onChangeStudentCollegeName}/>
+          <Form.Control required type="text" value={this.state.collegeName} onChange={this.onChangeStudentCollegeName}/>
         </Form.Group>
 
 
