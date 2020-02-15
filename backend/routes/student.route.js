@@ -29,9 +29,26 @@ router.route('/create-student').post((req, res, next) => {
 });
 
 router.route('/login').post((req, res) => {
-  console.log(dbConfig);
+  studentSchema.findOne({email: req.body.email}, (error, user) => {
+    if (error) {
+      console.log(error);
+      res.json(error);
+    } else if (user == null){
+      res.json("No user with that email");
+    } else {
+      bcrypt.compare(req.body.password, user.password)
+        .then(function(samePassword){
+          if(!samePassword){
+            res.json("Password invalid");
+          } else {
+            req.session.user = user
+            res.json(user)
+          }
+        });
+      // res.json(user);
+    }
+  })
 });
-
 // // READ Students
 // router.route('/').get((req, res) => {
 //   studentSchema.find((error, data) => {

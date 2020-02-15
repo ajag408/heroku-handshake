@@ -58,6 +58,7 @@ export default class CreateCompany extends Component {
           alert("Unsuccessful signup; make sure email is unique");
         } else {
           alert("Successful signup");
+          window.location.href = "/company-signin";
         }
       }
     );
