@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-
+import cookie from 'react-cookies';
 import axios from 'axios';
+import {Redirect} from 'react-router';
 
 export default class CompanySignin extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class CompanySignin extends Component {
     // Setting up state
     this.state = {
       email: '',
-      password: '',
+      password: ''
     }
   }
 
@@ -38,20 +39,35 @@ export default class CompanySignin extends Component {
       email: this.state.email,
       password: this.state.password,
     };
+    // axios.defaults.withCredentials = true;
+
     axios.post('http://localhost:4000/companies/login', companyObject)
     .then(res => {
         if(res.data.email){
-          window.location.href = "/";
+          window.location.href = "/company/";
         } else {
           alert(res.data);
         }
       }
     );
   }
-
+  // let redirectVar = null;
+  // if(cookie.load('cookie')){
+  //     console.log("hello");
+  //     redirectVar = <Redirect to= "/company/"/>
+  // }
   render() {
-    return (<div className="form-wrapper">
-
+    let redirectVar = null;
+    console.log(cookie);
+    if(cookie.load('cookie')){
+        console.log("hello");
+        redirectVar = <Redirect to= "/company/"/>
+    }
+    return (
+    <div>
+      {redirectVar}
+    <div className="form-wrapper">
+     
       <h1>Company Sign In</h1>
       <Form onSubmit={this.onSubmit}>
 
@@ -77,6 +93,6 @@ export default class CompanySignin extends Component {
             </Grid>
           </Grid>
       </Form>
-    </div>);
+    </div></div>);
   }
 }

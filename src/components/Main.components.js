@@ -6,6 +6,8 @@ import CreateStudent from './Student/create-student.component';
 import CreateCompany from './Company/create-company.component';
 import CompanySignin from './Company/company-signin.component';
 import StudentSignin from './Student/student-signin.component';
+import Navigator from './Company/companyNav.component'
+
 
 const Main = () => {
   return (
@@ -15,6 +17,7 @@ const Main = () => {
       <Route exact path='/signup-company' component={CreateCompany}></Route>
       <Route exact path='/company-signin' component={CompanySignin}></Route>
       <Route exact path='/student-signin' component={StudentSignin}></Route>
+      <Route exact path='/company' component={Navigator}></Route>
     </Switch>
   );
 }

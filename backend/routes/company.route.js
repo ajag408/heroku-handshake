@@ -42,8 +42,9 @@ router.route('/login').post((req, res) => {
           if(!samePassword){
             res.json("Password invalid");
           } else {
+            res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
             req.session.user = user
-            res.json(user)
+            res.send(user)
           }
         });
       // res.json(user);

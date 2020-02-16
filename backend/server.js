@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let cors = require('cors');
 let bodyParser = require('body-parser');
 var session = require('express-session');
-
+var cookieParser = require('cookie-parser');
 let dbConfig = require('./database/db');
 
 // Express Route
@@ -24,6 +24,15 @@ mongoose.connect(dbConfig.db, {
 
 const app = express();
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
 app.use(bodyParser.urlencoded({
   extended: true
 }));
