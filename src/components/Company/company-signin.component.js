@@ -10,7 +10,17 @@ import {Redirect} from 'react-router';
 
 export default class CompanySignin extends Component {
   constructor(props) {
+
+    axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.email){
+        window.location.href = "/company/";
+      }
+    });
+
     super(props)
+
 
     // Setting up functions
     this.onChangeCompanyEmail = this.onChangeCompanyEmail.bind(this);
@@ -24,6 +34,15 @@ export default class CompanySignin extends Component {
     }
   }
 
+  // componentWillMount(){
+  //   axios.get('http://localhost:4000/companies/user')
+  //     .then(res => {
+  //       console.log(res.data);
+  //       if(res.data.email){
+  //         window.location.href = "/company/";
+  //       }
+  //     });
+  // }
   onChangeCompanyEmail (e) {
     this.setState({email: e.target.value})
   }
@@ -51,21 +70,11 @@ export default class CompanySignin extends Component {
       }
     );
   }
-  // let redirectVar = null;
-  // if(cookie.load('cookie')){
-  //     console.log("hello");
-  //     redirectVar = <Redirect to= "/company/"/>
-  // }
+
   render() {
-    let redirectVar = null;
-    console.log(cookie);
-    if(cookie.load('cookie')){
-        console.log("hello");
-        redirectVar = <Redirect to= "/company/"/>
-    }
     return (
     <div>
-      {redirectVar}
+
     <div className="form-wrapper">
      
       <h1>Company Sign In</h1>

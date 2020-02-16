@@ -29,6 +29,18 @@ router.route('/create-company').post((req, res, next) => {
         });
 });
 
+router.route('/user').get((req, res, next) => {
+  var user = session.user;
+  console.log(session.user);
+  res.json(user);
+});
+
+router.route('/logout').get((req,res) => {
+  console.log("route hit")
+  session.user = undefined;
+  res.json("done");
+});
+
 router.route('/login').post((req, res) => {
   companySchema.findOne({email: req.body.email}, (error, user) => {
     if (error) {
@@ -43,8 +55,9 @@ router.route('/login').post((req, res) => {
             res.json("Password invalid");
           } else {
             res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
-            req.session.user = user
-            res.send(user)
+            session.user = user;
+            console.log(session.user);
+            res.send(user);
           }
         });
       // res.json(user);

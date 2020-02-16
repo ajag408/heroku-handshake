@@ -38,9 +38,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session({
   secret: 'cmpe_273_secure_string',
-  resave: false,
+  resave: true,
   saveUninitialized: true
 }));
+
 app.use(cors());
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)

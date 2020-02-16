@@ -11,6 +11,15 @@ export default class CreateCompany extends Component {
   constructor(props) {
     super(props)
 
+        axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.email){
+        window.location.href = "/company/";
+      }
+    });
+
+
     // Setting up functions
     this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
     this.onChangeCompanyEmail = this.onChangeCompanyEmail.bind(this);
