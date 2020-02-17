@@ -81,6 +81,18 @@ router.route('/create-job').post((req, res) => {
   })
 });
 
+router.route('/get-jobs').get((req,res) =>{
+  jobSchema.find({company: session.user}, (error,jobs) => {
+    if(error){
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("Jobs : ",JSON.stringify(jobs));
+      res.end(JSON.stringify(jobs));
+    }
+  })
+});
+
 // // READ company
 // router.route('/').get((req, res) => {
 //     companySchema.find((error, data) => {

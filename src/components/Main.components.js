@@ -8,7 +8,6 @@ import CompanySignin from './Company/company-signin.component';
 import StudentSignin from './Student/student-signin.component';
 import CompanyJobPosting from './Company/companyland.component'
 
-
 const Main = () => {
   return (
     <Switch>

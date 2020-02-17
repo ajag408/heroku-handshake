@@ -20,7 +20,7 @@ const categories = [
   {
     id: 'Manage',
     children: [
-      { id: 'Job Postings', icon: <WorkIcon />},
+      { id: 'Job Postings', icon: <WorkIcon />, action: () => {{window.location.href = '/company/landing'}}},
       { id: 'Profile', icon: <AccountBoxIcon /> },
       { id: 'Students', icon: <EmojiPeopleIcon /> },
       { id: 'Events', icon: <EventIcon /> },

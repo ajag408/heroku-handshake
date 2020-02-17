@@ -5,28 +5,59 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import Form from 'react-bootstrap/Form'
+import Form from 'react-bootstrap/Form';
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+
+
 
 const styles = theme => ({
   paper: {
-    maxWidth: 936,
+    maxWidth: '80%',
     margin: 'auto',
+    marginLeft: '15%',
+    marginRight: '5%',
     overflow: 'hidden',
   },
-  searchBar: {
-    borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
-  },
-  searchInput: {
-    fontSize: theme.typography.fontSize,
-  },
+
+ tableTitle: {
+   paddingLeft: '2%',
+ },
   block: {
     display: 'block',
   },
-  addUser: {
-    marginRight: theme.spacing(1),
-  },
+
   contentWrapper: {
     margin: '40px 16px',
+  },
+  table: {
+    minWidth: 650,
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
   },
   button: {
     backgroundColor: '#232f3e',
@@ -36,10 +67,27 @@ const styles = theme => ({
 
 function Content(props) {
   const { classes } = props;
+  const [treeExpanded, treeSetExpanded] = React.useState([]);
+  const handleChange = (event, nodes) => {
+    treeSetExpanded(nodes);
+  };
+  const [cardExpanded, cardSetExpanded] = React.useState(false);
+  const handleExpandClick = () => {
+    cardSetExpanded(!cardExpanded);
+  };
+
 
   return (
     <Paper className={classes.paper}>
+
       <div className={classes.contentWrapper}>
+      <TreeView
+      defaultCollapseIcon={<ExpandMoreIcon />}
+      defaultExpandIcon={<ChevronRightIcon />}
+      expanded={treeExpanded}
+      onNodeToggle={handleChange}
+     >
+      <TreeItem nodeId = "1" label = "Post New Job Opening">
       <h1>Post Job Opening</h1>
       <Form onSubmit={props.onSubmit}>
         <Form.Group controlId="Title">
@@ -88,7 +136,71 @@ function Content(props) {
           Post Job
         </Button>
       </Form>
+      </TreeItem>
+      </TreeView>
+<br></br><br></br>
+<h1>Jobs Posted</h1>
+      {props.state.jobs.map(job => (
+        
+        
+        
+       
+      <Card>
+      <CardHeader
+      
+        title = {job.title}
+        subheader= {props.state.companyName}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}(per hour)  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
+          Created on: {job.created} Deadline: {job.deadline}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: cardExpanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={cardExpanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={cardExpanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>
+            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
+            minutes.
+          </Typography>
+          <Typography paragraph>
+            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
+            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
+            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
+            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
+            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
+            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+          </Typography>
+          <Typography paragraph>
+            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
+            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
+            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
+            again without stirring, until mussels have opened and rice is just tender, 5 to 7
+            minutes more. (Discard any mussels that don’t open.)
+          </Typography>
+          <Typography>
+            Set aside off of the heat to let rest for 10 minutes, and then serve.
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
+      ))}
       </div>
+
     </Paper>
   );
 }
@@ -98,3 +210,33 @@ Content.propTypes = {
 };
 
 export default withStyles(styles)(Content);
+
+      //  <h1 className = {classes.tableTitle}>Jobs Posted</h1>
+      // <TableContainer component={Paper}>
+      // <Table className={classes.table} aria-label="simple table">
+ 
+      //   <TableHead>
+      //     <TableRow>
+      //       <TableCell>Applicants</TableCell>
+      //       <TableCell align="right">Title</TableCell>
+      //       <TableCell align="right">Location</TableCell>
+      //       <TableCell align="right">Description</TableCell>
+      //       <TableCell align="right">Protein&nbsp;(g)</TableCell>
+      //     </TableRow>
+      //   </TableHead>
+      //   <TableBody>
+      //     {rows.map(row => (
+      //       <TableRow key={row.name}>
+      //         <TableCell component="th" scope="row">
+      //           {row.name}
+      //         </TableCell>
+      //         <TableCell align="right">{row.calories}</TableCell>
+      //         <TableCell align="right">{row.fat}</TableCell>
+      //         <TableCell align="right">{row.carbs}</TableCell>
+      //         <TableCell align="right">{row.protein}</TableCell>
+      //       </TableRow>
+      //     ))}
+      //    </TableBody>
+      //     </Table>
+      //     </TableContainer>
+        

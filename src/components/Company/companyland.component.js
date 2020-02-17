@@ -10,13 +10,7 @@ export default class CompanyJobPosting extends Component {
     super(props)
 
 
-    axios.get('http://localhost:4000/companies/user')
-    .then(res => {
-      console.log(res.data);
-      if(!res.data.email){
-        window.location.href = "/company-signin";
-      }
-    });
+
     // Setting up functions
     this.onChangeJobTitle = this.onChangeJobTitle.bind(this);
     this.onChangeCreated = this.onChangeCreated.bind(this);
@@ -36,7 +30,47 @@ export default class CompanyJobPosting extends Component {
       salary: '',
       description: '',
       cat: 'Full Time',
+      jobs: [],
+      companyName: '',
     }
+    axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      console.log(res.data);
+      if(!res.data.email){
+        window.location.href = "/company-signin";
+      } else {
+        this.setState({
+          companyName : res.data.name
+          
+          });
+          console.log(this.state.companyName);
+      }
+    });
+
+  //   axios.get('http://localhost:4000/companies/get-jobs')
+  //   .then((response) => {
+  //   //update the state with the response data
+  //   this.setState({
+  //       jobs : this.state.jobs.concat(response.data)
+        
+  //   });
+  //   console.log(this.state.jobs);
+  //   });
+  }
+
+    // get the jobs data from backend  
+    componentDidMount(){
+      axios.get('http://localhost:4000/companies/get-jobs')
+              .then((response) => {
+              //update the state with the response data
+
+            
+              this.setState({
+                  jobs : this.state.jobs.concat(response.data)
+                  
+              });
+              console.log(this.state.jobs);
+          });
   }
 
   onChangeJobTitle(e) {
@@ -106,7 +140,7 @@ export default class CompanyJobPosting extends Component {
     <Content onSubmit = {this.onSubmit} state = {this.state} onChangeCreated = {this.onChangeCreated} onChangeJobTitle = {this.onChangeJobTitle}
     onChangeDeadline = {this.onChangeDeadline} onChangeJobLoc = {this.onChangeJobLoc}
       onChangeSalary = {this. onChangeSalary} onChangeJobDescription = {this.onChangeJobDescription}
-    onChangeCategory = {this.onChangeCategory}/>
+    onChangeCategory = {this.onChangeCategory} />
 
         </div> 
   
