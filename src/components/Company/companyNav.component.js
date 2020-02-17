@@ -100,7 +100,7 @@ function Navigator(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Handshake
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/company'}}>
+        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/company/landing'}}>
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>

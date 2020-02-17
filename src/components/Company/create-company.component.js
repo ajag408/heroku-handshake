@@ -15,7 +15,7 @@ export default class CreateCompany extends Component {
     .then(res => {
       console.log(res.data);
       if(res.data.email){
-        window.location.href = "/company/";
+        window.location.href = "/company/landing";
       }
     });
 

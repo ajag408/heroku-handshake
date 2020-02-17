@@ -17,7 +17,7 @@ const Main = () => {
       <Route exact path='/signup-company' component={CreateCompany}></Route>
       <Route exact path='/company-signin' component={CompanySignin}></Route>
       <Route exact path='/student-signin' component={StudentSignin}></Route>
-      <Route exact path='/company' component={CompanyJobPosting}></Route>
+      <Route exact path='/company/landing' component={CompanyJobPosting}></Route>
     </Switch>
   );
 }

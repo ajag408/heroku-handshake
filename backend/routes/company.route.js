@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 var session = require('express-session');
 // company Model
 let companySchema = require('../models/Company');
+let jobSchema = require('../models/Job');
 
 var BCRYPT_SALT_ROUNDS = 12;
 
@@ -61,6 +62,21 @@ router.route('/login').post((req, res) => {
           }
         });
       // res.json(user);
+    }
+  })
+});
+
+router.route('/create-job').post((req, res) => {
+  req.body.company = session.user;
+  console.log();
+  console.log(req.body);
+  jobSchema.create(req.body, (error, data) => {
+    if (error) {
+      res.json(error)
+    } else {
+      console.log("created");
+      console.log(data)
+      res.json("Added job");
     }
   })
 });

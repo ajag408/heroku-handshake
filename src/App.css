@@ -37,3 +37,17 @@ body h3 {
   text-decoration: none;
   color: #ffffff;
 }
+
+
+  .paper{
+    max-width: 936;
+    margin: 'auto';
+    overflow: 'hidden';
+  }
+
+  .block{
+    display: 'block';
+  }
+  .contentWrapper {
+    margin: '40px 16px';
+  }
