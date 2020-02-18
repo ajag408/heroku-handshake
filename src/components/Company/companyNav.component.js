@@ -21,7 +21,7 @@ const categories = [
     id: 'Manage',
     children: [
       { id: 'Job Postings', icon: <WorkIcon />, action: () => {{window.location.href = '/company/landing'}}},
-      { id: 'Profile', icon: <AccountBoxIcon /> },
+      { id: 'Profile', icon: <AccountBoxIcon />, action: () => {{window.location.href = '/company/profile'}} },
       { id: 'Students', icon: <EmojiPeopleIcon /> },
       { id: 'Events', icon: <EventIcon /> },
     //   { id: 'Functions', icon: <SettingsEthernetIcon /> },

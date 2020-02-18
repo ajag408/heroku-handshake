@@ -93,6 +93,22 @@ router.route('/get-jobs').get((req,res) =>{
   })
 });
 
+// Update company
+router.route('/update-company').put((req, res, next) => {
+    companySchema.findAndUpdate(session.user, {
+    $set: req.body
+  }, (error, data) => {
+    if (error) {
+      return next(error);
+      console.log(error)
+    } else {
+      res.json(data)
+      console.log('Compan updated successfully !')
+    }
+  })
+})
+
+
 // // READ company
 // router.route('/').get((req, res) => {
 //     companySchema.find((error, data) => {
@@ -116,20 +132,6 @@ router.route('/get-jobs').get((req,res) =>{
 // })
 
 
-// // Update company
-// router.route('/update-company/:id').put((req, res, next) => {
-//     companySchema.findByIdAndUpdate(req.params.id, {
-//     $set: req.body
-//   }, (error, data) => {
-//     if (error) {
-//       return next(error);
-//       console.log(error)
-//     } else {
-//       res.json(data)
-//       console.log('Student updated successfully !')
-//     }
-//   })
-// })
 
 // // Delete company
 // router.route('/delete-student/:id').delete((req, res, next) => {

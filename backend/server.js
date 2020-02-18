@@ -5,6 +5,7 @@ let bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 let dbConfig = require('./database/db');
+var multer = require('multer');
 
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
@@ -43,6 +44,8 @@ app.use(session({
 }));
 
 app.use(cors());
+app.use(multer({ dest: "./uploads/"}).single('photo'));
+
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)
 

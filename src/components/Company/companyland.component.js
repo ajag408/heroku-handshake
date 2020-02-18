@@ -123,6 +123,7 @@ export default class CompanyJobPosting extends Component {
             alert("Unsuccessful add");
           } else {
             alert("Successfully added new job");
+            window.location.href = "/company/landing";
           }
         }     
       );

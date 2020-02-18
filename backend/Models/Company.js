@@ -14,7 +14,16 @@ let companySchema = new Schema({
   },
   loc: {
     type: String
-  }
+  },
+  description: {
+    type: String
+  },
+  phone: {
+    type: String
+  },
+  profPic: 
+      { data: Buffer, contentType: String }
+
 }, {
     collection: 'companies'
   })

@@ -6,7 +6,8 @@ import CreateStudent from './Student/create-student.component';
 import CreateCompany from './Company/create-company.component';
 import CompanySignin from './Company/company-signin.component';
 import StudentSignin from './Student/student-signin.component';
-import CompanyJobPosting from './Company/companyland.component'
+import CompanyJobPosting from './Company/companyland.component';
+import CompanyProfile from './Company/company-profile.component';
 
 const Main = () => {
   return (
@@ -17,6 +18,7 @@ const Main = () => {
       <Route exact path='/company-signin' component={CompanySignin}></Route>
       <Route exact path='/student-signin' component={StudentSignin}></Route>
       <Route exact path='/company/landing' component={CompanyJobPosting}></Route>
+      <Route exact path='/company/profile' component={CompanyProfile}></Route>
     </Switch>
   );
 }
