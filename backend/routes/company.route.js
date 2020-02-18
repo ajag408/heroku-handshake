@@ -6,8 +6,14 @@ var session = require('express-session');
 // company Model
 let companySchema = require('../models/Company');
 let jobSchema = require('../models/Job');
-
 var BCRYPT_SALT_ROUNDS = 12;
+var multer = require('multer');
+const path = require('path')
+const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
+const upload = multer({
+  dest: UPLOAD_PATH,
+  limits: {fileSize: 1000000, files: 5}
+})
 
 // CREATE company
 router.route('/create-company').post((req, res, next) => {
@@ -95,20 +101,50 @@ router.route('/get-jobs').get((req,res) =>{
 
 // Update company
 router.route('/update-company').put((req, res, next) => {
-    companySchema.findAndUpdate(session.user, {
-    $set: req.body
-  }, (error, data) => {
+  companySchema.findOneAndUpdate({email: session.user.email}, {
+    // overwrite: true
+    $set: req.body, 
+  }, {new:true}, (error, data) => {
     if (error) {
       return next(error);
       console.log(error)
     } else {
       res.json(data)
-      console.log('Compan updated successfully !')
+
+      console.log(data);
+      session.user = data;
+      console.log('Company updated successfully !')
     }
   })
 })
 
+router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
+  const images = req.files.map((file) => {
+    return {
+      filename: file.filename,
+      originalname: file.originalname
+    }
+  })
+  companySchema.findOne({email: session.user.email}, {
+  }, (error, data) => {
+    if (error) {
+      return next(error);
+      console.log(error)
+    } else {
+      data.profPicFile = images.filename;
+      data.profPicOG = images.originalname;
+      data.save(function(err){
+        if(err){
+          console.log(err);
+        }
+        console.log(data);
+        session.user = data;
+        console.log('Picture uploaded successfully !')
+      });
 
+    }
+  })
+})
 // // READ company
 // router.route('/').get((req, res) => {
 //     companySchema.find((error, data) => {

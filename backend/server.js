@@ -6,6 +6,12 @@ var session = require('express-session');
 var cookieParser = require('cookie-parser');
 let dbConfig = require('./database/db');
 var multer = require('multer');
+const path = require('path')
+const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
+const upload = multer({
+  dest: UPLOAD_PATH,
+  limits: {fileSize: 1000000, files: 5}
+})
 
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
@@ -45,6 +51,7 @@ app.use(session({
 
 app.use(cors());
 app.use(multer({ dest: "./uploads/"}).single('photo'));
+
 
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)

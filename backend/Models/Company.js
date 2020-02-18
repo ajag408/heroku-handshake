@@ -21,8 +21,13 @@ let companySchema = new Schema({
   phone: {
     type: String
   },
-  profPic: 
-      { data: Buffer, contentType: String }
+  profPicFile: {
+    type: String,
+  },
+  
+  profPicOG: {
+    type: String
+  }
 
 }, {
     collection: 'companies'

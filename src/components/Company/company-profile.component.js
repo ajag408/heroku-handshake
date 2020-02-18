@@ -98,7 +98,7 @@ export default class CompanyProfile extends Component {
             alert("Unsuccessful update");
           } else {
             alert("Successful update");
-            window.location.href = "/company/landing";
+            window.location.href = "/company/profile";
           }
         }     
       );

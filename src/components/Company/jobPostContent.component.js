@@ -46,6 +46,9 @@ const styles = theme => ({
   contentWrapper: {
     margin: '40px 16px',
   },
+  root: {
+    padding: theme.spacing(4)
+},
   table: {
     minWidth: 650,
   },
@@ -82,6 +85,14 @@ function Content(props) {
     <Paper className={classes.paper}>
 
       <div className={classes.contentWrapper}>
+      <div className={classes.root}>
+
+
+        <Grid
+          item
+
+          xs={12}
+        >
       <TreeView
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
@@ -181,6 +192,10 @@ function Content(props) {
           </Collapse>
         </Card>
       ))}
+      {/* </Grid> */}
+      </Grid>
+      
+      </div>
       </div>
 
     </Paper>

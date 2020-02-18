@@ -93,7 +93,9 @@ function Content(props) {
                         variant="body1"
                         >
                         {props.state.loc}
+                
                         </Typography>
+                        <br></br>
                         <Typography
                         className={classes.dateText}
                         color="textSecondary"
@@ -110,13 +112,20 @@ function Content(props) {
                 </CardContent>
                 <Divider />
                 <CardActions>
+                
                     <Button
                     className={classes.uploadButton}
                     color="primary"
-                    variant="text"
+                    variant="contained"
+                    component = "label"
                     >
                     Upload picture
+                    <input
+                        type="file"
+                        style={{ display: "none" }}
+                    />
                     </Button>
+              
                 </CardActions>
                 </Card>
         </Grid>
@@ -203,7 +212,6 @@ function Content(props) {
                                 margin="dense"
                                 name="phone"
                                 onChange={props.onChangeCompanyPhone}
-                                required
                                 type="number"
                                 value={props.state.phone}
                                 variant="outlined"
@@ -219,6 +227,9 @@ function Content(props) {
                                 label="Description"
                                 margin="dense"
                                 name="description"
+                                multiline
+                                rows={15}
+                                style = {{width: 300}}
                                 onChange={props.onChangeDescription}
                                 // eslint-disable-next-line react/jsx-sort-props
                                 SelectProps={{ native: true }}
@@ -241,6 +252,7 @@ function Content(props) {
                         <Button
                             color="primary"
                             variant="contained"
+                            onClick = {props.onSubmit}
                         >
                             Save details
                         </Button>
