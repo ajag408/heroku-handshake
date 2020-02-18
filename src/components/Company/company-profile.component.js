@@ -41,7 +41,7 @@ export default class CompanyProfile extends Component {
           description: res.data.description,
           email: res.data.email,
           phone: res.data.phone,
-          profPic: res.data.profPic
+          profPic: res.data.profPic,
           
           
           });
@@ -113,10 +113,11 @@ export default class CompanyProfile extends Component {
 
     return (  <div>
     <Navigator/>
-    <Content onSubmit = {this.onSubmit} state = {this.state} onChangeCreated = {this.onChangeCreated} onChangeJobTitle = {this.onChangeJobTitle}
-    onChangeDeadline = {this.onChangeDeadline} onChangeJobLoc = {this.onChangeJobLoc}
-      onChangeSalary = {this. onChangeSalary} onChangeJobDescription = {this.onChangeJobDescription}
-    onChangeCategory = {this.onChangeCategory} />
+    <Content onSubmit = {this.onSubmit} state = {this.state} onChangeName= {this.onChangeName} onChangeLoc= {this.onChangeLoc}
+    onChangeDescription = {this.onChangeDescription}
+    onChangeCompanyEmail = {this.onChangeCompanyEmail}
+    onChangeCompanyPhone = {this.onChangeCompanyPhone}
+    onChangePic = {this.onChangePic}/>
 
         </div> 
   

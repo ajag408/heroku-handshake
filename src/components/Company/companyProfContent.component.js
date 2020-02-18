@@ -56,44 +56,8 @@ const styles = theme => ({
 function Content(props) {
     const { className, ...rest } = props;
     const { classes } = props;
-    const user = {
-        name: 'Shen Zhi',
-        city: 'Los Angeles',
-        country: 'USA',
-        timezone: 'GTM-7',
-        avatar: '/images/avatars/avatar_11.png'
-      };
 
-      const [values, setValues] = React.useState({
-        firstName: 'Shen',
-        lastName: 'Zhi',
-        email: 'shen.zhi@devias.io',
-        phone: '',
-        state: 'Alabama',
-        country: 'USA'
-      });
 
-      const handleChange = event => {
-        setValues({
-          ...values,
-          [event.target.name]: event.target.value
-        });
-      };
-
-      const states = [
-        {
-          value: 'alabama',
-          label: 'Alabama'
-        },
-        {
-          value: 'new-york',
-          label: 'New York'
-        },
-        {
-          value: 'san-francisco',
-          label: 'San Francisco'
-        }
-      ];
   return (
     <Paper className={classes.paper}>
 
@@ -121,33 +85,26 @@ function Content(props) {
                         gutterBottom
                         variant="h2"
                         >
-                        John Doe
+                        {props.state.name}
                         </Typography>
                         <Typography
                         className={classes.locationText}
                         color="textSecondary"
                         variant="body1"
                         >
-                        {user.city}, {user.country}
+                        {props.state.loc}
                         </Typography>
                         <Typography
                         className={classes.dateText}
                         color="textSecondary"
                         variant="body1"
                         >
-                        {moment().format('hh:mm A')} ({user.timezone})
+                        {props.state.description}
                         </Typography>
                     </div>
                     <Avatar
                         className={classes.avatar}
-                        src={user.avatar}
-                    />
-                    </div>
-                    <div className={classes.progress}>
-                    <Typography variant="body1">Profile Completeness: 70%</Typography>
-                    <LinearProgress
-                        value={70}
-                        variant="determinate"
+                        src={props.state.profPic}
                     />
                     </div>
                 </CardContent>
@@ -160,7 +117,6 @@ function Content(props) {
                     >
                     Upload picture
                     </Button>
-                    <Button variant="text">Remove picture</Button>
                 </CardActions>
                 </Card>
         </Grid>
@@ -196,13 +152,12 @@ function Content(props) {
                             >
                             <TextField
                                 fullWidth
-                                helperText="Please specify the first name"
-                                label="First name"
+                                label="Name"
                                 margin="dense"
-                                name="firstName"
-                                onChange={handleChange}
+                                name="name"
+                                onChange={props.onChangeName}
                                 required
-                                value={values.firstName}
+                                value={props.state.name}
                                 variant="outlined"
                             />
                             </Grid>
@@ -213,12 +168,11 @@ function Content(props) {
                             >
                             <TextField
                                 fullWidth
-                                label="Last name"
+                                label="Location"
                                 margin="dense"
-                                name="lastName"
-                                onChange={handleChange}
-                                required
-                                value={values.lastName}
+                                name="location"
+                                onChange={props.onChangeLoc}
+                                value={props.state.loc}
                                 variant="outlined"
                             />
                             </Grid>
@@ -232,9 +186,9 @@ function Content(props) {
                                 label="Email Address"
                                 margin="dense"
                                 name="email"
-                                onChange={handleChange}
+                                onChange={props.onChangeCompanyEmail}
                                 required
-                                value={values.email}
+                                value={props.state.email}
                                 variant="outlined"
                             />
                             </Grid>
@@ -248,9 +202,10 @@ function Content(props) {
                                 label="Phone Number"
                                 margin="dense"
                                 name="phone"
-                                onChange={handleChange}
+                                onChange={props.onChangeCompanyPhone}
+                                required
                                 type="number"
-                                value={values.phone}
+                                value={props.state.phone}
                                 variant="outlined"
                             />
                             </Grid>
@@ -261,25 +216,15 @@ function Content(props) {
                             >
                             <TextField
                                 fullWidth
-                                label="Select State"
+                                label="Description"
                                 margin="dense"
-                                name="state"
-                                onChange={handleChange}
-                                required
-                                select
+                                name="description"
+                                onChange={props.onChangeDescription}
                                 // eslint-disable-next-line react/jsx-sort-props
                                 SelectProps={{ native: true }}
-                                value={values.state}
+                                value={props.state.description}
                                 variant="outlined"
                             >
-                                {states.map(option => (
-                                <option
-                                    key={option.value}
-                                    value={option.value}
-                                >
-                                    {option.label}
-                                </option>
-                                ))}
                             </TextField>
                             </Grid>
                             <Grid
@@ -287,16 +232,7 @@ function Content(props) {
                             md={6}
                             xs={12}
                             >
-                            <TextField
-                                fullWidth
-                                label="Country"
-                                margin="dense"
-                                name="country"
-                                onChange={handleChange}
-                                required
-                                value={values.country}
-                                variant="outlined"
-                            />
+                            
                             </Grid>
                         </Grid>
                         </CardContent>
