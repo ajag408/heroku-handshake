@@ -12,7 +12,7 @@ const path = require('path')
 const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
 const upload = multer({
   dest: UPLOAD_PATH,
-  limits: {fileSize: 1000000, files: 5}
+  limits: { files: 5}
 });
 var fs = require('fs');
 
@@ -120,13 +120,19 @@ router.route('/update-company').put((req, res, next) => {
 })
 
 router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
-  console.log('hello');
+ 
+
   const images = req.files.map((file) => {
     return {
       filename: file.filename,
       originalname: file.originalname
     }
   })
+  if (!images[0].originalname.match(/jpg|jpeg|png|gif/)){
+    res.json("Not an image");
+  } else {
+
+ 
   companySchema.findOneAndUpdate({email: session.user.email}, {
     $set: {profPicFile: images[0].filename, profPicOG: images[0].originalname}
   }, {new:true}, (error, data) => {
@@ -137,16 +143,18 @@ router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
 
     } else {
 
-        console.log(data);
+        res.json(data);
         session.user = data;
         console.log('Picture uploaded successfully !')
       }
       })
-
+    }
     })
 
 
-    router.route('/profPic').get((req, res, next) => {
+    router.route('/profPic/').get((req, res, next) => {
+      console.log(UPLOAD_PATH);
+      console.log(session.user)
         fs.createReadStream(path.resolve(UPLOAD_PATH, session.user.profPicFile)).pipe(res)
 
       })

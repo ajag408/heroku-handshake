@@ -40,7 +40,7 @@ export default class CompanyProfile extends Component {
           description: res.data.description,
           email: res.data.email,
           phone: res.data.phone,
-          profPic: 'http://localhost:4000/companies/profPic/' + res.data.profPicOG
+          profPic: 'http://localhost:4000/companies/profPic/'
           });
       }
     });
@@ -93,11 +93,15 @@ export default class CompanyProfile extends Component {
 
     axios.put('http://localhost:4000/companies/update-company', companyObject)
       .then(res => {
-          if(res.data.name == "MongoError"){
-            alert("Unsuccessful update");
+          if(res.data.name){
+            if(res.data.name == "MongoError"){
+                alert("Unsuccessful update");
+            } else {
+                alert("Successful update");
+                window.location.href = "/company/profile";
+            }
           } else {
-            alert("Successful update");
-            window.location.href = "/company/profile";
+              alert(res.data);
           }
         }     
       );
@@ -117,7 +121,6 @@ export default class CompanyProfile extends Component {
               alert("Unsuccessful update");
             } else {
               alert("Successful update");
-            //   this.setState({profPic: 'http://localhost:4000/companies/profPic/'+ files[0].name})
               window.location.href = "/company/profile";
             }
           }     
