@@ -22,8 +22,8 @@ const categories = [
     children: [
       { id: 'Job Postings', icon: <WorkIcon />, action: () => {{window.location.href = '/company/landing'}}},
       { id: 'Profile', icon: <AccountBoxIcon />, action: () => {{window.location.href = '/company/profile'}} },
-      { id: 'Students', icon: <EmojiPeopleIcon /> },
-      { id: 'Events', icon: <EventIcon /> },
+      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/company/students'}} },
+      { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/company/events'}}},
     //   { id: 'Functions', icon: <SettingsEthernetIcon /> },
     //   { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
     ],

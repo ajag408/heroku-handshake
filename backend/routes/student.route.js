@@ -49,6 +49,37 @@ router.route('/login').post((req, res) => {
     }
   })
 });
+
+
+router.route('/search').post((req,res) => {
+  console.log(req.body);
+studentSchema.find({
+        // $match: {
+          $or:[
+            {name: {
+              $regex: req.body.search,
+              "$options": 'i'
+            }},
+            {collegeName: {
+              $regex: req.body.search,
+              $options: 'i'
+            
+            }}
+            ]
+            }
+          //  }
+           , function(err, students) 
+  {
+     if (err)
+     {
+         res.send(err);
+     }
+     console.log("Students : ",JSON.stringify(students));
+     res.end(JSON.stringify(students));
+ 
+  });
+});
+
 // // READ Students
 // router.route('/').get((req, res) => {
 //   studentSchema.find((error, data) => {

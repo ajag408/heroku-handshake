@@ -8,6 +8,8 @@ import CompanySignin from './Company/company-signin.component';
 import StudentSignin from './Student/student-signin.component';
 import CompanyJobPosting from './Company/companyland.component';
 import CompanyProfile from './Company/company-profile.component';
+import CompanyStudentsTab from './Company/company-studentsTab.component';
+import MakeEvents from './Company/make-events.component';
 
 const Main = () => {
   return (
@@ -19,6 +21,8 @@ const Main = () => {
       <Route exact path='/student-signin' component={StudentSignin}></Route>
       <Route exact path='/company/landing' component={CompanyJobPosting}></Route>
       <Route exact path='/company/profile' component={CompanyProfile}></Route>
+      <Route exact path='/company/students' component={CompanyStudentsTab}></Route>
+      <Route exact path='/company/events' component={MakeEvents}></Route>
     </Switch>
   );
 }

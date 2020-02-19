@@ -120,7 +120,7 @@ export default class CompanyProfile extends Component {
             if(res.data.name == "MongoError"){
               alert("Unsuccessful update");
             } else {
-              alert("Successful update");
+              alert(res.data);
               window.location.href = "/company/profile";
             }
           }     

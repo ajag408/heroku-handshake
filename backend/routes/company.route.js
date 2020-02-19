@@ -128,7 +128,8 @@ router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
       originalname: file.originalname
     }
   })
-  if (!images[0].originalname.match(/jpg|jpeg|png|gif/)){
+  console.log(images);
+  if (!images[0].originalname.match(/\.(gif|jpg|jpeg|tiff|png)$/i)){
     res.json("Not an image");
   } else {
 
@@ -143,9 +144,9 @@ router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
 
     } else {
 
-        res.json(data);
+        // res.json(data);
         session.user = data;
-        console.log('Picture uploaded successfully !')
+        res.json('Picture uploaded successfully !')
       }
       })
     }
