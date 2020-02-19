@@ -115,6 +115,7 @@ function Content(props) {
                 
                     <Button
                     className={classes.uploadButton}
+                    // onClick = {props.onUpload}
                     color="primary"
                     variant="contained"
                     component = "label"
@@ -122,7 +123,10 @@ function Content(props) {
                     Upload picture
                     <input
                         type="file"
+                        id ="INPUT_TAG"
                         style={{ display: "none" }}
+                        onChange = {props.onUpload}
+                        required
                     />
                     </Button>
               

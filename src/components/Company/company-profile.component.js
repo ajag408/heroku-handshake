@@ -17,7 +17,6 @@ export default class CompanyProfile extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.onChangeCompanyEmail = this.onChangeCompanyEmail.bind(this);
     this.onChangeCompanyPhone = this.onChangeCompanyPhone.bind(this);
-    this.onChangePic = this.onChangePic.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
@@ -41,12 +40,16 @@ export default class CompanyProfile extends Component {
           description: res.data.description,
           email: res.data.email,
           phone: res.data.phone,
-          profPic: res.data.profPic,
-          
-          
+          profPic: 'http://localhost:4000/companies/profPic/' + res.data.profPicOG
           });
       }
     });
+
+    // axios.get('http://localhost:4000/companies/profPic')
+    // .then(res => {
+    //     console.log(res);
+    //     this.setState({profPic: res});
+    // })
 }
 
 
@@ -72,10 +75,6 @@ export default class CompanyProfile extends Component {
     
   }
 
-  onChangePic(e) {
-    this.setState({pic: e.target.value})
-    
-  }
 
 
 
@@ -89,7 +88,7 @@ export default class CompanyProfile extends Component {
         description: this.state.description,
         email: this.state.email,
         phone: this.state.phone,
-        profPic: this.state.profPic
+
     };
 
     axios.put('http://localhost:4000/companies/update-company', companyObject)
@@ -105,7 +104,26 @@ export default class CompanyProfile extends Component {
     // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
     
 }
-
+    onUpload(e){
+        e.preventDefault();
+        const files = document.getElementById('INPUT_TAG').files;
+        console.log(files);
+        const formData = new FormData();
+        formData.append('image', files[0]);
+        // console.log(formData);
+        axios.post('http://localhost:4000/companies/profPic', formData)
+        .then(res => {
+            if(res.data.name == "MongoError"){
+              alert("Unsuccessful update");
+            } else {
+              alert("Successful update");
+            //   this.setState({profPic: 'http://localhost:4000/companies/profPic/'+ files[0].name})
+              window.location.href = "/company/profile";
+            }
+          }     
+        );
+        console.log(files[0])
+    }
 
   render() {
 
@@ -117,7 +135,7 @@ export default class CompanyProfile extends Component {
     onChangeDescription = {this.onChangeDescription}
     onChangeCompanyEmail = {this.onChangeCompanyEmail}
     onChangeCompanyPhone = {this.onChangeCompanyPhone}
-    onChangePic = {this.onChangePic}/>
+    onUpload = {this.onUpload} />
 
         </div> 
   

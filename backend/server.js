@@ -5,13 +5,13 @@ let bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 let dbConfig = require('./database/db');
-var multer = require('multer');
-const path = require('path')
-const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
-const upload = multer({
-  dest: UPLOAD_PATH,
-  limits: {fileSize: 1000000, files: 5}
-})
+// var multer = require('multer');
+// const path = require('path')
+// const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
+// const upload = multer({
+//   dest: UPLOAD_PATH,
+//   limits: {fileSize: 1000000, files: 5}
+// })
 
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
@@ -50,11 +50,42 @@ app.use(session({
 }));
 
 app.use(cors());
-app.use(multer({ dest: "./uploads/"}).single('photo'));
+// app.use(multer({ dest: "./uploads/"}).single('photo'));
 
 
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)
+// app.post('/company/profPic', upload.array('image',5), (req, res, next) => {
+//   console.log('hello');
+//   const images = req.files.map((file) => {
+//     return {
+//       filename: file.filename,
+//       originalname: file.originalname
+//     }
+//   })
+//   companySchema.findOne({email: session.user.email}, {
+//   }, (error, data) => {
+//     if (error) {
+//       console.log(error)
+//       console.log('hello2');
+//       return next(error);
+
+//     } else {
+//       data.profPicFile = images.filename;
+//       data.profPicOG = images.originalname;
+//       data.save(function(err){
+//         if(err){
+//           console.log('hello3');
+//           console.log(err);
+//         }
+//         console.log(data);
+//         session.user = data;
+//         console.log('Picture uploaded successfully !')
+//       });
+
+//     }
+//   })
+// })
 
 
 // PORT
