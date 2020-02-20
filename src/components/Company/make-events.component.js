@@ -15,19 +15,22 @@ export default class MakeEvents extends Component {
     this.onChangeEventName = this.onChangeEventName.bind(this);
     this.onChangeEventDescription = this.onChangeEventDescription.bind(this);
     this.onChangeTime = this.onChangeTime.bind(this);
+
+    this.onChangeDate = this.onChangeDate.bind(this);
     this.onChangeEventLoc= this.onChangeEventLoc.bind(this);
     this.onChangeEligibility = this.onChangeEligibility.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
     this.state = {
-      title: '',
+      name: '',
       time: '',
       loc: '',
       eligibility: '',
       description: '',
       events: [],
-      companyName: ''
+      companyName: '',
+      date: ''
     }
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
@@ -61,7 +64,7 @@ export default class MakeEvents extends Component {
   }
 
   onChangeEventName(e) {
-    this.setState({title: e.target.value})
+    this.setState({name: e.target.value})
   }
 
   onChangeEventDescription(e) {
@@ -70,6 +73,9 @@ export default class MakeEvents extends Component {
 
   onChangeTime(e) {
     this.setState({time: e.target.value})
+  }
+  onChangeDate(e) {
+    this.setState({date: e.target.value})
   }
 
 
@@ -94,9 +100,10 @@ export default class MakeEvents extends Component {
     e.preventDefault()
 
     const eventObject = {
-      title: this.state.title,
+      name: this.state.name,
       description: this.state.description,
       time: this.state.time,
+      date: this.state.date,
       loc: this.state.loc,
       eligibility: this.state.eligibility,
     };
@@ -111,7 +118,7 @@ export default class MakeEvents extends Component {
           }
         }     
       );
-    // this.setState({title: '', Time: '', deadline: '', loc: '', Eligibility: '', description: '', cat: ''})
+    // this.setState({name: '', Time: '', deadline: '', loc: '', Eligibility: '', description: '', cat: ''})
     
 }
 
@@ -122,7 +129,8 @@ export default class MakeEvents extends Component {
 
     return (  <div>
     <Navigator/>
-    <Content onSubmit = {this.onSubmit} state = {this.state} onChangeTime = {this.onChangeTime} onChangeEventName = {this.onChangeEventName}
+    <Content onSubmit = {this.onSubmit} state = {this.state} onChangeTime = {this.onChangeTime} 
+    onChangeDate = {this.onChangeDate} onChangeEventName = {this.onChangeEventName}
     onChangeEventLoc = {this.onChangeEventLoc} onChangeEligibility = {this.onChangeEligibility}
       onChangeEligibility = {this. onChangeEligibility} onChangeEventDescription = {this.onChangeEventDescription}
     />

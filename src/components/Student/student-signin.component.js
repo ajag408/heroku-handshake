@@ -10,7 +10,14 @@ import axios from 'axios';
 export default class StudentSignin extends Component {
   constructor(props) {
     super(props)
-
+    
+    axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.email){
+        window.location.href = "/company/landing";
+      }
+    });
     // Setting up functions
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
     this.onChangeStudentPassword = this.onChangeStudentPassword.bind(this);

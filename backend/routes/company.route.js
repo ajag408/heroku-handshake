@@ -6,6 +6,7 @@ var session = require('express-session');
 // company Model
 let companySchema = require('../models/Company');
 let jobSchema = require('../models/Job');
+let eventSchema = require('../models/Event');
 var BCRYPT_SALT_ROUNDS = 12;
 var multer = require('multer');
 const path = require('path')
@@ -161,6 +162,34 @@ router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
       })
 
 
+router.route('/create-event').post((req, res) => {
+  req.body.company = session.user;
+
+  console.log(req.body);
+  eventSchema.create(req.body, (error, data) => {
+    console.log("hello");
+    if (error) {
+      res.json(error)
+    } else {
+      console.log("created");
+      console.log(data)
+      res.json("Added event");
+    }
+  })
+});
+
+
+router.route('/get-events').get((req,res) =>{
+  eventSchema.find({company: session.user}, (error,events) => {
+    if(error){
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("Events : ",JSON.stringify(events));
+      res.end(JSON.stringify(events));
+    }
+  })
+});
 // // READ company
 // router.route('/').get((req, res) => {
 //     companySchema.find((error, data) => {

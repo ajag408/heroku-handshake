@@ -10,6 +10,13 @@ export default class CreateStudent extends Component {
   constructor(props) {
     super(props)
 
+    axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.email){
+        window.location.href = "/company/landing";
+      }
+    });
     // Setting up functions
     this.onChangeStudentName = this.onChangeStudentName.bind(this);
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);

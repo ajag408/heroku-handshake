@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import handshake from '../images/handshake.png';
 import sjsu from '../images/sjsu.jpg';
+import axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -48,7 +49,16 @@ const useStyles = makeStyles(theme => ({
 export default function Home() {
   const classes = useStyles();
 
+    axios.get('http://localhost:4000/companies/user')
+    .then(res => {
+      if(res.data.email){
+        window.location.href = "/company/landing";
+      }
+    });
+
+
   return (
+
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.homeBackground} >

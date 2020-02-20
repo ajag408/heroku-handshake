@@ -99,8 +99,8 @@ function Content(props) {
       expanded={treeExpanded}
       onNodeToggle={handleChange}
      >
-      <TreeItem nodeId = "1" label = "Post New Event Opening">
-      <h1>Post Job Opening</h1>
+      <TreeItem nodeId = "1" label = "Create New Event">
+      <h1>Post New Event</h1>
       <Form onSubmit={props.onSubmit}>
         <Form.Group controlId="Title">
           <Form.Label>Event Name</Form.Label>
@@ -113,9 +113,13 @@ function Content(props) {
           <Form.Control rows="10" required as="textarea" value={props.state.description} onChange={props.onChangeEventDescription}/>
         </Form.Group>
 
-        <Form.Group controlId="When">
-          <Form.Label>When</Form.Label>
-          <Form.Control required type="datetime" value={props.state.time} onChange={props.onChangeTime}/>
+        <Form.Group controlId="Date">
+          <Form.Label>Date</Form.Label>
+          <Form.Control required type="date" value={props.state.date} onChange={props.onChangeDate}/>
+        </Form.Group>
+        <Form.Group controlId="Time">
+          <Form.Label>Time</Form.Label>
+          <Form.Control required type="time" value={props.state.time} onChange={props.onChangeTime}/>
         </Form.Group>
 
         <Form.Group controlId="Loc">
@@ -125,11 +129,12 @@ function Content(props) {
 
         <Form.Group controlId="Eligibility">
           <Form.Label>Eligibility</Form.Label>
-          <Form.Control required type="text" list="majorList" value={props.state.eligibility} onChange={props.onChangeEventEligibility}/>
+          <Form.Control required type="text" list='majorList'  value={props.state.eligibility} onChange={props.onChangeEligibility}/>
             <datalist id = "majorList">
               <option value="All">All</option>
               <option value="Software Engineering">Software Engineering</option>
            </datalist>  
+          {/* </Form.Control> */}
         </Form.Group>
 
 
@@ -140,17 +145,17 @@ function Content(props) {
       </TreeItem>
       </TreeView>
 <br></br><br></br>
-<h1>Jobs Posted</h1>
-      {props.state.events.map((job, i) => (
+<h1>Events Posted</h1>
+      {props.state.events.map((event, i) => (
           <Card>
           <CardHeader
           
-            title = {job.title}
+            title = {event.name}
             subheader= {props.state.companyName}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}(per hour)  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
+              Eligibility: {event.eligibility} &nbsp;&nbsp;&nbsp;  Location: {event.loc}
               
             </Typography>
           </CardContent>
@@ -167,12 +172,13 @@ function Content(props) {
           </CardActions>
           <Collapse in={cardExpandedID === i} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph> Created on: <Moment format = "YYYY-MM-DD ">{job.created}</Moment></Typography>
+              <Typography paragraph> Which day?: <Moment format = "MM/DD/YYYY ">{event.date}</Moment></Typography>
               <Typography paragraph>
-              Deadline: <Moment format = "YYYY-MM-DD ">{job.deadline}</Moment>
+              What time?: {event.time}
+
               </Typography>
               <Typography paragraph>
-                Description:  {job.description}
+                Description:  {event.description}
               </Typography>
               {/* <Typography>
         

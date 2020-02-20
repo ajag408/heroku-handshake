@@ -8,10 +8,11 @@ import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 export default class CreateCompany extends Component {
+
   constructor(props) {
     super(props)
 
-        axios.get('http://localhost:4000/companies/user')
+    axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
       if(res.data.email){
