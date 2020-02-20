@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import Navigator from './studentNav.component';
-import Content from './jobPostContent.component';
+import Content from './jobSearchContent.component';
 
 
 export default class JobSearch extends Component {
@@ -15,7 +15,6 @@ export default class JobSearch extends Component {
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onChangeJobLoc= this.onChangeJobLoc.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
 
     // Setting up state
     this.state = {
@@ -70,7 +69,7 @@ export default class JobSearch extends Component {
         const searchObject = {
             search : this.state.search,
         };
-        axios.post('http://localhost:4000/students/search', searchObject)
+        axios.post('http://localhost:4000/students/searchJobs', searchObject)
         .then((response) => {
         //update the state with the response data
 

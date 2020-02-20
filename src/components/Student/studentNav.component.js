@@ -22,7 +22,7 @@ const categories = [
     id: 'Discover',
     children: [
       { id: 'Profile', icon: <AccountBoxIcon />, action: () => {{window.location.href = '/company/profile'}} },
-      { id: 'Job Search', icon: <WorkIcon />, action: () => {{window.location.href = '/company/landing'}}},
+      { id: 'Job Search', icon: <WorkIcon />, action: () => {{window.location.href = '/student/landing'}}},
       { id: 'Applications', icon: <PostAddIcon />, action: () => {{window.location.href = '/company/landing'}}},
       { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/company/events'}}},
       { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/company/students'}} },
@@ -98,7 +98,7 @@ function Navigator(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Handshake
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/company/landing'}}>
+        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/student/landing'}}>
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>

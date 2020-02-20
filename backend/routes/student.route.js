@@ -5,7 +5,8 @@ let mongoose = require('mongoose'),
   var session = require('express-session');
 // Student Model
 let studentSchema = require('../models/Student');
-
+let companySchema = require('../models/Company');
+let jobSchema = require('../models/Job');
 var BCRYPT_SALT_ROUNDS = 12;
 // CREATE Student
 router.route('/create-student').post((req, res, next) => {
@@ -14,7 +15,7 @@ router.route('/create-student').post((req, res, next) => {
     req.body.password = hashedPass;
     studentSchema.create(req.body, (error, data) => {
       if (error) {
-        return next(error)
+       res.json(error);
       } else {
         console.log(data)
         res.json(data)
@@ -26,6 +27,18 @@ router.route('/create-student').post((req, res, next) => {
       console.log(error);
       next();
   });
+});
+
+router.route('/user').get((req, res, next) => {
+  var user = session.user;
+  console.log(session.user);
+  res.json(user);
+});
+
+router.route('/logout').get((req,res) => {
+  console.log("route hit")
+  session.user = undefined;
+  res.json("done");
 });
 
 router.route('/login').post((req, res) => {
@@ -41,7 +54,8 @@ router.route('/login').post((req, res) => {
           if(!samePassword){
             res.json("Password invalid");
           } else {
-            req.session.user = user
+            session.user = user;
+            console.log(session.user);
             res.json(user)
           }
         });
@@ -76,6 +90,41 @@ studentSchema.find({
      }
      console.log("Students : ",JSON.stringify(students));
      res.end(JSON.stringify(students));
+ 
+  });
+});
+
+router.route('/searchJobs').post((req,res) => {
+  console.log(req.body);
+  var thisCompany;
+  companySchema.findOne({name: {$regex: req.body.search, $options: 'i'}},
+    function(err, company){
+      if(err){
+        console.log(err);
+      } else {
+        thisCompany = company;
+      }
+    }
+  )
+jobSchema.find({
+        // $match: {
+          $or:[
+            {title: {
+              $regex: req.body.search,
+              "$options": 'i'
+            }},
+            {company: thisCompany}
+            ]
+            }
+          //  }
+           , function(err, jobs) 
+  {
+     if (err)
+     {
+         res.send(err);
+     }
+     console.log("Jobs : ",JSON.stringify(jobs));
+     res.end(JSON.stringify(jobs));
  
   });
 });

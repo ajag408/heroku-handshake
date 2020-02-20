@@ -10,12 +10,19 @@ import axios from 'axios';
 export default class StudentSignin extends Component {
   constructor(props) {
     super(props)
-    
+
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
       if(res.data.email){
         window.location.href = "/company/landing";
+      }
+    });
+    axios.get('http://localhost:4000/students/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.email){
+        window.location.href = "/student/landing";
       }
     });
     // Setting up functions
@@ -48,7 +55,7 @@ export default class StudentSignin extends Component {
     axios.post('http://localhost:4000/students/login', studentObject)
     .then(res => {
         if(res.data.email){
-          window.location.href = "/";
+          window.location.href = "/student/landing";
         } else {
           alert(res.data);
         }
