@@ -112,7 +112,7 @@ function Content(props) {
           <CardHeader
           
             title = {job.title}
-            subheader= {props.state.companyName}
+            subheader= {job.companyName}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">

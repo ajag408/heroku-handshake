@@ -23,15 +23,16 @@ export default class JobSearch extends Component {
       cat: '',
       jobs: [],
       studentName: ''
+      
     }
     axios.get('http://localhost:4000/students/user')
     .then(res => {
       console.log(res.data);
-      if(!res.data.email){
+      if(!res.data.isStudent){
         window.location.href = "/student-signin";
       } else {
         this.setState({
-          studentName : res.data.name
+          studentName : res.data.user.name
           
           });
           console.log(this.state.studentName);
@@ -64,25 +65,81 @@ export default class JobSearch extends Component {
   }
 
   onChangeSearch(e) {
+    var jobArr;
     this.setState({search: e.target.value}, () =>{
         console.log(this.state.search);
-        const searchObject = {
-            search : this.state.search,
-        };
-        axios.post('http://localhost:4000/students/searchJobs', searchObject)
-        .then((response) => {
-        //update the state with the response data
+        if(this.state.search.length > 0){
+            const searchObject = {
+              search : this.state.search,
+           };
+     
+           axios.post('http://localhost:4000/students/searchJobs', searchObject)
+           .then((response) => {
+           //update the state with the response data
+              (async () => {
+                for(var i = 0; i<response.data.length; i++){
+                  var thisCompany = response.data[i].company;
+                  console.log("companies in for loop");
+                  console.log(thisCompany);
+                  const companyObject = {
+                    company: thisCompany
+                  };
+                  // console.log("company object");
+ 
+                  var saveMe = response.data[i];
+                  console.log("save me before axios");
+                  console.log(saveMe)
+                  await axios.post('http://localhost:4000/students/jobCompany', companyObject)
+                  .then((res) => {
+                    console.log("saveMe in axios");
+                    console.log(saveMe);
+                    saveMe.companyName = res.data.name;
+                    // console.log(res.data);
+                  })
+                  .then(() => {
+                  response.data[i] = saveMe;
+                  console.log("data that should be added")
+                  console.log(response.data[i])})
+                }
+                jobArr = response.data;
+                console.log("job arr after")
+                console.log(jobArr)
+               
+                  this.setState({
+                    jobs : jobArr
+                    
+                  });
+                    console.log("jobs at end");
+                    console.log(this.state.jobs);
+    
+                  
+              })();
+            })
+          //   .then((response)=>{
+             
+          // })
+            // .then(() => {
+            //   this.setState({
+            //     jobs : [{title: "hello"}],
+                
+            //   });
+            //     console.log("jobs at end");
+            //     console.log(this.state.jobs);
 
-      
-        this.setState({
-            jobs : response.data,
+            //   })
+  
+        } else {
+          this.setState({
+           jobs : [],
             
         });
-            console.log(this.state.jobs);
-         });
+        }
+
+
     } );
     
   }
+
 
 
   render() {

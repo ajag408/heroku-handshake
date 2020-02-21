@@ -15,7 +15,7 @@ export default class CreateCompany extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(res.data.email){
+      if(res.data.isCompany){
         window.location.href = "/company/landing";
       }
     });

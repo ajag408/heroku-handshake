@@ -31,13 +31,18 @@ router.route('/create-student').post((req, res, next) => {
 
 router.route('/user').get((req, res, next) => {
   var user = session.user;
-  console.log(session.user);
-  res.json(user);
+  // console.log(session.user);
+  var data = {
+    user: user,
+    isStudent: session.isStudent
+  }
+  res.json(data);
 });
 
 router.route('/logout').get((req,res) => {
   console.log("route hit")
   session.user = undefined;
+  session.isStudent = false;
   res.json("done");
 });
 
@@ -55,8 +60,12 @@ router.route('/login').post((req, res) => {
             res.json("Password invalid");
           } else {
             session.user = user;
-            console.log(session.user);
-            res.json(user)
+            session.isStudent = true;
+            var data = {
+              user: user,
+              isStudent: session.isStudent
+            }
+            res.send(data);
           }
         });
       // res.json(user);
@@ -96,37 +105,58 @@ studentSchema.find({
 
 router.route('/searchJobs').post((req,res) => {
   console.log(req.body);
+  var companyList;
+  companySchema.find({name: {$regex: req.body.search, $options: 'i'}},
+    function(err, companies){
+      if(err){
+        console.log(err);
+      } else {
+        // console.log(companies);
+        companyList = companies;
+        console.log("after company find");
+        console.log(companyList);
+        jobSchema.find({
+          // $match: {
+            $or:[
+              {title: {
+                $regex: req.body.search,
+                "$options": 'i'
+              }},
+              {company: {$in: companyList}}
+              ]
+              }
+            //  }
+             , function(err, jobs) 
+        {
+        if (err)
+        {
+           res.send(err);
+          }
+        console.log("Jobs : ",JSON.stringify(jobs));
+         res.end(JSON.stringify(jobs));
+   
+          });
+      }
+    }
+  )
+
+
+});
+
+router.route('/jobCompany').post((req,res) => {
+  console.log("inside company name get");
+  console.log(req.body);
   var thisCompany;
-  companySchema.findOne({name: {$regex: req.body.search, $options: 'i'}},
+  companySchema.findOne({_id: req.body.company},
     function(err, company){
       if(err){
         console.log(err);
       } else {
-        thisCompany = company;
+        console.log(company);
+        res.json(company);
       }
     }
   )
-jobSchema.find({
-        // $match: {
-          $or:[
-            {title: {
-              $regex: req.body.search,
-              "$options": 'i'
-            }},
-            {company: thisCompany}
-            ]
-            }
-          //  }
-           , function(err, jobs) 
-  {
-     if (err)
-     {
-         res.send(err);
-     }
-     console.log("Jobs : ",JSON.stringify(jobs));
-     res.end(JSON.stringify(jobs));
- 
-  });
 });
 
 // // READ Students

@@ -32,7 +32,7 @@ const categories = [
     id: 'Logout',
     children: [
       { id: 'Logout', icon: <ExitToAppIcon />, action: () => {
-        axios.get('http://localhost:4000/companies/logout')
+        axios.get('http://localhost:4000/students/logout')
         .then(res => {
             console.log(res);
             window.location.href = "/";

@@ -14,7 +14,7 @@ export default class CompanySignin extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(res.data.email){
+      if(res.data.isCompany){
         window.location.href = "/company/landing";
       }
     });
@@ -62,7 +62,7 @@ export default class CompanySignin extends Component {
 
     axios.post('http://localhost:4000/companies/login', companyObject)
     .then(res => {
-        if(res.data.email){
+        if(res.data.isCompany){
           window.location.href = "/company/landing";
         } else {
           alert(res.data);

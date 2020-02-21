@@ -36,11 +36,12 @@ export default class CompanyJobPosting extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(!res.data.email){
+      if(!res.data.isCompany){
+        console.log(res.data.isCompany)
         window.location.href = "/company-signin";
       } else {
         this.setState({
-          companyName : res.data.name
+          companyName : res.data.user.name
           
           });
           console.log(this.state.companyName);

@@ -31,15 +31,15 @@ export default class CompanyProfile extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(!res.data.email){
+      if(!res.data.isCompany){
         window.location.href = "/company-signin";
       } else {
         this.setState({
-          name : res.data.name,
-          loc: res.data.loc,
-          description: res.data.description,
-          email: res.data.email,
-          phone: res.data.phone,
+          name : res.data.user.name,
+          loc: res.data.user.loc,
+          description: res.data.user.description,
+          email: res.data.user.email,
+          phone: res.data.user.phone,
           profPic: 'http://localhost:4000/companies/profPic/'
           });
       }

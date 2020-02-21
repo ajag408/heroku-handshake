@@ -51,12 +51,18 @@ export default function Home() {
 
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
-      if(res.data.email){
+      if(res.data.isCompany){
         window.location.href = "/company/landing";
       }
     });
 
-
+    axios.get('http://localhost:4000/students/user')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.isStudent){
+        window.location.href = "/student/landing";
+      }
+    });
   return (
 
     <Grid container component="main" className={classes.root}>

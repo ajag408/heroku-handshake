@@ -22,7 +22,7 @@ export default class CompanyStudentsTab extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(!res.data.email){
+      if(!res.data.isCompany){
         window.location.href = "/company-signin";
       }
     });
@@ -31,20 +31,29 @@ export default class CompanyStudentsTab extends Component {
   onChangeSearch(e) {
     this.setState({search: e.target.value}, () =>{
         console.log(this.state.search);
-        const searchObject = {
-            search : this.state.search,
-        };
-        axios.post('http://localhost:4000/students/search', searchObject)
-        .then((response) => {
-        //update the state with the response data
-
-      
-        this.setState({
-            students : response.data,
+        if(this.state.search.length > 0){
+            const searchObject = {
+              search : this.state.search,
+           };
+           axios.post('http://localhost:4000/students/search', searchObject)
+           .then((response) => {
+           //update the state with the response data
+   
+         
+           this.setState({
+               students : response.data,
+               
+           });
+               console.log(this.state.students);
+            });
+        } else {
+          this.setState({
+            students : [],
             
         });
-            console.log(this.state.students);
-         });
+        }
+
+
     } );
     
   }

@@ -16,7 +16,6 @@ const upload = multer({
   limits: { files: 5}
 });
 var fs = require('fs');
-
 // CREATE company
 router.route('/create-company').post((req, res, next) => {
     bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
@@ -39,14 +38,20 @@ router.route('/create-company').post((req, res, next) => {
 });
 
 router.route('/user').get((req, res, next) => {
+  // var logged = session.isCompany;
   var user = session.user;
   console.log(session.user);
-  res.json(user);
+  var data = {
+    user: user,
+    isCompany: session.isCompany
+  }
+  res.json(data);
 });
 
 router.route('/logout').get((req,res) => {
   console.log("route hit")
   session.user = undefined;
+  session.isCompany = false;
   res.json("done");
 });
 
@@ -65,8 +70,12 @@ router.route('/login').post((req, res) => {
           } else {
             res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
             session.user = user;
-            console.log(session.user);
-            res.send(user);
+            session.isCompany = true;
+            var data = {
+              user: user,
+              isCompany: session.isCompany
+            }
+            res.send(data);
           }
         });
       // res.json(user);

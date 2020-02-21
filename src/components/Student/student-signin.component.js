@@ -14,14 +14,14 @@ export default class StudentSignin extends Component {
     axios.get('http://localhost:4000/companies/user')
     .then(res => {
       console.log(res.data);
-      if(res.data.email){
+      if(res.data.isCompany){
         window.location.href = "/company/landing";
       }
     });
     axios.get('http://localhost:4000/students/user')
     .then(res => {
       console.log(res.data);
-      if(res.data.email){
+      if(res.data.isStudent){
         window.location.href = "/student/landing";
       }
     });
@@ -54,7 +54,7 @@ export default class StudentSignin extends Component {
     };
     axios.post('http://localhost:4000/students/login', studentObject)
     .then(res => {
-        if(res.data.email){
+        if(res.data.isStudent){
           window.location.href = "/student/landing";
         } else {
           alert(res.data);
