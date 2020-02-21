@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Button from '@material-ui/core/Button';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import {
     Paper,
     Input,
@@ -83,7 +85,7 @@ const styles = theme => ({
 
 function Content(props) {
     const { classes } = props;
-
+    const [selected, setSelected] = React.useState(false);
     var i = -1;
     const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
     const handleExpandClick = i => {
@@ -104,8 +106,33 @@ function Content(props) {
                     disableUnderline
                     onChange={props.onChangeSearch}
                     value = {props.state.search}
-                />
+                /><br></br><br></br>
+        <ToggleButton
+           
+            selected={selected}
+            // onChange={() => {
+              
+            //   setSelected(!selected);
+            //   console.log(!selected);
+            //   // props.state.selectedFT = !selected;
 
+            // }}
+            onChange={props.onChangeFT}
+        >
+          Full Time
+        </ToggleButton>
+        <Button  size="medium" block="block" type="submit">
+          Full Time
+        </Button>&nbsp;&nbsp;
+        <Button  size="medium" block="block" type="submit">
+          Post Time
+        </Button>&nbsp;&nbsp;
+        <Button  size="medium" block="block" type="submit">
+          On Campus
+        </Button>&nbsp;&nbsp;
+        <Button  size="medium" block="block" type="submit">
+          Intern
+        </Button>&nbsp;&nbsp;
       <div className={classes.content}>
       {props.state.jobs.map((job, i) => (
           <Card>

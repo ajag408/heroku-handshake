@@ -14,7 +14,6 @@ export default class JobSearch extends Component {
     // Setting up functions
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onChangeJobLoc= this.onChangeJobLoc.bind(this);
-    this.onChangeCategory = this.onChangeCategory.bind(this);
 
     // Setting up state
     this.state = {
@@ -22,7 +21,8 @@ export default class JobSearch extends Component {
       loc: '',
       cat: '',
       jobs: [],
-      studentName: ''
+      studentName: '',
+      selectedFT: false
       
     }
     axios.get('http://localhost:4000/students/user')
@@ -60,9 +60,15 @@ export default class JobSearch extends Component {
     this.setState({loc: e.target.value})
   }
 
-  onChangeCategory(e) {
-    this.setState({cat: e.target.value})
+  onChangeFT(e) {
+    console.log("hello");
+    this.setState({selectedFT: !(this.state.selectedFT)}, () => {
+      console.log(this.state.selectedFT);
+    })
+    
   }
+
+
 
   onChangeSearch(e) {
     var jobArr;
@@ -149,8 +155,8 @@ export default class JobSearch extends Component {
     return (  <div>
     <Navigator/>
     <Content state = {this.state}  onChangeSearch = {this.onChangeSearch}
-     onChangeJobLoc = {this.onChangeJobLoc}
-    onChangeCategory = {this.onChangeCategory} />
+     onChangeJobLoc = {this.onChangeJobLoc} onChangeFT = {this.onChangeFT}
+    />
 
         </div> 
   
