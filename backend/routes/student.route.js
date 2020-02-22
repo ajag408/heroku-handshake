@@ -3,6 +3,7 @@ let mongoose = require('mongoose'),
   router = express.Router();
   var bcrypt = require('bcrypt');
   var session = require('express-session');
+  var sql = require('../database/sqldb');
 // Student Model
 let studentSchema = require('../models/Student');
 let companySchema = require('../models/Company');
@@ -13,7 +14,7 @@ router.route('/create-student').post((req, res, next) => {
   bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
   .then((hashedPass) => {
     req.body.password = hashedPass;
-    studentSchema.create(req.body, (error, data) => {
+    sql.query("INSERT INTO students SET ?", req.body, (error, data) => {
       if (error) {
        res.json(error);
       } else {
@@ -46,23 +47,24 @@ router.route('/logout').get((req,res) => {
   res.json("done");
 });
 
+
 router.route('/login').post((req, res) => {
-  studentSchema.findOne({email: req.body.email}, (error, user) => {
+  sql.query("SELECT * FROM students WHERE email = ?", [req.body.email], (error, user) => {
     if (error) {
       console.log(error);
       res.json(error);
-    } else if (user == null){
+    } else if (user[0] == null){
       res.json("No user with that email");
     } else {
-      bcrypt.compare(req.body.password, user.password)
+      bcrypt.compare(req.body.password, user[0].password)
         .then(function(samePassword){
           if(!samePassword){
             res.json("Password invalid");
           } else {
-            session.user = user;
+            session.user = user[0];
             session.isStudent = true;
             var data = {
-              user: user,
+              user: user[0],
               isStudent: session.isStudent
             }
             res.send(data);

@@ -1,6 +1,7 @@
 let mongoose = require('mongoose'),
 express = require('express'),
 router = express.Router();
+var sql = require('../database/sqldb');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
 // company Model
@@ -17,24 +18,30 @@ const upload = multer({
 });
 var fs = require('fs');
 // CREATE company
+
+
 router.route('/create-company').post((req, res, next) => {
-    bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
-        .then((hashedPass) => {
-            req.body.password = hashedPass;
-            companySchema.create(req.body, (error, data) => {
-                if (error) {
-                  res.json(error)
-                } else {
-                  console.log(data)
-                  res.json(data)
-                }
-              })
-        })
-        .catch((err) => {
-            console.log("Error saving company: ");
-            console.log(error);
-            next();
-        });
+  console.log("hello");
+  bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
+      .then((hashedPass) => {
+          req.body.password = hashedPass;
+          console.log(req.body);
+          sql.query("INSERT INTO companies SET ?", req.body, (error, data) => {
+              if (error) {
+                console.log(error);
+                res.json(error)
+              } else {
+                console.log("new sql success");
+                console.log(data)
+                res.json(data)
+              }
+            })
+      })
+      .catch((err) => {
+          console.log("Error saving company: ");
+          console.log(error);
+          next();
+      });
 });
 
 router.route('/user').get((req, res, next) => {
@@ -56,23 +63,24 @@ router.route('/logout').get((req,res) => {
 });
 
 router.route('/login').post((req, res) => {
-  companySchema.findOne({email: req.body.email}, (error, user) => {
+  sql.query("SELECT * FROM companies WHERE email = ?", [req.body.email], (error, user) => {
     if (error) {
       console.log(error);
       res.json(error);
-    } else if (user == null){
+    } else if (user[0] == null){
       res.json("No user with that email");
     } else {
-      bcrypt.compare(req.body.password, user.password)
+      console.log(user);
+      bcrypt.compare(req.body.password, user[0].password)
         .then(function(samePassword){
           if(!samePassword){
             res.json("Password invalid");
           } else {
             res.cookie('cookie',"admin",{maxAge: 900000, httpOnly: false, path : '/'});
-            session.user = user;
+            session.user = user[0];
             session.isCompany = true;
             var data = {
-              user: user,
+              user: user[0],
               isCompany: session.isCompany
             }
             res.send(data);
@@ -83,12 +91,14 @@ router.route('/login').post((req, res) => {
   })
 });
 
+
 router.route('/create-job').post((req, res) => {
-  req.body.company = session.user;
+  req.body.company = session.user.id;
   console.log();
   console.log(req.body);
-  jobSchema.create(req.body, (error, data) => {
+  sql.query("INSERT INTO jobs SET ?", req.body, (error, data) => {
     if (error) {
+      console.log(error);
       res.json(error)
     } else {
       console.log("created");
@@ -99,7 +109,7 @@ router.route('/create-job').post((req, res) => {
 });
 
 router.route('/get-jobs').get((req,res) =>{
-  jobSchema.find({company: session.user}, (error,jobs) => {
+  sql.query("SELECT * FROM jobs WHERE company = ?", [session.user.id],(error,jobs) => {
     if(error){
       console.log(error);
       res.json(error);
@@ -110,20 +120,46 @@ router.route('/get-jobs').get((req,res) =>{
   })
 });
 
+
+// Update company
+// router.route('/update-company').put((req, res, next) => {
+//   companySchema.findOneAndUpdate({email: session.user.email}, {
+//     // overwrite: true
+//     $set: req.body, 
+//   }, {new:true}, (error, data) => {
+//     if (error) {
+//       return next(error);
+//       console.log(error)
+//     } else {
+//       res.json(data)
+
+//       console.log(data);
+//       session.user = data;
+//       console.log('Company updated successfully !')
+//     }
+//   })
+// })
+
 // Update company
 router.route('/update-company').put((req, res, next) => {
-  companySchema.findOneAndUpdate({email: session.user.email}, {
-    // overwrite: true
-    $set: req.body, 
-  }, {new:true}, (error, data) => {
+  sql.query("UPDATE companies SET ? WHERE email = ?",
+   [req.body, session.user.email],(error, data) => {
     if (error) {
-      return next(error);
       console.log(error)
+      return next(error);
+      
     } else {
       res.json(data)
 
       console.log(data);
-      session.user = data;
+      sql.query("SELECT * FROM companies WHERE email = ?", [req.body.email], 
+        (error, user) => {
+          if(error){
+            console.log(error);
+          } else {
+            session.user = user[0];
+          }
+      })
       console.log('Company updated successfully !')
     }
   })

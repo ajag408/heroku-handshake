@@ -64,7 +64,8 @@ export default class CreateCompany extends Component {
     };
     axios.post('http://localhost:4000/companies/create-company', companyObject)
     .then(res => {
-        if(res.data.name == "MongoError"){
+      console.log(res);
+        if(res.data.errno){
           alert("Unsuccessful signup; make sure email is unique");
         } else {
           alert("Successful signup");

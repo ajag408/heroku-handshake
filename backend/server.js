@@ -5,6 +5,7 @@ let bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 let dbConfig = require('./database/db');
+const mysql = require('mysql');
 // var multer = require('multer');
 // const path = require('path')
 // const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
@@ -12,6 +13,15 @@ let dbConfig = require('./database/db');
 //   dest: UPLOAD_PATH,
 //   limits: {fileSize: 1000000, files: 5}
 // })
+const mc = mysql.createConnection({
+  host: 'localhost',
+  port: '8889',
+  user: 'root',
+  password: 'root',
+  database: 'handshake'
+});
+
+mc.connect();
 
 // Express Route
 const studentRoute = require('../backend/routes/student.route')

@@ -120,7 +120,7 @@ export default class CompanyJobPosting extends Component {
 
     axios.post('http://localhost:4000/companies/create-job', jobObject)
       .then(res => {
-          if(res.data.name == "MongoError"){
+          if(res.data.errno){
             alert("Unsuccessful add");
           } else {
             alert("Successfully added new job");

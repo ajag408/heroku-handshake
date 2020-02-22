@@ -93,16 +93,13 @@ export default class CompanyProfile extends Component {
 
     axios.put('http://localhost:4000/companies/update-company', companyObject)
       .then(res => {
-          if(res.data.name){
-            if(res.data.name == "MongoError"){
+          console.log(res);
+          if(res.data.errno){
                 alert("Unsuccessful update");
             } else {
                 alert("Successful update");
                 window.location.href = "/company/profile";
             }
-          } else {
-              alert(res.data);
-          }
         }     
       );
     // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})

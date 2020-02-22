@@ -67,7 +67,7 @@ export default class CreateStudent extends Component {
     };
     axios.post('http://localhost:4000/students/create-student', studentObject)
       .then(res => {
-          if(res.data.name == "MongoError"){
+          if(res.data.errno){
             alert("Unsuccessful signup; make sure email is unique");
           } else {
             alert("Successful signup");
