@@ -11,6 +11,7 @@ import CompanyProfile from './Company/company-profile.component';
 import CompanyStudentsTab from './Company/company-studentsTab.component';
 import MakeEvents from './Company/make-events.component';
 import JobSearch from './Student/studentland.component';
+import StudentProfile from './Student/student-profile.component';
 
 const Main = () => {
   return (
@@ -25,6 +26,7 @@ const Main = () => {
       <Route exact path='/company/students' component={CompanyStudentsTab}></Route>
       <Route exact path='/company/events' component={MakeEvents}></Route>
       <Route exact path='/student/landing' component={JobSearch}></Route>
+      <Route exact path='/student/profile' component={StudentProfile}></Route>
     </Switch>
   );
 }

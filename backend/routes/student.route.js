@@ -4,6 +4,14 @@
   var bcrypt = require('bcrypt');
   var session = require('express-session');
   var sql = require('../database/sqldb');
+  var multer = require('multer');
+const path = require('path')
+const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
+const upload = multer({
+  dest: UPLOAD_PATH,
+  limits: { files: 5}
+});
+var fs = require('fs');
 // Student Model
 
 var BCRYPT_SALT_ROUNDS = 12;
@@ -105,10 +113,109 @@ router.route('/searchJobs').post((req,res) => {
       }
     }
   )
-
-
 });
 
+router.route('/update-student-basic').put((req, res, next) => {
+  sql.query("UPDATE students SET ? WHERE email = ?",
+   [req.body, session.user.email],(error, data) => {
+    if (error) {
+      console.log(error)
+      return next(error);
+      
+    } else {
+      res.json(data)
+
+      console.log(data);
+      sql.query("SELECT * FROM students WHERE email = ?", [req.body.email], 
+        (error, user) => {
+          if(error){
+            console.log(error);
+          } else {
+            session.user = user[0];
+          }
+      })
+      console.log('Company updated successfully !')
+    }
+  })
+})
+
+router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
+  const images = req.files.map((file) => {
+    return {
+      profPicFile: file.filename,
+      profPicOG: file.originalname
+    }
+  })
+  console.log(images);
+  if (!images[0].profPicOG.match(/\.(gif|jpg|jpeg|tiff|png)$/i)){
+    res.json("Not an image");
+  } else {
+
+    console.log(session.user.email);
+    sql.query("UPDATE students SET ? WHERE email = ?",
+      [images[0], session.user.email],(error, data) => {
+    if (error) {
+      console.log(error)
+      console.log('hello2');
+      return next(error);
+
+    } else {
+
+        // res.json(data);
+        // session.user = data;
+        sql.query("SELECT * FROM students WHERE email = ?", [session.user.email], 
+        (error, user) => {
+          if(error){
+            console.log(error);
+          } else {
+            session.user = user[0];
+          }
+      })
+        res.json('Picture uploaded successfully !')
+      }
+      })
+    }
+    })
 
 
+
+router.route('/profPic/').get((req, res, next) => {
+  console.log(UPLOAD_PATH);
+  console.log(session.user)
+    fs.createReadStream(path.resolve(UPLOAD_PATH, session.user.profPicFile)).pipe(res)
+
+  })
+
+
+  router.route('/education').get((req, res, next) => {
+    console.log(session.user.id);
+    sql.query("SELECT * FROM education WHERE student = ?", [session.user.id],(error,education) => {
+      if(error){
+        console.log(error);
+        res.json(error);
+      } else {
+        console.log("Education : ",JSON.stringify(education));
+        res.end(JSON.stringify(education));
+      }
+    })
+  
+    })
+
+
+    router.route('/add-education').post((req, res) => {
+      req.body.student = session.user.id;
+    
+      console.log(req.body);
+      sql.query("INSERT INTO education SET ?", req.body,(error, data) => {
+        console.log("hello");
+        if (error) {
+          console.log(error);
+          res.json(error)
+        } else {
+          console.log("created");
+          console.log(data)
+          res.json("Added education");
+        }
+      })
+    });
 module.exports = router;
