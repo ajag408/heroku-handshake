@@ -161,7 +161,7 @@ function Content(props) {
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}(per hour)  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
+              Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
               
             </Typography>
           </CardContent>

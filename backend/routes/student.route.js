@@ -1,13 +1,11 @@
-let mongoose = require('mongoose'),
+
   express = require('express'),
   router = express.Router();
   var bcrypt = require('bcrypt');
   var session = require('express-session');
   var sql = require('../database/sqldb');
 // Student Model
-let studentSchema = require('../models/Student');
-let companySchema = require('../models/Company');
-let jobSchema = require('../models/Job');
+
 var BCRYPT_SALT_ROUNDS = 12;
 // CREATE Student
 router.route('/create-student').post((req, res, next) => {
@@ -76,24 +74,11 @@ router.route('/login').post((req, res) => {
 });
 
 
+
 router.route('/search').post((req,res) => {
   console.log(req.body);
-studentSchema.find({
-        // $match: {
-          $or:[
-            {name: {
-              $regex: req.body.search,
-              "$options": 'i'
-            }},
-            {collegeName: {
-              $regex: req.body.search,
-              $options: 'i'
-            
-            }}
-            ]
-            }
-          //  }
-           , function(err, students) 
+  sql.query("SELECT * FROM students WHERE name LIKE ? OR collegeName LIKE ?", ['%'+req.body.search+'%', '%'+req.body.search+'%'], 
+            function(err, students) 
   {
      if (err)
      {
@@ -105,39 +90,18 @@ studentSchema.find({
   });
 });
 
+
 router.route('/searchJobs').post((req,res) => {
   console.log(req.body);
   var companyList;
-  companySchema.find({name: {$regex: req.body.search, $options: 'i'}},
-    function(err, companies){
+  sql.query("SELECT * FROM jobs INNER JOIN companies ON jobs.company = companies.id WHERE title LIKE ? OR name LIKE ?",
+   ['%'+req.body.search+'%', '%'+req.body.search+'%'],
+    function(err, jobs){
       if(err){
         console.log(err);
       } else {
-        // console.log(companies);
-        companyList = companies;
-        console.log("after company find");
-        console.log(companyList);
-        jobSchema.find({
-          // $match: {
-            $or:[
-              {title: {
-                $regex: req.body.search,
-                "$options": 'i'
-              }},
-              {company: {$in: companyList}}
-              ]
-              }
-            //  }
-             , function(err, jobs) 
-        {
-        if (err)
-        {
-           res.send(err);
-          }
-        console.log("Jobs : ",JSON.stringify(jobs));
+       console.log("Jobs : ",JSON.stringify(jobs));
          res.end(JSON.stringify(jobs));
-   
-          });
       }
     }
   )
@@ -145,73 +109,6 @@ router.route('/searchJobs').post((req,res) => {
 
 });
 
-router.route('/jobCompany').post((req,res) => {
-  console.log("inside company name get");
-  console.log(req.body);
-  var thisCompany;
-  companySchema.findOne({_id: req.body.company},
-    function(err, company){
-      if(err){
-        console.log(err);
-      } else {
-        console.log(company);
-        res.json(company);
-      }
-    }
-  )
-});
 
-// // READ Students
-// router.route('/').get((req, res) => {
-//   studentSchema.find((error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
-
-
-
-// // Get Single Student
-// router.route('/edit-student/:id').get((req, res) => {
-//   studentSchema.findById(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
-
-
-// // Update Student
-// router.route('/update-student/:id').put((req, res, next) => {
-//   studentSchema.findByIdAndUpdate(req.params.id, {
-//     $set: req.body
-//   }, (error, data) => {
-//     if (error) {
-//       return next(error);
-//       console.log(error)
-//     } else {
-//       res.json(data)
-//       console.log('Student updated successfully !')
-//     }
-//   })
-// })
-
-// // Delete Student
-// router.route('/delete-student/:id').delete((req, res, next) => {
-//   studentSchema.findByIdAndRemove(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error);
-//     } else {
-//       res.status(200).json({
-//         msg: data
-//       })
-//     }
-//   })
-// })
 
 module.exports = router;

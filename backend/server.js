@@ -4,7 +4,7 @@ let cors = require('cors');
 let bodyParser = require('body-parser');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-let dbConfig = require('./database/db');
+
 const mysql = require('mysql');
 // var multer = require('multer');
 // const path = require('path')
@@ -27,17 +27,6 @@ mc.connect();
 const studentRoute = require('../backend/routes/student.route')
 const companyRoute = require('../backend/routes/company.route')
 
-// Connecting mongoDB Database
-mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.db, {
-  useNewUrlParser: true
-}).then(() => {
-  console.log('Database sucessfully connected!')
-},
-  error => {
-    console.log('Could not connect to database : ' + error)
-  }
-)
 
 const app = express();
 app.use(bodyParser.json());
@@ -65,37 +54,7 @@ app.use(cors());
 
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)
-// app.post('/company/profPic', upload.array('image',5), (req, res, next) => {
-//   console.log('hello');
-//   const images = req.files.map((file) => {
-//     return {
-//       filename: file.filename,
-//       originalname: file.originalname
-//     }
-//   })
-//   companySchema.findOne({email: session.user.email}, {
-//   }, (error, data) => {
-//     if (error) {
-//       console.log(error)
-//       console.log('hello2');
-//       return next(error);
 
-//     } else {
-//       data.profPicFile = images.filename;
-//       data.profPicOG = images.originalname;
-//       data.save(function(err){
-//         if(err){
-//           console.log('hello3');
-//           console.log(err);
-//         }
-//         console.log(data);
-//         session.user = data;
-//         console.log('Picture uploaded successfully !')
-//       });
-
-//     }
-//   })
-// })
 
 
 // PORT

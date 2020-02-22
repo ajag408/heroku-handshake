@@ -1,13 +1,9 @@
-let mongoose = require('mongoose'),
+
 express = require('express'),
 router = express.Router();
 var sql = require('../database/sqldb');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
-// company Model
-let companySchema = require('../models/Company');
-let jobSchema = require('../models/Job');
-let eventSchema = require('../models/Event');
 var BCRYPT_SALT_ROUNDS = 12;
 var multer = require('multer');
 const path = require('path')
@@ -121,24 +117,6 @@ router.route('/get-jobs').get((req,res) =>{
 });
 
 
-// Update company
-// router.route('/update-company').put((req, res, next) => {
-//   companySchema.findOneAndUpdate({email: session.user.email}, {
-//     // overwrite: true
-//     $set: req.body, 
-//   }, {new:true}, (error, data) => {
-//     if (error) {
-//       return next(error);
-//       console.log(error)
-//     } else {
-//       res.json(data)
-
-//       console.log(data);
-//       session.user = data;
-//       console.log('Company updated successfully !')
-//     }
-//   })
-// })
 
 // Update company
 router.route('/update-company').put((req, res, next) => {
@@ -165,38 +143,48 @@ router.route('/update-company').put((req, res, next) => {
   })
 })
 
-router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
+
+  
+    router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
  
 
-  const images = req.files.map((file) => {
-    return {
-      filename: file.filename,
-      originalname: file.originalname
-    }
-  })
-  console.log(images);
-  if (!images[0].originalname.match(/\.(gif|jpg|jpeg|tiff|png)$/i)){
-    res.json("Not an image");
-  } else {
-
- 
-  companySchema.findOneAndUpdate({email: session.user.email}, {
-    $set: {profPicFile: images[0].filename, profPicOG: images[0].originalname}
-  }, {new:true}, (error, data) => {
-    if (error) {
-      console.log(error)
-      console.log('hello2');
-      return next(error);
-
-    } else {
-
-        // res.json(data);
-        session.user = data;
-        res.json('Picture uploaded successfully !')
-      }
+      const images = req.files.map((file) => {
+        return {
+          profPicFile: file.filename,
+          profPicOG: file.originalname
+        }
       })
-    }
-    })
+      console.log(images);
+      if (!images[0].profPicOG.match(/\.(gif|jpg|jpeg|tiff|png)$/i)){
+        res.json("Not an image");
+      } else {
+    
+        console.log(session.user.email);
+        sql.query("UPDATE companies SET ? WHERE email = ?",
+          [images[0], session.user.email],(error, data) => {
+        if (error) {
+          console.log(error)
+          console.log('hello2');
+          return next(error);
+    
+        } else {
+    
+            // res.json(data);
+            // session.user = data;
+            sql.query("SELECT * FROM companies WHERE email = ?", [session.user.email], 
+            (error, user) => {
+              if(error){
+                console.log(error);
+              } else {
+                session.user = user[0];
+              }
+          })
+            res.json('Picture uploaded successfully !')
+          }
+          })
+        }
+        })
+    
 
 
     router.route('/profPic/').get((req, res, next) => {
@@ -208,10 +196,10 @@ router.route('/profPic').post(upload.array('image', 5), (req, res, next) => {
 
 
 router.route('/create-event').post((req, res) => {
-  req.body.company = session.user;
+  req.body.company = session.user.id;
 
   console.log(req.body);
-  eventSchema.create(req.body, (error, data) => {
+  sql.query("INSERT INTO events SET ?", req.body,(error, data) => {
     console.log("hello");
     if (error) {
       res.json(error)
@@ -225,7 +213,7 @@ router.route('/create-event').post((req, res) => {
 
 
 router.route('/get-events').get((req,res) =>{
-  eventSchema.find({company: session.user}, (error,events) => {
+  sql.query("SELECT * FROM events WHERE company = ?", [session.user.id], (error,events) => {
     if(error){
       console.log(error);
       res.json(error);
@@ -235,6 +223,5 @@ router.route('/get-events').get((req,res) =>{
     }
   })
 });
-
 
 module.exports = router;
