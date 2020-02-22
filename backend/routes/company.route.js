@@ -199,41 +199,6 @@ router.route('/get-events').get((req,res) =>{
     }
   })
 });
-// // READ company
-// router.route('/').get((req, res) => {
-//     companySchema.find((error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
 
-// // Get Single company
-// router.route('/edit-student/:id').get((req, res) => {
-//     companySchema.findById(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error)
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// })
-
-
-
-// // Delete company
-// router.route('/delete-student/:id').delete((req, res, next) => {
-//     companySchema.findByIdAndRemove(req.params.id, (error, data) => {
-//     if (error) {
-//       return next(error);
-//     } else {
-//       res.status(200).json({
-//         msg: data
-//       })
-//     }
-//   })
-// })
 
 module.exports = router;
