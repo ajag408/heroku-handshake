@@ -117,10 +117,12 @@ function Content(props) {
                             hover
                             // key={user.id}
                             // selected={selectedUsers.indexOf(user.id) !== -1}
+                            // onClick = {() => {window.location.href = `/student/${student.id}`}}
                         >
                             <TableCell>
-                            <div>
+                            <div><a href = {'/student/' + student.id}>
                                 <Typography variant="body1">{student.name}</Typography>
+                                </a>
                             </div>
                             </TableCell>
                             <TableCell>{student.collegeName}</TableCell>

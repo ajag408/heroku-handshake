@@ -51,7 +51,7 @@ export default class ViewStudentProfile extends Component {
       }
       });
 
-      axios.get(`http://localhost:4000/experienceBlind/${params.id}`)
+      axios.get(`http://localhost:4000/students/experienceBlind/${params.id}`)
       .then(res => {
         console.log(res.data);
         if(res.data.errno){

@@ -265,9 +265,9 @@ router.route('/profPic/').get((req, res, next) => {
       })
 
       router.route('/experienceBlind/:id').get((req, res, next) => {
-        console.log(req.params,id);
+        console.log(req.params.id);
         console.log("hello from ex blind");
-        sql.query("SELECT * FROM experience WHERE student = ?", [req.params,id],(error,experience) => {
+        sql.query("SELECT * FROM experience WHERE student = ?", [req.params.id],(error,experience) => {
           if(error){
             console.log("hello from ex blind error");
             console.log(error);
@@ -326,8 +326,9 @@ router.route('/profPic/').get((req, res, next) => {
 
       router.route('/profPicBlind/:id').get((req, res, next) => {
         console.log(UPLOAD_PATH);
+        console.log("hello from prof pic");
         console.log(req.params.id);
-        sql.query("SELECT * FROM students WHERE id = ?", [req,params.id], (err, student) => {
+        sql.query("SELECT * FROM students WHERE id = ?", [req.params.id], (err, student) => {
           if(err){
             console.log(err);
           } else {
