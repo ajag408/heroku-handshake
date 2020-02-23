@@ -107,6 +107,7 @@ function Content(props) {
                         <TableRow>
                         <TableCell>Name</TableCell>
                         <TableCell>College Name</TableCell>
+                        <TableCell>Skillset</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -123,6 +124,7 @@ function Content(props) {
                             </div>
                             </TableCell>
                             <TableCell>{student.collegeName}</TableCell>
+                            <TableCell>{student.skillset}</TableCell>
                         </TableRow>
                         ))}
                     </TableBody>

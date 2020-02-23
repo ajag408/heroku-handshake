@@ -28,6 +28,15 @@ export default class StudentProfile extends Component {
     this.onChangeGPA = this.onChangeGPA.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onSubmitEducation = this.onSubmitEducation.bind(this);
+    this.onChangeCompanyName = this.onChangeCompanyName.bind(this);
+    this.onChangeJobTitle = this.onChangeJobTitle.bind(this);
+    this.onChangeJobLocation = this.onChangeJobLocation.bind(this);
+    this.onChangeStartDate = this.onChangeStartDate.bind(this);
+    this.onChangeEndDate = this.onChangeEndDate.bind(this);
+    this.onChangeWorkDescription = this.onChangeWorkDescription.bind(this);
+    this.onChangeSkillset = this.onChangeSkillset.bind(this);
+    this.onSubmitSkillset = this.onSubmitSkillset.bind(this);
+
 
     // Setting up state
     this.state = {
@@ -46,8 +55,17 @@ export default class StudentProfile extends Component {
       degree: '',
       major: '',
       gradYear: '',
-      gpa: ''
+      gpa: '',
+      experience: [],
+      companyName: '',
+      jobTitle: '',
+      jobLocation: '',
+      stDate: '',
+      endDate: '',
+      workDescription: '',
+      skillset: ''
     }
+
     axios.get('http://localhost:4000/students/user')
     .then(res => {
       console.log(res.data);
@@ -63,7 +81,8 @@ export default class StudentProfile extends Component {
           careerObjective: res.data.user.careerObjective,
           email: res.data.user.email,
           phone: res.data.user.phone,
-          profPic: 'http://localhost:4000/students/profPic/'
+          profPic: 'http://localhost:4000/students/profPic/',
+          skillset: res.data.user.skillset 
           });
       }
     });
@@ -76,6 +95,18 @@ export default class StudentProfile extends Component {
       } else {
         this.setState({
             education: res.data
+      });
+    }
+    });
+
+    axios.get('http://localhost:4000/students/experience')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.errno){
+        alert(res.data);
+      } else {
+        this.setState({
+            experience: res.data
       });
     }
     });
@@ -140,6 +171,35 @@ export default class StudentProfile extends Component {
   onChangeGPA(e) {
     this.setState({gpa: e.target.value})
   }
+
+  onChangeCompanyName(e) {
+    this.setState({companyName: e.target.value})
+  }
+
+  onChangeJobTitle(e) {
+    this.setState({jobTitle: e.target.value})
+  }
+
+  onChangeJobLocation(e) {
+    this.setState({jobLocation: e.target.value})
+  }
+
+  onChangeStartDate(e) {
+    this.setState({stDate: e.target.value})
+  }
+
+  onChangeEndDate(e) {
+    this.setState({endDate: e.target.value})
+  }
+
+  onChangeWorkDescription(e) {
+    this.setState({workDescription: e.target.value})
+  }
+
+  onChangeSkillset(e) {
+    this.setState({skillset: e.target.value})
+  }
+
 
 
 
@@ -207,6 +267,62 @@ onSubmitEducation(e) {
   
 }
 
+onSubmitExperience(e) {
+
+  e.preventDefault()
+
+  const experienceObject = {
+    companyName: this.state.companyName,
+    loc: this.state.jobLocation,
+    title: this.state.jobTitle,
+    startDate: this.state.stDate,
+    endDate: this.state.endDate,
+    description: this.state.workDescription
+
+
+  };
+
+  axios.post('http://localhost:4000/students/add-experience', experienceObject)
+    .then(res => {
+        console.log(res);
+        if(res.data.errno){
+              alert("Unsuccessful add");
+          } else {
+              alert("Successful add");
+              window.location.href = "/student/profile";
+          }
+      }     
+    );
+  // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+  
+}
+
+onSubmitSkillset(e) {
+
+  e.preventDefault()
+
+  const skillsetObject = {
+
+    skillset: this.state.skillset
+
+
+  };
+
+  axios.put('http://localhost:4000/students/update-skillset', skillsetObject)
+    .then(res => {
+        console.log(res);
+        if(res.data.errno){
+              alert("Unsuccessful update");
+          } else {
+              alert("Successful update");
+              window.location.href = "/student/profile";
+          }
+      }     
+    );
+  // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+  
+}
+
     onUpload(e){
         e.preventDefault();
         const files = document.getElementById('INPUT_TAG').files;
@@ -249,6 +365,15 @@ onSubmitEducation(e) {
     onChangeGPA = {this.onChangeGPA}
     onChangeGradYear = {this.onChangeGradYear}
     onSubmitEducation = {this.onSubmitEducation}
+    onChangeCompanyName = {this.onChangeCompanyName}
+    onChangeJobLocation = {this.onChangeJobLocation}
+    onChangeJobTitle = {this.onChangeJobTitle}
+    onChangeStartDate = {this.onChangeStartDate}
+    onChangeEndDate = {this.onChangeEndDate}
+    onChangeWorkDescription= {this.onChangeWorkDescription}
+    onChangeSkillset= {this.onChangeSkillset}
+    onSubmitSkillset= {this.onSubmitSkillset}
+    onSubmitExperience = {this.onSubmitExperience}
     
     
     

@@ -511,6 +511,244 @@ function Content(props) {
         </Grid>
         </TreeItem>
         <br></br><br></br>
+        <TreeItem nodeId = "4" label = "View Experience">
+        <Grid
+        //   item
+        //   lg={8}
+        //   md={6}
+        //   xl={8}
+          xs={12}
+        >
+            {props.state.experience.map((experience, i) => (
+                <Card>
+                <CardHeader
+                
+                    title = {experience.companyName}
+                    subheader = {experience.title}
+                />
+                <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                    Location: {experience.loc} &nbsp;&nbsp;&nbsp;   Start Date: {experience.startDate} <br></br><br></br>  
+                     End Date: {experience.endDate} <br></br><br></br>
+                     Work Description: {experience.description} <br></br><br></br>
+
+                    
+                    </Typography>
+                </CardContent>
+                </Card>
+            ))}
+        </Grid>
+        </TreeItem>
+        <br></br><br></br>
+        <TreeItem nodeId = "5" label = "Add Experience">
+        <Grid
+        //   item
+        //   lg={8}
+        //   md={6}
+        //   xl={8}
+          xs={12}
+        >
+                    <Card
+                    {...rest}
+                    className={clsx(classes.root, className)}
+                    >
+                    <form
+                        autoComplete="off"
+                        noValidate
+                    >
+                        <CardHeader
+                        subheader="The information can be edited"
+                        title="Experience"
+                        />
+                        <Divider />
+                        <CardContent>
+                        <Grid
+                            container
+                            spacing={3}
+                        >
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                            <TextField
+                                fullWidth
+                                label="Company Name"
+                                margin="dense"
+                                name="name"
+                                onChange={props.onChangeCompanyName}
+                                required
+                                value={props.state.companyName}
+                                variant="outlined"
+                            />
+                            </Grid>
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                           
+                            <TextField
+                                fullWidth
+                                label="Title"
+                               
+                                margin="dense"
+                                name="title"
+                                onChange={props.onChangeJobTitle}
+                                value={props.state.jobTitle}
+                                variant="outlined"
+                            />
+                            </Grid>
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                            <TextField
+                                fullWidth
+                                label="Location"
+                               
+                                margin="dense"
+                                name="location"
+                                onChange={props.onChangeJobLocation}
+                                value={props.state.jobLocation}
+                                variant="outlined"
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                                Start Date: 
+                           <TextField
+                                fullWidth
+                                // label="Start Date"
+                                type = 'date'
+                                margin="dense"
+                                name="startDate"
+                                onChange={props.onChangeStartDate}
+                                value={props.state.stDate}
+                                variant="outlined"
+                            />
+                         </Grid>
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                                End Date
+                            <TextField
+                                fullWidth
+                                // label="Graduation Year"
+                                margin="dense"
+                                name="endDate"
+                                type = "date"
+                                onChange={props.onChangeEndDate}
+                                value={props.state.endDate}
+                                variant="outlined"
+                            />
+
+                            </Grid>
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                            <TextField
+                                fullWidth
+                                label="Work Description"
+                                margin="dense"
+                                name="description"
+                                onChange={props.onChangeWorkDescription}
+                                multiline
+                                rows={15}
+                                style = {{width: 300}}
+                                value={props.state.workDescription}
+                                variant="outlined"
+                            />
+                            </Grid>
+          
+                        </Grid>
+                        </CardContent>
+                        <Divider />
+                        <CardActions>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick = {props.onSubmitExperience}
+                        >
+                            Add 
+                        </Button>
+                        </CardActions>
+                    </form>
+                    </Card>
+        </Grid>
+        </TreeItem>
+        <br></br><br></br>
+      <TreeItem nodeId = "6" label = "View/Update Skillset">
+        <Grid
+        //   item
+        //   lg={8}
+        //   md={6}
+        //   xl={8}
+          xs={12}
+        >
+                    <Card
+                    {...rest}
+                    className={clsx(classes.root, className)}
+                    >
+                    <form
+                        autoComplete="off"
+                        noValidate
+                    >
+                        <CardHeader
+                        subheader="The information can be edited"
+                        title="Skillset"
+                        />
+                        <Divider />
+                        <CardContent>
+                        <Grid
+                            container
+                            spacing={3}
+                        >
+                            <Grid
+                            item
+                            md={6}
+                            xs={12}
+                            >
+                            <TextField
+                                fullWidth
+                                label="Skillset"
+                                margin="dense"
+                                name="skillset"
+                                multiline
+                                rows={15}
+                                style = {{width: 300}}
+                                onChange={props.onChangeSkillset}
+                                required
+                                value={props.state.skillset}
+                                variant="outlined"
+                            />
+                            </Grid>
+                           
+                        </Grid>
+                        </CardContent>
+                        <Divider />
+                        <CardActions>
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick = {props.onSubmitSkillset}
+                        >
+                            Save skills
+                        </Button>
+                        </CardActions>
+                    </form>
+                    </Card>
+        </Grid>
+        </TreeItem>
+        <br></br><br></br>
         </TreeView>
       </Grid>
     </div>

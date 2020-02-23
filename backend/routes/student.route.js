@@ -82,10 +82,22 @@ router.route('/login').post((req, res) => {
 });
 
 
+router.route('/getStudent/:id').get((req, res) => {
+  console.log(req.params.id);
+  sql.query("SELECT * FROM students WHERE id = ?", [req.params.id], function(err, student){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Student: ", JSON.stringify(student));
+      res.end(JSON.stringify(student));
+    }
+  });
+});
 
 router.route('/search').post((req,res) => {
   console.log(req.body);
-  sql.query("SELECT * FROM students WHERE name LIKE ? OR collegeName LIKE ?", ['%'+req.body.search+'%', '%'+req.body.search+'%'], 
+  sql.query("SELECT * FROM students WHERE name LIKE ? OR collegeName LIKE ? OR skillset LIKE ?", ['%'+req.body.search+'%', '%'+req.body.search+'%', '%'+req.body.search+'%'], 
             function(err, students) 
   {
      if (err)
@@ -218,4 +230,111 @@ router.route('/profPic/').get((req, res, next) => {
         }
       })
     });
+
+    router.route('/educationBlind/:id').get((req, res, next) => {
+      console.log(req.params.id);
+      console.log("hello from ed blinc");
+      sql.query("SELECT * FROM education WHERE student = ?", [req.params.id],(error,education) => {
+        if(error){
+          console.log("hello from ed blink eroor");
+          console.log(error);
+          res.json(error);
+        } else {
+          console.log("hello from ed blink success");
+          console.log("Education : ",JSON.stringify(education));
+          res.end(JSON.stringify(education));
+        }
+      })
+    
+      })
+  
+
+
+    router.route('/experience').get((req, res, next) => {
+      console.log(session.user.id);
+      sql.query("SELECT * FROM experience WHERE student = ?", [session.user.id],(error,experience) => {
+        if(error){
+          console.log(error);
+          res.json(error);
+        } else {
+          console.log("Experience : ",JSON.stringify(experience));
+          res.end(JSON.stringify(experience));
+        }
+      })
+    
+      })
+
+      router.route('/experienceBlind/:id').get((req, res, next) => {
+        console.log(req.params,id);
+        console.log("hello from ex blind");
+        sql.query("SELECT * FROM experience WHERE student = ?", [req.params,id],(error,experience) => {
+          if(error){
+            console.log("hello from ex blind error");
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log("Experience : ",JSON.stringify(experience));
+            res.end(JSON.stringify(experience));
+          }
+        })
+      
+        })
+  
+  
+      router.route('/add-experience').post((req, res) => {
+        req.body.student = session.user.id;
+      
+        console.log(req.body);
+        sql.query("INSERT INTO experience SET ?", req.body,(error, data) => {
+          console.log("hello");
+          if (error) {
+            console.log(error);
+            res.json(error)
+          } else {
+            console.log("created");
+            console.log(data)
+            res.json("Added experience");
+          }
+        })
+      });
+
+
+
+      router.route('/update-skillset').put((req, res, next) => {
+        sql.query("UPDATE students SET ? WHERE email = ?",
+         [req.body, session.user.email],(error, data) => {
+          if (error) {
+            console.log(error)
+            return next(error);
+            
+          } else {
+            res.json(data)
+      
+            console.log(data);
+            sql.query("SELECT * FROM students WHERE email = ?", [session.user.email], 
+              (error, user) => {
+                if(error){
+                  console.log(error);
+                } else {
+                  session.user = user[0];
+                }
+            })
+            console.log('Company updated successfully !')
+          }
+        })
+      })
+
+      router.route('/profPicBlind/:id').get((req, res, next) => {
+        console.log(UPLOAD_PATH);
+        console.log(req.params.id);
+        sql.query("SELECT * FROM students WHERE id = ?", [req,params.id], (err, student) => {
+          if(err){
+            console.log(err);
+          } else {
+            fs.createReadStream(path.resolve(UPLOAD_PATH, student[0].profPicFile)).pipe(res);
+          }
+        });
+        
+      
+        })
 module.exports = router;
