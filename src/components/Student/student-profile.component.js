@@ -36,6 +36,7 @@ export default class StudentProfile extends Component {
     this.onChangeWorkDescription = this.onChangeWorkDescription.bind(this);
     this.onChangeSkillset = this.onChangeSkillset.bind(this);
     this.onSubmitSkillset = this.onSubmitSkillset.bind(this);
+    this.onSubmitExperience = this.onSubmitExperience.bind(this);
 
 
     // Setting up state
@@ -108,6 +109,7 @@ export default class StudentProfile extends Component {
         this.setState({
             experience: res.data
       });
+      console.log(this.state);
     }
     });
 
@@ -270,7 +272,7 @@ onSubmitEducation(e) {
 onSubmitExperience(e) {
 
   e.preventDefault()
-
+  console.log(this.state);
   const experienceObject = {
     companyName: this.state.companyName,
     loc: this.state.jobLocation,
@@ -281,6 +283,8 @@ onSubmitExperience(e) {
 
 
   };
+
+  // console.log(experienceObject);
 
   axios.post('http://localhost:4000/students/add-experience', experienceObject)
     .then(res => {
@@ -300,7 +304,7 @@ onSubmitExperience(e) {
 onSubmitSkillset(e) {
 
   e.preventDefault()
-
+  console.log(this.state);
   const skillsetObject = {
 
     skillset: this.state.skillset

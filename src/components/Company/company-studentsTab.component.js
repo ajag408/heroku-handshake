@@ -38,7 +38,7 @@ export default class CompanyStudentsTab extends Component {
            axios.post('http://localhost:4000/students/search', searchObject)
            .then((response) => {
            //update the state with the response data
-   
+            console.log(response.data);
          
            this.setState({
                students : response.data,
