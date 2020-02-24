@@ -224,4 +224,16 @@ router.route('/get-events').get((req,res) =>{
   })
 });
 
+router.route('/getCompany/:id').get((req, res) => {
+  console.log(req.params.id);
+  sql.query("SELECT * FROM companies WHERE id = ?", [req.params.id], function(err, company){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("Company: ", JSON.stringify(company));
+      res.end(JSON.stringify(company));
+    }
+  });
+});
 module.exports = router;

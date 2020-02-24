@@ -15,7 +15,7 @@ export default class JobSearch extends Component {
     this.onChangeSearchInput = this.onChangeSearchInput.bind(this);
     this.onChangeSearchFilter = this.onChangeSearchFilter.bind(this);
     this.onChangeSearchLoc = this.onChangeSearchLoc.bind(this);
-    // this.onChangeJobLoc= this.onChangeJobLoc.bind(this);
+    this.onUpload= this.onUpload.bind(this);
 
 
     // Setting up state
@@ -29,7 +29,6 @@ export default class JobSearch extends Component {
       selectedPT: false,
       selectedON: false,
       selectedIN: false
-      
     }
     axios.get('http://localhost:4000/students/user')
     .then(res => {
@@ -46,55 +45,7 @@ export default class JobSearch extends Component {
     });
   }
 
-    // get the jobs data from backend  
-//     componentDidMount(){
-//       axios.get('http://localhost:4000/companies/get-jobs')
-//               .then((response) => {
-//               //update the state with the response data
 
-            
-//               this.setState({
-//                   jobs : this.state.jobs.concat(response.data)
-                  
-//               });
-//               console.log(this.state.jobs);
-//           });
-//   }
-
-
-
-
-  // onChangeFT(e) {
-  //   console.log("hello");
-  //   console.log(this.state.selectedFT);
-  //   var FT = [];
-  //   if(this.state.selectedFT){
-  //     for(var i =0;i<this.state.jobs.length; i++){
-  //       if(this.state.jobs[i].cat == "Full Time"){
-  //         FT.push(this.state.jobs[i]);
-  //       }
-  //     }
-  //     this.setState({
-  //       jobs : FT    
-  //     });
-  //   } else {
-  //     if(this.state.search.length > 0){
-  //       const searchObject = {
-  //         search : this.state.search,
-  //      };
- 
-  //      axios.post('http://localhost:4000/students/searchJobs', searchObject)
-  //      .then((response) => {
-
-  //         this.setState({
-  //           jobs : response.data,
-            
-  //         });
-  //           // console.log(this.state.jobs);
-  //        });
-  //     }
-  //   }
-  // }
 
   onChangeSearchInput(e) {
     // if(e.target.value.length>0){
@@ -117,6 +68,7 @@ export default class JobSearch extends Component {
          }
             const searchObject = {
               search : this.state.search,
+              loc: this.state.loc
            };
      
            axios.post('http://localhost:4000/students/searchJobs', searchObject)
@@ -169,10 +121,9 @@ export default class JobSearch extends Component {
            filter.push(filterName);
          }
        }
-       console.log(filter);
-       console.log(this.state.search);
-          const searchObject = {
+        const searchObject = {
             search : this.state.search,
+            loc: this.state.loc
          };
    
          axios.post('http://localhost:4000/students/searchJobs', searchObject)
@@ -213,9 +164,93 @@ export default class JobSearch extends Component {
     }
   
     onChangeSearchLoc(e) {
-      this.setState({loc: e.target.value})
-    }
+      this.setState({loc: e.target.value}, () =>{
+        console.log(this.state.loc);
+        if(this.state.search.length > 0){
+          var filter = [];
+          const filterObject = {
+            "Full Time" : this.state.selectedFT,
+            "Part Time": this.state.selectedPT,
+            "On Campus" : this.state.selectedON,
+            "Intern" : this.state.selectedIN,
+         };
+         for( const [name, value] in filterObject){
+           if(value == true){
+             filter.push(name);
+           }
+         }
+            const searchObject = {
+              search : this.state.search,
+              loc: this.state.loc
+           };
+     
+           axios.post('http://localhost:4000/students/searchJobs', searchObject)
+           .then((response) => {
 
+                if(filter.length>0){
+                  for(var i =0;i<response.data.length; i++){
+                    if(filter.includes(response.data[i].cat)){
+                      this.state.jobs.push(response.data[i]);
+                    }
+                  }
+                }
+                else {
+                   this.setState({
+                    jobs : response.data,
+                    
+                     });
+                }
+                console.log(this.state.jobs);
+             });
+ 
+
+  
+        } else {
+          this.setState({
+           jobs : [],
+            
+        });
+        }
+
+
+    } );
+    }
+    onUpload(e){
+      console.log(e.target.value);
+      // console.log(e._dispatchListeners);
+      e.preventDefault();
+      const files = document.getElementById('INPUT_TAG').files;
+      console.log(files.length);
+      if(files.length==0){
+        alert("Please upload a resume to submit your application");
+      } 
+      else{
+        const formData = new FormData();
+        // files[0].jobID = e.target.value;
+        formData.append('resume', files[0]);
+        // console.log(e.target.value);
+        // formData.append('jobID', e.target.value);
+        const applyObject = {
+          id : e.target.value
+       };
+       console.log(applyObject)
+        axios.post('http://localhost:4000/students/jobApply', applyObject)
+        // console.log(formData.getAll('resume'));
+        axios.post('http://localhost:4000/students/resume', formData)
+        .then(res => {
+            if(res.data.errno){
+              alert("Unsuccessful update");
+            } else {
+              alert(res.data);
+              window.location.href = "/student/profile";
+            }
+          }     
+        );
+        console.log(files[0])
+        alert("succussful upload");
+      }
+
+  }
 
 
   render() {
@@ -226,7 +261,8 @@ export default class JobSearch extends Component {
     <Navigator/>
     <Content state = {this.state}  onChangeSearchInput = {this.onChangeSearchInput}
     onChangeSearchFilter = {this.onChangeSearchFilter}
-     onChangeJobLoc = {this.onChangeJobLoc} 
+     onChangeSearchLoc = {this.onChangeSearchLoc} 
+     onUpload = {this.onUpload} 
     />
 
         </div> 

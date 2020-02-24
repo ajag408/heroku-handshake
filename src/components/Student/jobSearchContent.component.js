@@ -94,6 +94,9 @@ function Content(props) {
     const handleExpandClick = i => {
       cardSetExpandedID(cardExpandedID == i ? -1: i);
     };
+
+
+
   
   return (
     <Paper className={classes.paper}>
@@ -176,7 +179,7 @@ function Content(props) {
           placeholder="Filter by location"
           className={classes.input}
           disableUnderline
-          onChange={props.onChangeSearchLocation}
+          onChange={props.onChangeSearchLoc}
           value = {props.state.loc}
           />
       <div className={classes.content}>
@@ -185,8 +188,12 @@ function Content(props) {
           <CardHeader
           
             title = {job.title}
-            subheader= {job.name}
+
           />
+           <a href = {'/company/' + job.id}><CardHeader
+         
+          subheader = {job.name}
+           /></a> 
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
               Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
@@ -217,6 +224,38 @@ function Content(props) {
         
               </Typography> */}
             </CardContent>
+            <CardActions>
+                
+            <Button
+                className={classes.uploadButton}
+                // onClick = {props.onUpload}
+                color="primary"
+                variant="contained"
+                component = "label"
+                >
+                  Upload Resume (PDF) 
+                <input
+                    type="file"
+                    id ="INPUT_TAG"
+                    style={{ display: "none" }}
+                    
+                    required
+                />
+              </Button>
+                  <button
+                className={classes.uploadButton}
+                // onClick = {props.onUpload}
+                color="primary"
+                variant="contained"
+                component = "label"
+                onClick = {props.onUpload}
+                value = {job.jobID}
+                key = {job.jobID}
+                >
+                Submit Application 
+                </button>
+          
+            </CardActions>
           </Collapse>
         </Card>
       ))} 

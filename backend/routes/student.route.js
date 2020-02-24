@@ -113,8 +113,8 @@ router.route('/search').post((req,res) => {
 
 router.route('/searchJobs').post((req,res) => {
   console.log(req.body);
-  sql.query("SELECT * FROM jobs INNER JOIN companies ON jobs.company = companies.id WHERE title LIKE ? OR name LIKE ?",
-   ['%'+req.body.search+'%', '%'+req.body.search+'%'],
+  sql.query("SELECT j.id AS jobID, j.title, j.created, j.deadline, j.loc, j. salary, j.description, j.cat, c.id, c.name FROM jobs AS j INNER JOIN companies AS c ON j.company = c.id WHERE (j.title LIKE ? OR c.name LIKE ?) AND j.loc LIKE ?",
+   ['%'+req.body.search+'%', '%'+req.body.search+'%', '%'+req.body.loc+'%'],
     function(err, jobs){
       if(err){
         console.log(err);
@@ -337,4 +337,56 @@ router.route('/profPic/').get((req, res, next) => {
         
       
         })
+
+
+        router.route('/jobApply').post((req,res) => {
+          console.log("in job apply");
+          console.log(req.body.id);
+          session.jobID = req.body.id;
+        })
+
+        router.route('/resume').post(upload.array('resume', 5), (req, res, next) => {
+          console.log(req.files);
+          const resume = req.files.map((file) => {
+            console.log("in resume");
+            console.log(session.jobID);
+            return {
+              resFile: file.filename,
+              resOG: file.originalname,
+              jobID: session.jobID
+            }
+          })
+          console.log(resume);
+          // if (!resume[0].resOG.match(/\.(pdf)$/i)){
+          //   res.json("Not a PDF");
+          // } else {
+        
+          //   console.log(session.user.email);
+          //   resume[0].student = session.user.id;
+          //   sql.query("INSERT INTO applications SET ?",
+          //    resume[0] ,(error, data) => {
+          //   if (error) {
+          //     console.log(error)
+          //     console.log('hello2');
+          //     return next(error);
+        
+          //   } else {
+        
+          //       // res.json(data);
+          //       // session.user = data;
+          //       sql.query("SELECT * FROM students WHERE email = ?", [session.user.email], 
+          //       (error, user) => {
+          //         if(error){
+          //           console.log(error);
+          //         } else {
+          //           session.user = user[0];
+          //         }
+          //     })
+          //       res.json('Picture uploaded successfully !')
+          //     }
+          //     })
+          //   }
+            })
+        
+        
 module.exports = router;
