@@ -85,7 +85,10 @@ const styles = theme => ({
 
 function Content(props) {
     const { classes } = props;
-    const [selected, setSelected] = React.useState(false);
+    const [selectedFT, setSelectedFT] = React.useState(false);
+    const [selectedPT, setSelectedPT] = React.useState(false);
+    const [selectedON, setSelectedON] = React.useState(false);
+    const [selectedIN, setSelectedIN] = React.useState(false);
     var i = -1;
     const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
     const handleExpandClick = i => {
@@ -104,35 +107,78 @@ function Content(props) {
                     placeholder="Search jobs by company name or job title"
                     className={classes.input}
                     disableUnderline
-                    onChange={props.onChangeSearch}
+                    onChange={props.onChangeSearchInput}
                     value = {props.state.search}
                 /><br></br><br></br>
         <ToggleButton
            
-            selected={selected}
-            // onChange={() => {
+            selected={selectedFT}
+            onClick={() => {
               
-            //   setSelected(!selected);
-            //   console.log(!selected);
-            //   // props.state.selectedFT = !selected;
-
-            // }}
-            onChange={props.onChangeFT}
+              setSelectedFT(!selectedFT);
+              console.log(!selectedFT);
+              props.state.selectedFT = !selectedFT;
+              console.log(props.state.selectedFT);
+            }}
+            onChange ={props.onChangeSearchFilter}
+            // onChange={props.onChangeFT}
         >
           Full Time
-        </ToggleButton>
-        <Button  size="medium" block="block" type="submit">
-          Full Time
-        </Button>&nbsp;&nbsp;
-        <Button  size="medium" block="block" type="submit">
-          Post Time
-        </Button>&nbsp;&nbsp;
-        <Button  size="medium" block="block" type="submit">
-          On Campus
-        </Button>&nbsp;&nbsp;
-        <Button  size="medium" block="block" type="submit">
-          Intern
-        </Button>&nbsp;&nbsp;
+        </ToggleButton>&nbsp;&nbsp;
+        <ToggleButton
+           
+           selected={selectedPT}
+           onClick={() => {
+             
+             setSelectedPT(!selectedPT);
+             console.log(!selectedPT);
+             props.state.selectedPT = !selectedPT;
+             console.log(props.state.selectedPT);
+           }}
+           onChange ={props.onChangeSearchFilter}
+           // onChange={props.onChangeFT}
+       >
+         Part Time
+       </ToggleButton>&nbsp;&nbsp;
+       <ToggleButton
+           
+           selected={selectedON}
+           onClick={() => {
+             
+             setSelectedON(!selectedON);
+             console.log(!selectedON);
+             props.state.selectedON = !selectedON;
+             console.log(props.state.selectedON);
+           }}
+           onChange ={props.onChangeSearchFilter}
+           // onChange={props.onChangeFT}
+       >
+         On Campus
+       </ToggleButton>&nbsp;&nbsp;
+       <ToggleButton
+           
+           selected={selectedIN}
+           onClick={() => {
+             
+             setSelectedIN(!selectedIN);
+             console.log(!selectedIN);
+             props.state.selectedIN = !selectedIN;
+             console.log(props.state.selectedIN);
+           }}
+           onChange ={props.onChangeSearchFilter}
+           // onChange={props.onChangeFT}
+       >
+         Intern
+       </ToggleButton><br></br><br></br>
+       <Input
+
+                    
+          placeholder="Filter by location"
+          className={classes.input}
+          disableUnderline
+          onChange={props.onChangeSearchLocation}
+          value = {props.state.loc}
+          />
       <div className={classes.content}>
       {props.state.jobs.map((job, i) => (
           <Card>

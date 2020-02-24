@@ -113,7 +113,6 @@ router.route('/search').post((req,res) => {
 
 router.route('/searchJobs').post((req,res) => {
   console.log(req.body);
-  var companyList;
   sql.query("SELECT * FROM jobs INNER JOIN companies ON jobs.company = companies.id WHERE title LIKE ? OR name LIKE ?",
    ['%'+req.body.search+'%', '%'+req.body.search+'%'],
     function(err, jobs){
