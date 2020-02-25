@@ -1,5 +1,6 @@
 import { ADD_STUDENT } from "../constants/action-types";
 import { SIGNIN_STUDENT } from "../constants/action-types";
+import { LOGOUT_STUDENT } from "../constants/action-types";
 import axios from 'axios';
 export function studentMiddleware({ dispatch }) {
     return function(next) {
@@ -27,6 +28,13 @@ export function studentMiddleware({ dispatch }) {
                         }
                     }
                     );
+        }
+        else if(action.type === LOGOUT_STUDENT){
+           axios.get('http://localhost:4000/students/logout')
+                    .then(res => {
+                        console.log(res);
+                        window.location.href = "/";
+                    });
         }
         return next(action);
       };

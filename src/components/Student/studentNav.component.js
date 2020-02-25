@@ -16,6 +16,8 @@ import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import axios from 'axios';
+import { connect } from "react-redux";
+import { logoutStudent } from "../../js/actions/index";
 
 const categories = [
   {
@@ -32,11 +34,12 @@ const categories = [
     id: 'Logout',
     children: [
       { id: 'Logout', icon: <ExitToAppIcon />, action: () => {
-        axios.get('http://localhost:4000/students/logout')
-        .then(res => {
-            console.log(res);
-            window.location.href = "/";
-        });
+        this.props.logoutStudent();
+        // axios.get('http://localhost:4000/students/logout')
+        // .then(res => {
+        //     console.log(res);
+        //     window.location.href = "/";
+        // });
          }
     },
     ],
@@ -89,9 +92,12 @@ const styles = theme => ({
   },
 });
 
-function Navigator(props) {
+function Nav(props) {
   const { classes, ...other } = props;
-
+  const handleClick = (event, id) => {
+    console.log(id);
+    // console.log(action);
+  };
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
@@ -146,8 +152,13 @@ function Navigator(props) {
   );
 }
 
-Navigator.propTypes = {
+Nav.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
+function mapDispatchToProps(dispatch) {
+  return { 
+    logoutStudent: () => dispatch(logoutStudent())
+  };
+};
+const Navigator = connect(null, mapDispatchToProps)(Nav);
 export default withStyles(styles)(Navigator);
