@@ -9,10 +9,10 @@ const initialState = {
 
 function rootReducer (state = initialState, action) {
   
-        if (action.type === ADD_STUDENT) {
-            console.log("processing in reducer")
+        // if (action.type === ADD_STUDENT) {
+        //     console.log("processing in reducer")
 
-          }
+        //   }
         return state;
     }
   

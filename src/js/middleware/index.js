@@ -1,6 +1,7 @@
 import { ADD_STUDENT } from "../constants/action-types";
+import { SIGNIN_STUDENT } from "../constants/action-types";
 import axios from 'axios';
-export function addStudentMiddleware({ dispatch }) {
+export function studentMiddleware({ dispatch }) {
     return function(next) {
       return function(action) {
         if (action.type === ADD_STUDENT) {
@@ -15,6 +16,17 @@ export function addStudentMiddleware({ dispatch }) {
                 }
                 }
             );
+        }
+        else if(action.type === SIGNIN_STUDENT){
+                axios.post('http://localhost:4000/students/login', action.payload)
+                    .then(res => {
+                        if(res.data.isStudent){
+                        window.location.href = "/student/landing";
+                        } else {
+                        alert(res.data);
+                        }
+                    }
+                    );
         }
         return next(action);
       };

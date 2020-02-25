@@ -4,10 +4,11 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-
+import { connect } from "react-redux";
+import { signinStudent } from "../../js/actions/index";
 import axios from 'axios';
 
-export default class StudentSignin extends Component {
+class StudentSigninForm extends Component {
   constructor(props) {
     super(props)
 
@@ -52,15 +53,16 @@ export default class StudentSignin extends Component {
       email: this.state.email,
       password: this.state.password,
     };
-    axios.post('http://localhost:4000/students/login', studentObject)
-    .then(res => {
-        if(res.data.isStudent){
-          window.location.href = "/student/landing";
-        } else {
-          alert(res.data);
-        }
-      }
-    );
+    this.props.signinStudent(studentObject);
+    // axios.post('http://localhost:4000/students/login', studentObject)
+    // .then(res => {
+    //     if(res.data.isStudent){
+    //       window.location.href = "/student/landing";
+    //     } else {
+    //       alert(res.data);
+    //     }
+    //   }
+    // );
   }
 
   render() {
@@ -94,3 +96,10 @@ export default class StudentSignin extends Component {
     </div>);
   }
 }
+function mapDispatchToProps(dispatch) {
+  return { 
+    signinStudent: student => dispatch(signinStudent(student))
+  };
+};
+const StudentSignin = connect(null, mapDispatchToProps)(StudentSigninForm);
+export default StudentSignin;
