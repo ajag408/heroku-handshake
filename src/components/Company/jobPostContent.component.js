@@ -25,6 +25,7 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 
 const styles = theme => ({
@@ -185,9 +186,36 @@ function Content(props) {
               <Typography paragraph>
                 Description:  {job.description}
               </Typography>
-              {/* <Typography>
-        
-              </Typography> */}
+              <PerfectScrollbar>
+                <div className={classes.inner}>
+                    <Table>
+                    <TableHead>
+                        <TableRow>
+                        <TableCell>Students Applied</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {/* {job.applicants.map(student => ( */}
+                        <TableRow
+                            className={classes.tableRow}
+                            hover
+                            // key={user.id}
+                            // selected={selectedUsers.indexOf(user.id) !== -1}
+                            // onClick = {() => {window.location.href = `/student/${student.id}`}}
+                        >
+                            <TableCell>
+                            {/* <div><a href = {'/student/' + student.id}>
+                                <Typography variant="body1">{student.name}</Typography>
+                                </a>
+                            </div> */}
+                            {/* {job.applicants} */}
+                            </TableCell>
+                        </TableRow>
+                        {/* ))} */}
+                    </TableBody>
+                    </Table>
+                </div>
+                </PerfectScrollbar>
             </CardContent>
           </Collapse>
         </Card>

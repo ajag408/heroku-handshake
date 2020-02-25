@@ -242,12 +242,12 @@ export default class JobSearch extends Component {
               alert("Unsuccessful update");
             } else {
               alert(res.data);
-              window.location.href = "/student/profile";
+              // window.location.href = "/student/profile";
             }
           }     
         );
         console.log(files[0])
-        alert("succussful upload");
+        // alert("succussful upload");
       }
 
   }

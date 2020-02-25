@@ -31,6 +31,7 @@ export default class CompanyJobPosting extends Component {
       description: '',
       cat: 'Full Time',
       jobs: [],
+      loaded: false,
       companyName: '',
     }
     axios.get('http://localhost:4000/companies/user')
@@ -60,18 +61,22 @@ export default class CompanyJobPosting extends Component {
   }
 
     // get the jobs data from backend  
-    componentDidMount(){
+    componentWillMount(){
       axios.get('http://localhost:4000/companies/get-jobs')
-              .then((response) => {
-              //update the state with the response data
-
-            
-              this.setState({
-                  jobs : this.state.jobs.concat(response.data)
-                  
-              });
-              console.log(this.state.jobs);
-          });
+         .then((response) => {
+            for( const job in response.data){
+                axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
+                .then((res) => {
+                  response.data[job].applicants = res.data;
+                })
+              }
+            this.setState({
+                jobs : this.state.jobs.concat(response.data),
+                loaded: true
+            });
+          console.log(this.state.jobs);
+          })
+          console.log(this.state.jobs);
   }
 
   onChangeJobTitle(e) {
@@ -135,7 +140,9 @@ export default class CompanyJobPosting extends Component {
 
   render() {
 
-
+    if (!this.state.loaded) {
+      return <div />
+  }
 
     return (  <div>
     <Navigator/>
