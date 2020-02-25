@@ -34,12 +34,7 @@ const categories = [
     id: 'Logout',
     children: [
       { id: 'Logout', icon: <ExitToAppIcon />, action: () => {
-        this.props.logoutStudent();
-        // axios.get('http://localhost:4000/students/logout')
-        // .then(res => {
-        //     console.log(res);
-        //     window.location.href = "/";
-        // });
+        console.log("setting this with redux");
          }
     },
     ],
@@ -94,10 +89,15 @@ const styles = theme => ({
 
 function Nav(props) {
   const { classes, ...other } = props;
-  const handleClick = (event, id) => {
-    console.log(id);
-    // console.log(action);
-  };
+  console.log(categories[1].children[0].action);
+  categories[1].children[0].action = () => {
+    props.logoutStudent();
+  }
+  console.log(categories[1].children[0])
+  // const handleClick = (event, id) => {
+  //   console.log(id);
+  //   // console.log(action);
+  // };
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>

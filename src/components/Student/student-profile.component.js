@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Navigator from './studentNav.component';
 import Content from './studentProfContent.component';
+import { connect } from "react-redux";
+import { displayStudent } from "../../js/actions/index";
 
-
-export default class StudentProfile extends Component {
+class DisplayStudent extends Component {
   constructor(props) {
     super(props)
 
@@ -66,27 +67,27 @@ export default class StudentProfile extends Component {
       workDescription: '',
       skillset: ''
     }
-
-    axios.get('http://localhost:4000/students/user')
-    .then(res => {
-      console.log(res.data);
-      if(!res.data.isStudent){
-        window.location.href = "/student-signin";
-      } else {
-        this.setState({
-          name : res.data.user.name,
-          dob: res.data.user.dob,
-          city: res.data.user.city,
-          state: res.data.user.state,
-          country: res.data.user.country,
-          careerObjective: res.data.user.careerObjective,
-          email: res.data.user.email,
-          phone: res.data.user.phone,
-          profPic: 'http://localhost:4000/students/profPic/',
-          skillset: res.data.user.skillset 
-          });
-      }
-    });
+    this.props.displayStudent(this.state);
+    // axios.get('http://localhost:4000/students/user')
+    // .then(res => {
+    //   console.log(res.data);
+    //   if(!res.data.isStudent){
+    //     window.location.href = "/student-signin";
+    //   } else {
+    //     this.setState({
+    //       name : res.data.user.name,
+    //       dob: res.data.user.dob,
+    //       city: res.data.user.city,
+    //       state: res.data.user.state,
+    //       country: res.data.user.country,
+    //       careerObjective: res.data.user.careerObjective,
+    //       email: res.data.user.email,
+    //       phone: res.data.user.phone,
+    //       profPic: 'http://localhost:4000/students/profPic/',
+    //       skillset: res.data.user.skillset 
+    //       });
+    //   }
+    // });
 
     axios.get('http://localhost:4000/students/education')
     .then(res => {
@@ -390,3 +391,13 @@ onSubmitSkillset(e) {
     );        
   }
 }
+function mapDispatchToProps(dispatch) {
+  return { 
+    displayStudent: student => dispatch(displayStudent(student))
+  };
+};
+// const mapStateToProps = state => {
+//   return { this.state: state.books };
+// };
+const StudentProfile = connect(null, mapDispatchToProps)(DisplayStudent);
+export default StudentProfile;
