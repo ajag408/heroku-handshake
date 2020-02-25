@@ -1,14 +1,14 @@
   
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addStudent } from "../js/actions/index";
+import { addStudent } from "../../js/actions/index";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
-class CreateStudent extends Component {
+class CreateStudents extends Component {
   constructor(props) {
     super(props)
 
@@ -126,5 +126,5 @@ function mapDispatchToProps(dispatch) {
     addStudent: student => dispatch(addStudent(student))
   };
 };
-const CreateStudent = connect(null, mapDispatchToProps)(CreateStudent);
+const CreateStudent = connect(null, mapDispatchToProps)(CreateStudents);
 export default CreateStudent;

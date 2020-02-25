@@ -1,3 +1,5 @@
+import { ADD_STUDENT } from "../constants/action-types";
+
 const initialState = {
     name: '',
     email: '',
@@ -5,14 +7,13 @@ const initialState = {
     collegeName: ''
   };
 
-  export const reducer = (state = initialState, action) => {
-    switch(action.type){
-        // case 'ADD_NAME':
-        //     return {
-        //         ...state,
-        //         names: [...state.names, action.payload]
-        //     }
-        default:
-            return state
+function rootReducer (state = initialState, action) {
+  
+        if (action.type === ADD_STUDENT) {
+            console.log("processing in reducer")
+
+          }
+        return state;
     }
-  }
+  
+    export default rootReducer;
