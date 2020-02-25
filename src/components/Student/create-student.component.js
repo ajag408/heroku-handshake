@@ -1,12 +1,14 @@
   
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { addStudent } from "../js/actions/index";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
-export default class CreateStudent extends Component {
+class CreateStudent extends Component {
   constructor(props) {
     super(props)
 
@@ -65,16 +67,17 @@ export default class CreateStudent extends Component {
       password: this.state.password,
       collegeName: this.state.collegeName
     };
-    axios.post('http://localhost:4000/students/create-student', studentObject)
-      .then(res => {
-          if(res.data.errno){
-            alert("Unsuccessful signup; make sure email is unique");
-          } else {
-            alert("Successful signup");
-            window.location.href = "/student-signin";
-          }
-        }
-      );
+    this.props.addStudent(studentObject);
+    // axios.post('http://localhost:4000/students/create-student', studentObject)
+    //   .then(res => {
+    //       if(res.data.errno){
+    //         alert("Unsuccessful signup; make sure email is unique");
+    //       } else {
+    //         alert("Successful signup");
+    //         window.location.href = "/student-signin";
+    //       }
+    //     }
+    //   );
     this.setState({name: '', email: '', password: '', collegeName: ''})
   }
 
@@ -118,3 +121,10 @@ export default class CreateStudent extends Component {
     </div>);
   }
 }
+function mapDispatchToProps(dispatch) {
+  return { 
+    addStudent: student => dispatch(addStudent(student))
+  };
+};
+const CreateStudent = connect(null, mapDispatchToProps)(CreateStudent);
+export default CreateStudent;
