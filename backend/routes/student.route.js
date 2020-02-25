@@ -353,39 +353,32 @@ router.route('/profPic/').get((req, res, next) => {
             return {
               resFile: file.filename,
               resOG: file.originalname,
-              jobID: session.jobID
+              job: session.jobID,
+              student: session.user.id
             }
           })
           console.log(resume);
-          // if (!resume[0].resOG.match(/\.(pdf)$/i)){
-          //   res.json("Not a PDF");
-          // } else {
+          if (!resume[0].resOG.match(/\.(pdf)$/i)){
+            res.json("Not a PDF");
+          } else {
         
-          //   console.log(session.user.email);
-          //   resume[0].student = session.user.id;
-          //   sql.query("INSERT INTO applications SET ?",
-          //    resume[0] ,(error, data) => {
-          //   if (error) {
-          //     console.log(error)
-          //     console.log('hello2');
-          //     return next(error);
+            // console.log(session.user.email);
+            // resume[0].student = session.user.id;
+            sql.query("INSERT INTO applications SET ?",
+             resume[0] ,(error, data) => {
+            if (error) {
+              console.log(error)
+              console.log('hello2');
+              return next(error);
         
-          //   } else {
+            } else {
         
-          //       // res.json(data);
-          //       // session.user = data;
-          //       sql.query("SELECT * FROM students WHERE email = ?", [session.user.email], 
-          //       (error, user) => {
-          //         if(error){
-          //           console.log(error);
-          //         } else {
-          //           session.user = user[0];
-          //         }
-          //     })
-          //       res.json('Picture uploaded successfully !')
-          //     }
-          //     })
-          //   }
+                // res.json(data);
+                // session.user = data;
+                res.json('Resume uploaded successfully !')
+              }
+              })
+            }
             })
         
         

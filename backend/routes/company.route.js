@@ -105,13 +105,28 @@ router.route('/create-job').post((req, res) => {
 });
 
 router.route('/get-jobs').get((req,res) =>{
-  sql.query("SELECT * FROM jobs WHERE company = ?", [session.user.id],(error,jobs) => {
+  sql.query("SELECT * FROM jobs WHERE company = ?", 
+  [session.user.id],(error,jobs) => {
     if(error){
       console.log(error);
       res.json(error);
     } else {
       console.log("Jobs : ",JSON.stringify(jobs));
       res.end(JSON.stringify(jobs));
+    }
+  })
+});
+
+router.route('/get-applicants').post((req,res) =>{
+  console.log(req.body)
+  sql.query("SELECT students.name, students.id FROM applications, jobs, students WHERE jobs.id = ? AND applications.job = jobs.id AND applications.student = students.id", 
+  [req.body.id],(error,applicants) => {
+    if(error){
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("Applicants : ",JSON.stringify(applicants));
+      res.end(JSON.stringify(applicants));
     }
   })
 });
