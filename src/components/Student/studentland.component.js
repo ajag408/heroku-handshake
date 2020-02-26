@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import axios from 'axios';
 import Navigator from './studentNav.component';
 import Content from './jobSearchContent.component';
-
+import { connect } from "react-redux";
 
 export default class JobSearch extends Component {
   constructor(props) {

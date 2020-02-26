@@ -5,7 +5,7 @@ import Navigator from './studentNav.component';
 import Content from './studentProfContent.component';
 import { connect } from "react-redux";
 import { displayStudent } from "../../js/actions/index";
-
+import store from '../../js/store/index';
 class DisplayStudent extends Component {
   constructor(props) {
     super(props)
@@ -65,9 +65,56 @@ class DisplayStudent extends Component {
       stDate: '',
       endDate: '',
       workDescription: '',
-      skillset: ''
+      skillset: '',
     }
-    this.props.displayStudent(this.state);
+    // store.subscribe(() => {
+    //     // this.state = store.getState(); 
+        
+    //     this.setState(
+    //       {
+    //         name: store.getState().name,
+    //         dob: store.getState().dob,
+    //         city: store.getState().city,
+    //         state: store.getState().state,
+    //         country: store.getState().country,
+    //         careerObjective: store.getState().careerObjective,
+    //         email: store.getState().email,
+    //         phone: store.getState().phone,
+    //         profPic: store.getState().profPic,
+    //         education: store.getState().education,
+    //         collegeName: store.getState(),
+    //         educationLocation: store.getState(),
+    //         degree: store.getState(),
+    //         major: store.getState(),
+    //         gradYear: store.getState(),
+    //         gpa: store.getState(),
+    //         experience: store.getState(),
+    //         companyName: store.getState(),
+    //         jobTitle: store.getState(),
+    //         jobLocation: store.getState(),
+    //         stDate: store.getState(),
+    //         endDate: store.getState(),
+    //         workDescription: store.getState(),
+    //         skillset: store.getState(),
+    //       })
+    //     console.log(this.state)
+    // });
+      // console.log();
+      this.props.displayStudent(this.state);
+      
+    // console.log(this.state.student);
+
+ 
+    // store.subscribe(() => {
+    //   console.log("hello");
+    //   // When state will be updated(in our case, when items will be fetched), 
+    //   // we will update local component state and force component to rerender 
+    //   // with new data.
+
+    //   console.log(store.getState());
+    // });
+    
+
     // axios.get('http://localhost:4000/students/user')
     // .then(res => {
     //   console.log(res.data);
@@ -89,30 +136,30 @@ class DisplayStudent extends Component {
     //   }
     // });
 
-    axios.get('http://localhost:4000/students/education')
-    .then(res => {
-      console.log(res.data);
-      if(res.data.errno){
-        alert(res.data);
-      } else {
-        this.setState({
-            education: res.data
-      });
-    }
-    });
+    // axios.get('http://localhost:4000/students/education')
+    // .then(res => {
+    //   console.log(res.data);
+    //   if(res.data.errno){
+    //     alert(res.data);
+    //   } else {
+    //     this.setState({
+    //         education: res.data
+    //   });
+    // }
+    // });
 
-    axios.get('http://localhost:4000/students/experience')
-    .then(res => {
-      console.log(res.data);
-      if(res.data.errno){
-        alert(res.data);
-      } else {
-        this.setState({
-            experience: res.data
-      });
-      console.log(this.state);
-    }
-    });
+    // axios.get('http://localhost:4000/students/experience')
+    // .then(res => {
+    //   console.log(res.data);
+    //   if(res.data.errno){
+    //     alert(res.data);
+    //   } else {
+    //     this.setState({
+    //         experience: res.data
+    //   });
+    //   console.log(this.state);
+    // }
+    // });
 
     // axios.get('http://localhost:4000/companies/profPic')
     // .then(res => {
@@ -120,8 +167,36 @@ class DisplayStudent extends Component {
     //     this.setState({profPic: res});
     // })
 }
+componentWillReceiveProps(newProps){
+  console.log(newProps);
+    this.setState({
+      name: newProps.name,
+          dob: newProps.dob,
+    city: newProps.city,
+    state: newProps.state,
+    country: newProps.country,
+    careerObjective: newProps.careerObjective,
+    email: newProps.email,
+    phone: newProps.phone,
+    profPic: newProps.profPic,
+    education: newProps.education,
+    collegeName: newProps.collegeName,
+    educationLocation: newProps.educationLocation,
+    degree: newProps.degree,
+    major: newProps.major,
+    gradYear: newProps.gradYear,
+    gpa: newProps.gpa,
+    experience: newProps.experience,
+    companyName: newProps.companyName,
+    jobTitle: newProps.jobTitle,
+    jobLocation: newProps.jobLocation,
+    stDate: newProps.stDate,
+    endDate: newProps.endDate,
+    workDescription: newProps.workDescription,
+    skillset: newProps.skillset, 
+    })
 
-
+}
   onChangeName(e) {
     this.setState({name: e.target.value})
   }
@@ -393,11 +468,56 @@ onSubmitSkillset(e) {
 }
 function mapDispatchToProps(dispatch) {
   return { 
-    displayStudent: student => dispatch(displayStudent(student))
+    displayStudent: (student) => dispatch(displayStudent(student))
+    // const mapStateToProps = state => {
+    //     console.log(state);
+    //     return { student: state };
+    //   }
   };
 };
-// const mapStateToProps = state => {
-//   return { this.state: state.books };
-// };
-const StudentProfile = connect(null, mapDispatchToProps)(DisplayStudent);
+const mapStateToProps = state=> {
+  return {
+    name : state.name,
+    dob: state.dob,
+    city: state.city,
+    state: state.state,
+    country: state.country,
+    careerObjective: state.careerObjective,
+    email: state.email,
+    phone: state.phone,
+    profPic: state.profPic,
+    education: state.education,
+    collegeName: state.collegeName,
+    educationLocation: state.educationLocation,
+    degree: state.degree,
+    major: state.major,
+    gradYear: state.gradYear,
+    gpa: state.gpa,
+    experience: state.experience,
+    companyName: state.companyName,
+    jobTitle: state.jobTitle,
+    jobLocation: state.jobLocation,
+    stDate: state.stDate,
+    endDate: state.endDate,
+    workDescription: state.workDescription,
+    skillset: state.skillset, 
+  };
+};
+
+// const mergeProps = (state, actions) => ({
+  
+//   ...state,
+//   ...actions,
+//   display: actions.displayStudent(state.student)
+                  
+//   // display: state.student
+//   //    ? () => {
+//   //     return (
+//   //       actions.displayStudent(state.student)
+//   //     )
+//   //   }
+//   //   : null
+//   });
+const StudentProfile = connect(mapStateToProps ,mapDispatchToProps)(DisplayStudent);
+
 export default StudentProfile;

@@ -58,7 +58,27 @@ export function studentMiddleware({ dispatch }) {
                   };
               }
             });
-
+            axios.get('http://localhost:4000/students/education')
+            .then(res => {
+              console.log(res.data);
+              if(res.data.errno){
+                alert(res.data);
+              } else {
+                action.payload.education = res.data;
+             }
+            });
+        
+            axios.get('http://localhost:4000/students/experience')
+            .then(res => {
+              console.log(res.data);
+              if(res.data.errno){
+                alert(res.data);
+              } else {
+                action.payload.experience = res.data;
+            }
+            })
+            .then(() => {next(action)})
+          
          }
         return next(action);
       };
