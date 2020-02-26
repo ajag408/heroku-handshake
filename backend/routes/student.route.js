@@ -331,21 +331,26 @@ router.route('/profPic/').get((req, res, next) => {
           if(err){
             console.log(err);
           } else {
-            fs.createReadStream(path.resolve(UPLOAD_PATH, student[0].profPicFile)).pipe(res);
-          }
+            if(student[0].profPicFile){
+             fs.createReadStream(path.resolve(UPLOAD_PATH, student[0].profPicFile)).pipe(res);
+            } else {
+              console.log("we good");
+            }
+          
+            }
         });
         
       
         })
 
 
-        router.route('/jobApply').post((req,res) => {
+  router.route('/jobApply').post((req,res) => {
           console.log("in job apply");
           console.log(req.body.id);
           session.jobID = req.body.id;
         })
 
-        router.route('/resume').post(upload.array('resume', 5), (req, res, next) => {
+    router.route('/resume').post(upload.array('resume', 5), (req, res, next) => {
           console.log(req.files);
           const resume = req.files.map((file) => {
             console.log("in resume");
@@ -354,7 +359,8 @@ router.route('/profPic/').get((req, res, next) => {
               resFile: file.filename,
               resOG: file.originalname,
               job: session.jobID,
-              student: session.user.id
+              student: session.user.id,
+              status: "Pending"
             }
           })
           console.log(resume);
@@ -380,6 +386,12 @@ router.route('/profPic/').get((req, res, next) => {
               })
             }
             })
-        
-        
+
+  router.route('/getResume/:resFile').get((req, res, next) => {
+    console.log(UPLOAD_PATH);
+    // console.log(session.user)
+      fs.createReadStream(path.resolve(UPLOAD_PATH, req.params.resFile)).pipe(res)
+  
+    })
+            
 module.exports = router;

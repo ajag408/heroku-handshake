@@ -119,7 +119,7 @@ router.route('/get-jobs').get((req,res) =>{
 
 router.route('/get-applicants').post((req,res) =>{
   console.log(req.body)
-  sql.query("SELECT students.name, students.id FROM applications, jobs, students WHERE jobs.id = ? AND applications.job = jobs.id AND applications.student = students.id", 
+  sql.query("SELECT students.name, students.id, applications.resFile, applications.status FROM applications, jobs, students WHERE jobs.id = ? AND applications.job = jobs.id AND applications.student = students.id", 
   [req.body.id],(error,applicants) => {
     if(error){
       console.log(error);

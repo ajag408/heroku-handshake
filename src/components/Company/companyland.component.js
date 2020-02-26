@@ -49,36 +49,52 @@ export default class CompanyJobPosting extends Component {
       }
     });
 
-  //   axios.get('http://localhost:4000/companies/get-jobs')
-  //   .then((response) => {
-  //   //update the state with the response data
-  //   this.setState({
-  //       jobs : this.state.jobs.concat(response.data)
+
+    axios.get('http://localhost:4000/companies/get-jobs')
+    .then((response) => {
+          (async() => {
+           for( const job in response.data){
+              await axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
+              .then((res) => {
+                response.data[job].applicants = res.data;
+              })
+              .then(() => {
+                this.setState({
+                  jobs : this.state.jobs.concat(response.data[job]),
+                 });
+                })
+            }
+            // this.setState({
+            //     jobs : this.state.jobs.concat(response.data),
+                
+            // });
+            console.log(this.state.jobs);
+            })();
+            console.log(this.state.jobs);
+        });
         
-  //   });
-  //   console.log(this.state.jobs);
-  //   });
   }
+  
 
     // get the jobs data from backend  
-    componentWillMount(){
-      axios.get('http://localhost:4000/companies/get-jobs')
-         .then((response) => {
-            for( const job in response.data){
-                axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
-                .then((res) => {
-                  response.data[job].applicants = res.data;
-                })
-              }
-            this.setState({
-                jobs : this.state.jobs.concat(response.data),
-                loaded: true
-            });
-          console.log(this.state.jobs);
-          })
-          console.log(this.state.jobs);
-  }
-
+    // componentWillMount(){
+      // axios.get('http://localhost:4000/companies/get-jobs')
+      //    .then((response) => {
+      //       for( const job in response.data){
+      //           axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
+      //           .then((res) => {
+      //             response.data[job].applicants = res.data;
+      //           })
+      //         }
+      //       this.setState({
+      //           jobs : this.state.jobs.concat(response.data),
+      //           loaded: true
+      //       });
+      //     console.log(this.state.jobs);
+      //     })
+      //     console.log(this.state.jobs);
+  // }
+  // }
   onChangeJobTitle(e) {
     this.setState({title: e.target.value})
   }
@@ -140,9 +156,9 @@ export default class CompanyJobPosting extends Component {
 
   render() {
 
-    if (!this.state.loaded) {
-      return <div />
-  }
+  //   if (!this.state.loaded) {
+  //     return <div />
+  // }
 
     return (  <div>
     <Navigator/>

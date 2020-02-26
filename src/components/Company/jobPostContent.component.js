@@ -163,7 +163,7 @@ function Content(props) {
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
               Category: {job.cat} &nbsp;&nbsp;&nbsp;   Salary: ${job.salary}  &nbsp;&nbsp;&nbsp;   Location: {job.loc}
-              
+                        
             </Typography>
           </CardContent>
           <CardActions className = {classes.tableTitle} disableSpacing>
@@ -184,18 +184,21 @@ function Content(props) {
               Deadline: <Moment format = "YYYY-MM-DD ">{job.deadline}</Moment>
               </Typography>
               <Typography paragraph>
-                Description:  {job.description}
+                Description:  {job.description} 
               </Typography>
+          
               <PerfectScrollbar>
                 <div className={classes.inner}>
                     <Table>
                     <TableHead>
                         <TableRow>
                         <TableCell>Students Applied</TableCell>
+                        <TableCell>Resume</TableCell>
+                        <TableCell>Application Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {/* {job.applicants.map(student => ( */}
+                        {job.applicants.map(student => (
                         <TableRow
                             className={classes.tableRow}
                             hover
@@ -204,14 +207,26 @@ function Content(props) {
                             // onClick = {() => {window.location.href = `/student/${student.id}`}}
                         >
                             <TableCell>
-                            {/* <div><a href = {'/student/' + student.id}>
+                            <div><a href = {'/student/' + student.id}>
                                 <Typography variant="body1">{student.name}</Typography>
                                 </a>
-                            </div> */}
+                            </div> 
                             {/* {job.applicants} */}
                             </TableCell>
+                            <TableCell><a href ={`http://localhost:4000/students/getResume/${student.resFile}`}>View Resume</a></TableCell>
+                            <TableCell>
+                              <Form>
+                              <Form.Group>
+                                <Form.Control required as="select" value = {student.status} >
+                                    <option value="Pending">Pending</option>
+                                    <option value="Reviewed">Reviewed</option>
+                                    <option value="Declined">Declined</option>
+                                </Form.Control>
+                              </Form.Group>
+                              </Form>
+                            </TableCell>
                         </TableRow>
-                        {/* ))} */}
+                         ))}
                     </TableBody>
                     </Table>
                 </div>
