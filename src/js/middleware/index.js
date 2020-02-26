@@ -2,6 +2,11 @@ import { ADD_STUDENT } from "../constants/action-types";
 import { SIGNIN_STUDENT } from "../constants/action-types";
 import { LOGOUT_STUDENT } from "../constants/action-types";
 import { DISPLAY_STUDENT } from "../constants/action-types";
+import { UPDATE_STUDENT } from "../constants/action-types";
+import { ADD_EDUCATION } from "../constants/action-types";
+import { ADD_EXPERIENCE} from "../constants/action-types";
+import { UPDATE_SKILLSET} from "../constants/action-types";
+import { UPLOAD_PROFPIC} from "../constants/action-types";
 import axios from 'axios';
 export function studentMiddleware({ dispatch }) {
     return function(next) {
@@ -78,8 +83,74 @@ export function studentMiddleware({ dispatch }) {
             }
             })
             .then(() => {next(action)})
-          
          }
+         else if(action.type === UPDATE_STUDENT){
+          axios.put('http://localhost:4000/students/update-student-basic', action.payload)
+          .then(res => {
+              console.log(res);
+              if(res.data.errno){
+                    alert("Unsuccessful update");
+                } else {
+                    alert("Successful update");
+                    window.location.href = "/student/profile";
+                }
+            }     
+          );
+         }
+         else if(action.type === ADD_EDUCATION){
+          axios.post('http://localhost:4000/students/add-education', action.payload)
+          .then(res => {
+              console.log(res);
+              if(res.data.errno){
+                    alert("Unsuccessful add");
+                } else {
+                    alert("Successful add");
+                    window.location.href = "/student/profile";
+                }
+            }     
+          );
+         }
+         else if(action.type === ADD_EXPERIENCE){
+            axios.post('http://localhost:4000/students/add-experience', action.payload)
+              .then(res => {
+                  console.log(res);
+                  if(res.data.errno){
+                        alert("Unsuccessful add");
+                    } else {
+                        alert("Successful add");
+                        window.location.href = "/student/profile";
+                    }
+                }     
+              );
+         }
+         else if(action.type === UPDATE_SKILLSET){
+           axios.put('http://localhost:4000/students/update-skillset', action.payload)
+              .then(res => {
+                  console.log(res);
+                  if(res.data.errno){
+                        alert("Unsuccessful update");
+                    } else {
+                        alert("Successful update");
+                        window.location.href = "/student/profile";
+                    }
+                }     
+              );
+       }
+       else if(action.type === UPLOAD_PROFPIC){
+               axios.post('http://localhost:4000/students/profPic', action.payload)
+                .then(res => {
+                    if(res.data.errno){
+                      alert("Unsuccessful update");
+                    } else {
+                      // alert(res.data);
+                      window.location.href = "/student/profile";
+                    }
+                  }     
+                );
+    }
+
+
+
         return next(action);
       };
     };

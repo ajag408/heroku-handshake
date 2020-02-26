@@ -4,7 +4,8 @@ import axios from 'axios';
 import Navigator from './studentNav.component';
 import Content from './studentProfContent.component';
 import { connect } from "react-redux";
-import { displayStudent } from "../../js/actions/index";
+import { displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic} from "../../js/actions/index";
+// import { Student } from "../../js/actions/index";
 import store from '../../js/store/index';
 class DisplayStudent extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class DisplayStudent extends Component {
     this.onChangeSkillset = this.onChangeSkillset.bind(this);
     this.onSubmitSkillset = this.onSubmitSkillset.bind(this);
     this.onSubmitExperience = this.onSubmitExperience.bind(this);
+    this.onUpload = this.onUpload.bind(this);
 
 
     // Setting up state
@@ -67,105 +69,9 @@ class DisplayStudent extends Component {
       workDescription: '',
       skillset: '',
     }
-    // store.subscribe(() => {
-    //     // this.state = store.getState(); 
-        
-    //     this.setState(
-    //       {
-    //         name: store.getState().name,
-    //         dob: store.getState().dob,
-    //         city: store.getState().city,
-    //         state: store.getState().state,
-    //         country: store.getState().country,
-    //         careerObjective: store.getState().careerObjective,
-    //         email: store.getState().email,
-    //         phone: store.getState().phone,
-    //         profPic: store.getState().profPic,
-    //         education: store.getState().education,
-    //         collegeName: store.getState(),
-    //         educationLocation: store.getState(),
-    //         degree: store.getState(),
-    //         major: store.getState(),
-    //         gradYear: store.getState(),
-    //         gpa: store.getState(),
-    //         experience: store.getState(),
-    //         companyName: store.getState(),
-    //         jobTitle: store.getState(),
-    //         jobLocation: store.getState(),
-    //         stDate: store.getState(),
-    //         endDate: store.getState(),
-    //         workDescription: store.getState(),
-    //         skillset: store.getState(),
-    //       })
-    //     console.log(this.state)
-    // });
-      // console.log();
+
       this.props.displayStudent(this.state);
       
-    // console.log(this.state.student);
-
- 
-    // store.subscribe(() => {
-    //   console.log("hello");
-    //   // When state will be updated(in our case, when items will be fetched), 
-    //   // we will update local component state and force component to rerender 
-    //   // with new data.
-
-    //   console.log(store.getState());
-    // });
-    
-
-    // axios.get('http://localhost:4000/students/user')
-    // .then(res => {
-    //   console.log(res.data);
-    //   if(!res.data.isStudent){
-    //     window.location.href = "/student-signin";
-    //   } else {
-    //     this.setState({
-    //       name : res.data.user.name,
-    //       dob: res.data.user.dob,
-    //       city: res.data.user.city,
-    //       state: res.data.user.state,
-    //       country: res.data.user.country,
-    //       careerObjective: res.data.user.careerObjective,
-    //       email: res.data.user.email,
-    //       phone: res.data.user.phone,
-    //       profPic: 'http://localhost:4000/students/profPic/',
-    //       skillset: res.data.user.skillset 
-    //       });
-    //   }
-    // });
-
-    // axios.get('http://localhost:4000/students/education')
-    // .then(res => {
-    //   console.log(res.data);
-    //   if(res.data.errno){
-    //     alert(res.data);
-    //   } else {
-    //     this.setState({
-    //         education: res.data
-    //   });
-    // }
-    // });
-
-    // axios.get('http://localhost:4000/students/experience')
-    // .then(res => {
-    //   console.log(res.data);
-    //   if(res.data.errno){
-    //     alert(res.data);
-    //   } else {
-    //     this.setState({
-    //         experience: res.data
-    //   });
-    //   console.log(this.state);
-    // }
-    // });
-
-    // axios.get('http://localhost:4000/companies/profPic')
-    // .then(res => {
-    //     console.log(res);
-    //     this.setState({profPic: res});
-    // })
 }
 componentWillReceiveProps(newProps){
   console.log(newProps);
@@ -297,19 +203,7 @@ componentWillReceiveProps(newProps){
         phone: this.state.phone,
 
     };
-
-    axios.put('http://localhost:4000/students/update-student-basic', studentObject)
-      .then(res => {
-          console.log(res);
-          if(res.data.errno){
-                alert("Unsuccessful update");
-            } else {
-                alert("Successful update");
-                window.location.href = "/student/profile";
-            }
-        }     
-      );
-    // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+    this.props.updateStudent(studentObject);
     
 }
 
@@ -329,19 +223,7 @@ onSubmitEducation(e) {
 
 
   };
-
-  axios.post('http://localhost:4000/students/add-education', educationObject)
-    .then(res => {
-        console.log(res);
-        if(res.data.errno){
-              alert("Unsuccessful add");
-          } else {
-              alert("Successful add");
-              window.location.href = "/student/profile";
-          }
-      }     
-    );
-  // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+  this.props.addEducation(educationObject);
   
 }
 
@@ -359,21 +241,7 @@ onSubmitExperience(e) {
 
 
   };
-
-  // console.log(experienceObject);
-
-  axios.post('http://localhost:4000/students/add-experience', experienceObject)
-    .then(res => {
-        console.log(res);
-        if(res.data.errno){
-              alert("Unsuccessful add");
-          } else {
-              alert("Successful add");
-              window.location.href = "/student/profile";
-          }
-      }     
-    );
-  // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+  this.props.addExperience(experienceObject)
   
 }
 
@@ -388,18 +256,7 @@ onSubmitSkillset(e) {
 
   };
 
-  axios.put('http://localhost:4000/students/update-skillset', skillsetObject)
-    .then(res => {
-        console.log(res);
-        if(res.data.errno){
-              alert("Unsuccessful update");
-          } else {
-              alert("Successful update");
-              window.location.href = "/student/profile";
-          }
-      }     
-    );
-  // this.setState({title: '', created: '', deadline: '', loc: '', salary: '', description: '', cat: ''})
+  this.props.updateSkillset(skillsetObject);
   
 }
 
@@ -409,17 +266,9 @@ onSubmitSkillset(e) {
         console.log(files);
         const formData = new FormData();
         formData.append('image', files[0]);
-        // console.log(formData);
-        axios.post('http://localhost:4000/students/profPic', formData)
-        .then(res => {
-            if(res.data.errno){
-              alert("Unsuccessful update");
-            } else {
-              alert(res.data);
-              window.location.href = "/student/profile";
-            }
-          }     
-        );
+        // console.log(this.props.uploadProfPic);
+        console.log(this.props);
+        this.props.uploadProfPic(formData);
         console.log(files[0])
     }
 
@@ -454,6 +303,7 @@ onSubmitSkillset(e) {
     onChangeSkillset= {this.onChangeSkillset}
     onSubmitSkillset= {this.onSubmitSkillset}
     onSubmitExperience = {this.onSubmitExperience}
+    onUpload = {this.onUpload}
     
     
     
@@ -468,11 +318,12 @@ onSubmitSkillset(e) {
 }
 function mapDispatchToProps(dispatch) {
   return { 
-    displayStudent: (student) => dispatch(displayStudent(student))
-    // const mapStateToProps = state => {
-    //     console.log(state);
-    //     return { student: state };
-    //   }
+    displayStudent: (student) => dispatch(displayStudent(student)),
+    updateStudent: student => dispatch(updateStudent(student)),
+    addEducation: education => dispatch(addEducation(education)),
+    addExperience: experience => dispatch(addExperience(experience)),
+    updateSkillset: skillset => dispatch(updateSkillset(skillset)),
+    uploadProfPic: formData => dispatch(uploadProfPic(formData))
   };
 };
 const mapStateToProps = state=> {
@@ -504,20 +355,6 @@ const mapStateToProps = state=> {
   };
 };
 
-// const mergeProps = (state, actions) => ({
-  
-//   ...state,
-//   ...actions,
-//   display: actions.displayStudent(state.student)
-                  
-//   // display: state.student
-//   //    ? () => {
-//   //     return (
-//   //       actions.displayStudent(state.student)
-//   //     )
-//   //   }
-//   //   : null
-//   });
 const StudentProfile = connect(mapStateToProps ,mapDispatchToProps)(DisplayStudent);
 
 export default StudentProfile;

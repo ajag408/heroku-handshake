@@ -33,7 +33,7 @@ function rootReducer (state = initialState, action) {
             // console.log(action.payload)
             state = action.payload;
             return state;
-            return Object.assign({}, state, action.payload);
+            
           }
         return state;
     }
