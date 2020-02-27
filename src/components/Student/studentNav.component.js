@@ -27,7 +27,7 @@ const categories = [
       { id: 'Job Search', icon: <WorkIcon />, action: () => {{window.location.href = '/student/landing'}}},
       { id: 'Applications', icon: <PostAddIcon />, action: () => {{window.location.href = '/student/applications'}}},
       { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/student/events'}}},
-      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/company/students'}} },
+      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/student/students'}} },
     ],
   },
   {

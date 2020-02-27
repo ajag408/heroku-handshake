@@ -16,6 +16,7 @@ import ViewStudentProfile from './Student/view-student.component';
 import ViewCompanyProfile from './Company/view-company.component';
 import Applications from './Student/applications.component';
 import ViewEvents from './Student/view-events.component';
+import StudentSearch from './Student/all-students.component';
 
 const Main = () => {
   return (
@@ -33,6 +34,7 @@ const Main = () => {
       <Route exact path='/student/profile' component={StudentProfile}></Route>
       <Route exact path='/student/applications' component={Applications}></Route>
       <Route exact path='/student/events' component={ViewEvents}></Route>
+      <Route exact path='/student/students' component={StudentSearch}></Route>
       <Route exact path='/student/:id' component={ViewStudentProfile}></Route>
       <Route exact path='/company/:id' component={ViewCompanyProfile}></Route>
       
