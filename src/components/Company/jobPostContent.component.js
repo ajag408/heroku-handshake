@@ -217,7 +217,7 @@ function Content(props) {
                             <TableCell>
                               <Form>
                               <Form.Group>
-                                <Form.Control required as="select" value = {student.status} >
+                                <Form.Control id = {student.appID} required as="select" value = {student.status} onChange = {props.onChangeApplicationStatus}>
                                     <option value="Pending">Pending</option>
                                     <option value="Reviewed">Reviewed</option>
                                     <option value="Declined">Declined</option>

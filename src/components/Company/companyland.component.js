@@ -20,6 +20,7 @@ export default class CompanyJobPosting extends Component {
     this.onChangeJobDescription = this.onChangeJobDescription.bind(this);
     this.onChangeCategory = this.onChangeCategory.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeApplicationStatus = this.onChangeApplicationStatus.bind(this);
 
     // Setting up state
     this.state = {
@@ -124,6 +125,26 @@ export default class CompanyJobPosting extends Component {
     
   }
 
+  onChangeApplicationStatus(e){
+    console.log(e.target.id);
+    console.log(e.target.value);
+    const applicationObject = {
+      id: e.target.id,
+      status: e.target.value
+    };
+    // console.log(document.getElementById(1).id)
+    axios.post('http://localhost:4000/companies/updateApplication', applicationObject)
+    .then(res => {
+        if(res.data.errno){
+          alert("Unsuccessful update");
+        } else {
+          alert("Successfully updated");
+          window.location.href = "/company/landing";
+        }
+      }     
+    );
+  }
+
 
   onSubmit(e) {
 
@@ -165,7 +186,8 @@ export default class CompanyJobPosting extends Component {
     <Content onSubmit = {this.onSubmit} state = {this.state} onChangeCreated = {this.onChangeCreated} onChangeJobTitle = {this.onChangeJobTitle}
     onChangeDeadline = {this.onChangeDeadline} onChangeJobLoc = {this.onChangeJobLoc}
       onChangeSalary = {this. onChangeSalary} onChangeJobDescription = {this.onChangeJobDescription}
-    onChangeCategory = {this.onChangeCategory} />
+    onChangeCategory = {this.onChangeCategory} 
+    onChangeApplicationStatus = {this.onChangeApplicationStatus} />
 
         </div> 
   
