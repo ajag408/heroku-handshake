@@ -411,7 +411,7 @@ router.route('/profPic/').get((req, res, next) => {
               
             
       router.route('/get-upcoming-events').get((req,res) =>{
-        sql.query("SELECT events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.company = companies.id ORDER BY date", 
+        sql.query("SELECT events.id, events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.company = companies.id ORDER BY date", 
         [moment(Date.now()).format('YYYY-MM-DD')], (error,events) => {
           if(error){
             console.log(error);
@@ -424,7 +424,7 @@ router.route('/profPic/').get((req, res, next) => {
       });
 
       router.route('/search-upcoming-events').post((req,res) =>{
-        sql.query("SELECT events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.name LIKE ? AND events.company = companies.id ORDER BY date", 
+        sql.query("SELECT events.id, events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.name LIKE ? AND events.company = companies.id ORDER BY date", 
         [moment(Date.now()).format('YYYY-MM-DD'), '%'+req.body.search+'%'], (error,events) => {
           if(error){
             console.log(error);
@@ -435,4 +435,33 @@ router.route('/profPic/').get((req, res, next) => {
           }
         })
       });
+
+      router.route('/get-event').post((req,res) =>{
+        console.log('')
+        sql.query("SELECT * FROM events WHERE id = ?", 
+        [req.body.id], (error,event) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log("Event : ",JSON.stringify(event));
+            res.end(JSON.stringify(event));
+          }
+        })
+      });
+
+      router.route('/registerEvent').post((req,res) =>{
+        console.log(req.body)
+        req.body.student = session.user.id
+        sql.query("INSERT INTO registered_student_event SET ?", req.body, (error,reg) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            
+            res.json(reg);
+          }
+        })
+      });
+      
 module.exports = router;

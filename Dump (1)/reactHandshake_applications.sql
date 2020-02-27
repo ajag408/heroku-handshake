@@ -16,36 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `jobs`
+-- Table structure for table `applications`
 --
 
-DROP TABLE IF EXISTS `jobs`;
+DROP TABLE IF EXISTS `applications`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `jobs` (
+CREATE TABLE `applications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `company` int(11) NOT NULL,
-  `title` varchar(255) DEFAULT NULL,
+  `job` int(11) NOT NULL,
+  `student` int(11) NOT NULL,
+  `resFile` varchar(255) DEFAULT NULL,
+  `resOG` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
   `created` varchar(255) DEFAULT NULL,
-  `deadline` varchar(255) DEFAULT NULL,
-  `loc` varchar(255) DEFAULT NULL,
-  `salary` varchar(25) DEFAULT NULL,
-  `description` text,
-  `cat` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `company` (`company`),
-  CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  KEY `job` (`job`),
+  KEY `student` (`student`),
+  CONSTRAINT `applications_ibfk_1` FOREIGN KEY (`job`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `applications_ibfk_2` FOREIGN KEY (`student`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `jobs`
+-- Dumping data for table `applications`
 --
 
-LOCK TABLES `jobs` WRITE;
-/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
-INSERT INTO `jobs` VALUES (1,1,'Full Stack Developer','2020-02-10','2020-02-26','Mountain View','102000','Meh.','Full Time'),(2,2,'Coffee Getter','5454-02-01','275760-03-24','My House ','0','Fetch me coffee for free, within 30 seconds','On Campus');
-/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
+LOCK TABLES `applications` WRITE;
+/*!40000 ALTER TABLE `applications` DISABLE KEYS */;
+INSERT INTO `applications` VALUES (1,1,1,'9e1e2bad2d1cd1c73aaff3cff2a127d2','resume.pdf','Declined','2020-02-26'),(2,1,2,'7e476bd341abe28aea9e2883b88ca828','MHQ-Applicant.pdf','Reviewed','2020-02-26'),(5,2,1,'24c1a6d9c69d5a177d87a66ffb6cfa11','resume.pdf','Pending','2020-02-26');
+/*!40000 ALTER TABLE `applications` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 19:27:39
+-- Dump completed on 2020-02-26 20:32:12

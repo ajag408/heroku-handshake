@@ -21,6 +21,8 @@ export default class ViewEvents extends Component {
     this.state = {
       search: '',
       events: [],
+      education: [],
+      regMatch: false
     }
     axios.get('http://localhost:4000/students/user')
     .then(res => {
@@ -28,6 +30,19 @@ export default class ViewEvents extends Component {
       if(!res.data.isStudent){
         window.location.href = "/student-signin";
       } 
+    });
+
+    axios.get('http://localhost:4000/students/education')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.errno){
+        alert(res.data);
+      } else {
+        this.setState({
+            education: res.data,
+        });
+        console.log(this.state.education);
+     }
     });
     axios.get('http://localhost:4000/students/get-upcoming-events')
     .then(res => {
@@ -84,7 +99,56 @@ export default class ViewEvents extends Component {
   }
 
   onRegister(e) {
+      console.log(e.target.id);
+    const eventObject = {
+        id: e.target.id,
+      };
 
+      // console.log(document.getElementById(1).id)
+      axios.post('http://localhost:4000/students/get-event', eventObject)
+      .then(res => {
+          console.log(res.data[0].eligibility);
+          if(res.data.errno){
+            alert("Unsuccessful update");
+          } else {
+            if(res.data[0].eligibilty == "All"){
+                this.setState({
+                    regMatch : true,       
+                });
+            } else {
+                for(var i = 0 ; i<this.state.education.length; i++){
+                
+                    console.log(this.state.education[i].major);
+                    if(res.data[0].eligibility == this.state.education[i].major){
+                        console.log('yee');
+                        this.setState({
+                            regMatch : true,       
+                        });
+                    }
+                }
+            }
+            if(!this.state.regMatch){
+                alert("You are not eligible to register for this event, based on your educational background")
+            } else {
+                console.log("in final else");
+                console.log(res.data[0].id);
+                const regObject = {
+                    event: res.data[0].id 
+                };
+                axios.post('http://localhost:4000/students/registerEvent', regObject)
+                .then(res => {
+                    if(res.data.errno){
+                        alert("You already registered for this event");
+                     } else {
+                        alert("Successful registration");
+                     }
+                })
+            }
+          }
+        }     
+      );
+
+    //   console.log(this.state.regMatch);
      
   }
     // } else {

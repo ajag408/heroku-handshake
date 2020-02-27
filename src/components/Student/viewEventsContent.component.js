@@ -146,16 +146,17 @@ function Content(props) {
               <Typography paragraph>
                 Description:  {event.description}
               </Typography>
-              <Button
+              <button
                 className={classes.uploadButton}
                 // onClick = {props.onUpload}
                 color="primary"
                 variant="contained"
                 component = "label"
+                id = {event.id}
                 onClick = {props.onRegister}
                 >
                 Register
-                </Button>
+                </button>
             </CardContent>
           </Collapse>
         </Card>

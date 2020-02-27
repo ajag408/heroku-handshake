@@ -16,35 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `experience`
+-- Table structure for table `registered_student_event`
 --
 
-DROP TABLE IF EXISTS `experience`;
+DROP TABLE IF EXISTS `registered_student_event`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `experience` (
+CREATE TABLE `registered_student_event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `companyName` varchar(255) DEFAULT NULL,
-  `loc` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `startDate` varchar(255) DEFAULT NULL,
-  `endDate` varchar(255) DEFAULT NULL,
-  `description` text,
+  `event` int(11) NOT NULL,
   `student` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_index` (`event`,`student`),
   KEY `student` (`student`),
-  CONSTRAINT `experience_ibfk_1` FOREIGN KEY (`student`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  CONSTRAINT `registered_student_event_ibfk_1` FOREIGN KEY (`student`) REFERENCES `students` (`id`),
+  CONSTRAINT `registered_student_event_ibfk_2` FOREIGN KEY (`event`) REFERENCES `events` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `experience`
+-- Dumping data for table `registered_student_event`
 --
 
-LOCK TABLES `experience` WRITE;
-/*!40000 ALTER TABLE `experience` DISABLE KEYS */;
-INSERT INTO `experience` VALUES (1,'Logitech','Newark, CA','UI Developer','0012-01-31','2454-12-31','Ate thai food twice or thrice',1),(2,'Etkin Lab','Stanford, CA','Volunteer Research Assistant','2015-07-12','2016-07-03','Zapped brains and drank coffee.',1);
-/*!40000 ALTER TABLE `experience` ENABLE KEYS */;
+LOCK TABLES `registered_student_event` WRITE;
+/*!40000 ALTER TABLE `registered_student_event` DISABLE KEYS */;
+INSERT INTO `registered_student_event` VALUES (5,2,1),(3,4,1);
+/*!40000 ALTER TABLE `registered_student_event` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 19:27:39
+-- Dump completed on 2020-02-26 20:32:12

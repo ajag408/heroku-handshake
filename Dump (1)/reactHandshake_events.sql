@@ -16,36 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `applications`
+-- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `applications`;
+DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `applications` (
+CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `job` int(11) NOT NULL,
-  `student` int(11) NOT NULL,
-  `resFile` varchar(255) DEFAULT NULL,
-  `resOG` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `created` varchar(255) DEFAULT NULL,
+  `company` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `time` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `loc` varchar(255) DEFAULT NULL,
+  `eligibility` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `job` (`job`),
-  KEY `student` (`student`),
-  CONSTRAINT `applications_ibfk_1` FOREIGN KEY (`job`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `applications_ibfk_2` FOREIGN KEY (`student`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  KEY `company` (`company`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `applications`
+-- Dumping data for table `events`
 --
 
-LOCK TABLES `applications` WRITE;
-/*!40000 ALTER TABLE `applications` DISABLE KEYS */;
-INSERT INTO `applications` VALUES (1,1,1,'9e1e2bad2d1cd1c73aaff3cff2a127d2','resume.pdf','Declined','2020-02-26'),(2,1,2,'7e476bd341abe28aea9e2883b88ca828','MHQ-Applicant.pdf','Reviewed','2020-02-26'),(5,2,1,'24c1a6d9c69d5a177d87a66ffb6cfa11','resume.pdf','Pending','2020-02-26');
-/*!40000 ALTER TABLE `applications` ENABLE KEYS */;
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,1,'Make Fun of Microsoft','Roast session','13:45','0005-03-04','Skype','Software Engineering'),(2,1,'Interactive Storytelling','Scare each other','15:55','2020-05-13','My Basement','All'),(3,1,'Reflection ','Reflect on if you could time-travel to the past and attend this event','00:03','2020-02-01','The Future','Software Engineering'),(4,1,'Fight Corona','Beat coronavirus up','02:36','2020-02-29','Mountain View','Software Engineering');
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -57,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 19:27:38
+-- Dump completed on 2020-02-26 20:32:12
