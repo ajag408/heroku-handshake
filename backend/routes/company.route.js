@@ -256,6 +256,20 @@ router.route('/get-events').get((req,res) =>{
   })
 });
 
+router.route('/get-registered-students').post((req,res) =>{
+  console.log(req.body)
+  sql.query("SELECT students.name, students.id FROM registered_student_event, students WHERE registered_student_event.event = ? AND registered_student_event.student = students.id",
+  [req.body.id],(error,students) => {
+    if(error){
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("Registered students : ",JSON.stringify(students));
+      res.end(JSON.stringify(students));
+    }
+  })
+});
+
 router.route('/getCompany/:id').get((req, res) => {
   console.log(req.params.id);
   sql.query("SELECT * FROM companies WHERE id = ?", [req.params.id], function(err, company){

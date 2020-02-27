@@ -9,7 +9,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
+import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import {
@@ -92,13 +95,67 @@ function Content(props) {
       cardSetExpandedID(cardExpandedID == i ? -1: i);
     };
 
-
+    const [treeExpanded, treeSetExpanded] = React.useState([]);
+    const handleChange = (event, nodes) => {
+      treeSetExpanded(nodes);
+    };
 
   
   return (
     <Paper className={classes.paper}>
 
-        <div className={classes.contentWrapper}>
+    <div className={classes.contentWrapper}>
+    <TreeView
+      defaultCollapseIcon={<ExpandMoreIcon />}
+      defaultExpandIcon={<ChevronRightIcon />}
+      expanded={treeExpanded}
+      onNodeToggle={handleChange}
+     >
+      <TreeItem nodeId = "1" label = "View Registered Events">
+      <h1> Registered</h1>
+        {props.state.registered.map((event, i) => (
+            <Card>
+            <CardHeader
+            
+              title = {event.name}
+              subheader= {event.companyName}
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Eligibility: {event.eligibility} &nbsp;&nbsp;&nbsp;  Location: {event.loc}
+                
+              </Typography>
+            </CardContent>
+            <CardActions className = {classes.tableTitle} disableSpacing>
+              View full description
+              <IconButton
+
+                onClick={() => handleExpandClick(i)}
+                aria-expanded={cardExpandedID === i}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={cardExpandedID === i} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography paragraph> Which day?: <Moment format = "MM/DD/YYYY ">{event.date}</Moment></Typography>
+                <Typography paragraph>
+                What time?: {event.time}
+
+                </Typography>
+                <Typography paragraph>
+                  Description:  {event.description}
+                </Typography>
+                {/* <Typography>
+          
+                </Typography> */}
+              </CardContent>
+            </Collapse>
+          </Card>
+        ))}
+      </TreeItem>
+      </TreeView>
     <div className={classes.root}>
                 <SearchIcon className={classes.icon} />
                 <Input

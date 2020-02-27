@@ -464,4 +464,17 @@ router.route('/profPic/').get((req, res, next) => {
         })
       });
       
+      router.route('/get-registered-events').get((req,res) =>{
+        sql.query("SELECT events.id, events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM registered_student_event, events, companies WHERE registered_student_event.student = ? AND registered_student_event.event = events.id AND events.company = companies.id", 
+        [session.user.id], (error,regs) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            
+            console.log("Regs : ",JSON.stringify(regs));
+            res.end(JSON.stringify(regs));
+          }
+        })
+      });
 module.exports = router;

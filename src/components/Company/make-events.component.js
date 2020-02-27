@@ -52,15 +52,27 @@ export default class MakeEvents extends Component {
     componentDidMount(){
       axios.get('http://localhost:4000/companies/get-events')
               .then((response) => {
-              //update the state with the response data
-
-            
-              this.setState({
-                  events : this.state.events.concat(response.data)
-                  
-              });
-              console.log(this.state.events);
-          });
+                (async() => {
+                  for( const event in response.data){
+                     await axios.post('http://localhost:4000/companies/get-registered-students',  response.data[event])
+                     .then((res) => {
+                       response.data[event].students= res.data;
+                     })
+                     .then(() => {
+                       this.setState({
+                         events : this.state.events.concat(response.data[event]),
+                        });
+                       })
+                   }
+                   // this.setState({
+                   //     jobs : this.state.jobs.concat(response.data),
+                       
+                   // });
+                   console.log(this.state.events);
+                   })();
+                   console.log(this.state.events);
+             
+            });
   }
 
   onChangeEventName(e) {

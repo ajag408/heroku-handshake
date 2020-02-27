@@ -21,6 +21,7 @@ export default class ViewEvents extends Component {
     this.state = {
       search: '',
       events: [],
+      registered: [],
       education: [],
       regMatch: false
     }
@@ -31,6 +32,17 @@ export default class ViewEvents extends Component {
         window.location.href = "/student-signin";
       } 
     });
+
+    axios.get('http://localhost:4000/students/get-registered-events')
+    .then(res=>{
+      if(res.data.errno){
+        console.log(res.data);
+      } else {
+        this.setState({
+          registered: res.data,
+      });
+      }
+    })
 
     axios.get('http://localhost:4000/students/education')
     .then(res => {
