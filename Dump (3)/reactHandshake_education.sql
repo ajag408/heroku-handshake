@@ -16,34 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `companies`
+-- Table structure for table `education`
 --
 
-DROP TABLE IF EXISTS `companies`;
+DROP TABLE IF EXISTS `education`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `companies` (
+CREATE TABLE `education` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
+  `collegeName` varchar(255) DEFAULT NULL,
   `loc` varchar(255) DEFAULT NULL,
-  `description` text,
-  `phone` varchar(25) DEFAULT NULL,
-  `profPicFile` varchar(255) DEFAULT NULL,
-  `profPicOG` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `degree` varchar(255) DEFAULT NULL,
+  `major` varchar(255) DEFAULT NULL,
+  `gradYear` varchar(255) DEFAULT NULL,
+  `gpa` varchar(255) DEFAULT NULL,
+  `student` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `student` (`student`),
+  CONSTRAINT `education_ibfk_1` FOREIGN KEY (`student`) REFERENCES `students` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `companies`
+-- Dumping data for table `education`
 --
 
-LOCK TABLES `companies` WRITE;
-/*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'Google','$2b$12$VfPWR/f5geNKceoi1nyhte2egl8z3fO/QJwqAYbw.Y2K/alNcUahG','Mountain View','A drug trafficking front.','4087777777','b903ac5e012e3f2cbbe488ad482f16b5','2017SCCMug.jpg','google@google.com'),(2,'Facebook','$2b$12$5.KgPbh6yDxDv5Kl/vLDw.MOde0cmXk7UGJpP2.a4/cnBrA15W502','Menlo Park','A amusement factory.','222222222','be76aa2cf76e4a557913669d005cdf4c','IMG_4443.JPG','facebook@facebook.com');
-/*!40000 ALTER TABLE `companies` ENABLE KEYS */;
+LOCK TABLES `education` WRITE;
+/*!40000 ALTER TABLE `education` DISABLE KEYS */;
+INSERT INTO `education` VALUES (1,'UCSD','La Jolla','B.S. with Honors','Cognitive Science','2015','3.5',1),(2,'','','','','','',1),(3,'SJSU','San Jose, CA','M.s.','Software Engineering','2022','3.0',1);
+/*!40000 ALTER TABLE `education` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 15:04:25
+-- Dump completed on 2020-02-26 19:27:39

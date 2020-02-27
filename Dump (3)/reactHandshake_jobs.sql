@@ -16,35 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `events`
+-- Table structure for table `jobs`
 --
 
-DROP TABLE IF EXISTS `events`;
+DROP TABLE IF EXISTS `jobs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `events` (
+CREATE TABLE `jobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` text,
-  `time` varchar(255) DEFAULT NULL,
-  `date` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `created` varchar(255) DEFAULT NULL,
+  `deadline` varchar(255) DEFAULT NULL,
   `loc` varchar(255) DEFAULT NULL,
-  `eligibility` varchar(255) DEFAULT NULL,
+  `salary` varchar(25) DEFAULT NULL,
+  `description` text,
+  `cat` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `company` (`company`),
-  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `events`
+-- Dumping data for table `jobs`
 --
 
-LOCK TABLES `events` WRITE;
-/*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,1,'Make Fun of Microsoft','Roast session','13:45','0005-03-04','Skype','Software Engineering');
-/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+LOCK TABLES `jobs` WRITE;
+/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+INSERT INTO `jobs` VALUES (1,1,'Full Stack Developer','2020-02-10','2020-02-26','Mountain View','102000','Meh.','Full Time'),(2,2,'Coffee Getter','5454-02-01','275760-03-24','My House ','0','Fetch me coffee for free, within 30 seconds','On Campus');
+/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 15:14:55
+-- Dump completed on 2020-02-26 19:27:39

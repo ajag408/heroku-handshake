@@ -14,6 +14,8 @@ import JobSearch from './Student/studentland.component';
 import StudentProfile from './Student/student-profile.component';
 import ViewStudentProfile from './Student/view-student.component';
 import ViewCompanyProfile from './Company/view-company.component';
+import Applications from './Student/applications.component';
+import ViewEvents from './Student/view-events.component';
 
 const Main = () => {
   return (
@@ -29,8 +31,11 @@ const Main = () => {
       <Route exact path='/company/events' component={MakeEvents}></Route>
       <Route exact path='/student/landing' component={JobSearch}></Route>
       <Route exact path='/student/profile' component={StudentProfile}></Route>
+      <Route exact path='/student/applications' component={Applications}></Route>
+      <Route exact path='/student/events' component={ViewEvents}></Route>
       <Route exact path='/student/:id' component={ViewStudentProfile}></Route>
       <Route exact path='/company/:id' component={ViewCompanyProfile}></Route>
+      
     </Switch>
   );
 }

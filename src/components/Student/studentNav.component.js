@@ -25,8 +25,8 @@ const categories = [
     children: [
       { id: 'Profile', icon: <AccountBoxIcon />, action: () => {window.location.href = '/student/profile'} },
       { id: 'Job Search', icon: <WorkIcon />, action: () => {{window.location.href = '/student/landing'}}},
-      { id: 'Applications', icon: <PostAddIcon />, action: () => {{window.location.href = '/company/landing'}}},
-      { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/company/events'}}},
+      { id: 'Applications', icon: <PostAddIcon />, action: () => {{window.location.href = '/student/applications'}}},
+      { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/student/events'}}},
       { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/company/students'}} },
     ],
   },

@@ -11,6 +11,7 @@ const upload = multer({
   dest: UPLOAD_PATH,
   limits: { files: 5}
 });
+var moment = require('moment');
 var fs = require('fs');
 // Student Model
 
@@ -360,7 +361,8 @@ router.route('/profPic/').get((req, res, next) => {
               resOG: file.originalname,
               job: session.jobID,
               student: session.user.id,
-              status: "Pending"
+              status: "Pending",
+              created:  moment(Date.now()).format('YYYY-MM-DD')
             }
           })
           console.log(resume);
@@ -393,5 +395,44 @@ router.route('/profPic/').get((req, res, next) => {
       fs.createReadStream(path.resolve(UPLOAD_PATH, req.params.resFile)).pipe(res)
   
     })
+
+    router.route('/jobsApplied').get((req, res, next) => {
+      sql.query("SELECT jobs.title, companies.name, applications.created, applications.status FROM applications, jobs, companies WHERE applications.job = jobs.id AND jobs.company = companies.id AND applications.student =?", 
+        [session.user.id],(error,applications) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log("Applications : ",JSON.stringify(applications));
+            res.end(JSON.stringify(applications));
+          }
+        })
+      })
+              
             
+      router.route('/get-upcoming-events').get((req,res) =>{
+        sql.query("SELECT events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.company = companies.id ORDER BY date", 
+        [moment(Date.now()).format('YYYY-MM-DD')], (error,events) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log("Events : ",JSON.stringify(events));
+            res.end(JSON.stringify(events));
+          }
+        })
+      });
+
+      router.route('/search-upcoming-events').post((req,res) =>{
+        sql.query("SELECT events.name, events.eligibility, events.loc, events.date, events.time, events.description, companies.name AS companyName FROM events, companies WHERE date > ? AND events.name LIKE ? AND events.company = companies.id ORDER BY date", 
+        [moment(Date.now()).format('YYYY-MM-DD'), '%'+req.body.search+'%'], (error,events) => {
+          if(error){
+            console.log(error);
+            res.json(error);
+          } else {
+            console.log("Events : ",JSON.stringify(events));
+            res.end(JSON.stringify(events));
+          }
+        })
+      });
 module.exports = router;

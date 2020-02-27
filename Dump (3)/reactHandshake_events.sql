@@ -16,39 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `students`
+-- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `students`;
+DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `students` (
+CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `company` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `collegeName` varchar(255) DEFAULT NULL,
-  `skillset` text,
-  `profPicFile` varchar(500) DEFAULT NULL,
-  `profPicOG` varchar(500) DEFAULT NULL,
-  `city` varchar(500) DEFAULT NULL,
-  `state` varchar(500) DEFAULT NULL,
-  `dob` varchar(500) DEFAULT NULL,
-  `careerObjective` varchar(500) DEFAULT NULL,
-  `country` varchar(500) DEFAULT NULL,
-  `phone` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `description` text,
+  `time` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
+  `loc` varchar(255) DEFAULT NULL,
+  `eligibility` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `company` (`company`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `students`
+-- Dumping data for table `events`
 --
 
-LOCK TABLES `students` WRITE;
-/*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES (1,'Akash Jagannathan','akash.jagannathan@sjsu.edu','$2b$12$mXHoyWCyfjlEAJ2rZxiOaO/lKGE7BqvoXf6XG6/VayMOjnL8Hau0q','SJSU','Node JS, React JS, Java','b41cffdd0a133081374a6caaf162ffd5','2017SCCMug.jpg','Sunnyvale','CA','1992-01-05','To own the world, for others.','USA','4086918882'),(2,'Rama','rama@rama.org','$2b$12$C5IkQyzchuhutMOK.Ff8Pem/aJfsTjV9ScruubarER9YhFp1esDpu','Ayodh',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Mike','mike@mike.com','$2b$12$wkqAmZO.i6YYj4HVoh.LiO8IrqOEXnylelOq5kVehCsfC.KJIhVYm','NYU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `students` ENABLE KEYS */;
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,1,'Make Fun of Microsoft','Roast session','13:45','0005-03-04','Skype','Software Engineering'),(2,1,'Interactive Storytelling','Scare each other','15:55','2020-05-13','My Basement','All'),(3,1,'Reflection ','Reflect on if you could time-travel to the past and attend this event','00:03','2020-02-01','The Future','Software Engineering'),(4,1,'Fight Corona','Beat coronavirus up','02:36','2020-02-29','Mountain View','Software Engineering');
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 15:14:55
+-- Dump completed on 2020-02-26 19:27:39
