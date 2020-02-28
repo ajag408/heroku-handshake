@@ -207,7 +207,7 @@ function Content(props) {
                             // onClick = {() => {window.location.href = `/student/${student.id}`}}
                         >
                             <TableCell>
-                            <div><a href = {'/student/' + student.id}>
+                            <div><a href = {'/company/student/' + student.id}>
                                 <Typography variant="body1">{student.name}</Typography>
                                 </a>
                             </div> 

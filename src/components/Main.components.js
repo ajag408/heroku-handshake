@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-
+import { Redirect } from 'react-router-dom';
 import Home from './home.component';
 import CreateStudent from './Student/create-student.component';
 import CreateCompany from './Company/create-company.component';
@@ -12,7 +12,8 @@ import CompanyStudentsTab from './Company/company-studentsTab.component';
 import MakeEvents from './Company/make-events.component';
 import JobSearch from './Student/studentland.component';
 import StudentProfile from './Student/student-profile.component';
-import ViewStudentProfile from './Student/view-student.component';
+import ViewStudentProfileFromCompany from './Student/view-studentFromCompany.component';
+import ViewStudentProfileFromStudent from './Student/view-studentFromStudent.component';
 import ViewCompanyProfile from './Company/view-company.component';
 import Applications from './Student/applications.component';
 import ViewEvents from './Student/view-events.component';
@@ -35,9 +36,10 @@ const Main = () => {
       <Route exact path='/student/applications' component={Applications}></Route>
       <Route exact path='/student/events' component={ViewEvents}></Route>
       <Route exact path='/student/students' component={StudentSearch}></Route>
-      <Route exact path='/student/:id' component={ViewStudentProfile}></Route>
+      <Route exact path='/company/student/:id' component={ViewStudentProfileFromCompany}></Route>
+      <Route exact path='/student/:id' component={ViewStudentProfileFromStudent}></Route>
       <Route exact path='/company/:id' component={ViewCompanyProfile}></Route>
-      
+      <Route render={() => <Redirect to={{pathname: "/"}} />} />
     </Switch>
   );
 }

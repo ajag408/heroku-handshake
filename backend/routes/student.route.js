@@ -83,6 +83,8 @@ router.route('/login').post((req, res) => {
 });
 
 
+
+
 router.route('/getStudent/:id').get((req, res) => {
   console.log(req.params.id);
   sql.query("SELECT * FROM students WHERE id = ?", [req.params.id], function(err, student){
@@ -94,6 +96,18 @@ router.route('/getStudent/:id').get((req, res) => {
       res.end(JSON.stringify(student));
     }
   });
+});
+
+router.route('/get-all-students').get((req,res) =>{
+  sql.query("SELECT * FROM students",  (error,students) => {
+    if(error){
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("All Students : ",JSON.stringify(students));
+      res.end(JSON.stringify(students));
+    }
+  })
 });
 
 router.route('/search').post((req,res) => {
@@ -110,6 +124,23 @@ router.route('/search').post((req,res) => {
  
   });
 });
+
+router.route('/filterMajor').post((req,res) => {
+  console.log(req.body);
+  sql.query("SELECT * FROM students,education WHERE (name LIKE ? OR students.collegeName LIKE ? OR skillset LIKE ?) AND education.student = students.id AND education.major LIKE ? GROUP BY students.id ", 
+  ['%'+req.body.search+'%', '%'+req.body.search+'%', '%'+req.body.search+'%', '%'+req.body.major+'%'], 
+            function(err, students) 
+  {
+     if (err)
+     {
+         res.send(err);
+     }
+     console.log("Students : ",JSON.stringify(students));
+     res.end(JSON.stringify(students));
+ 
+  });
+});
+
 
 
 router.route('/searchJobs').post((req,res) => {

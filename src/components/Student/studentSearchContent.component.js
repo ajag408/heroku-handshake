@@ -6,6 +6,10 @@ import clsx from 'clsx';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
+import TreeView from '@material-ui/lab/TreeView';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import TreeItem from '@material-ui/lab/TreeItem';
 import {
     Paper,
     Input,
@@ -77,12 +81,66 @@ const styles = theme => ({
 
 function Content(props) {
     const { classes } = props;
+    const [treeExpanded, treeSetExpanded] = React.useState([]);
+    const handleChange = (event, nodes) => {
+      treeSetExpanded(nodes);
+    };
 
 
   return (
     <Paper className={classes.paper}>
 
         <div className={classes.contentWrapper}>
+        <TreeView
+      defaultCollapseIcon={<ExpandMoreIcon />}
+      defaultExpandIcon={<ChevronRightIcon />}
+      expanded={treeExpanded}
+      onNodeToggle={handleChange}
+     >
+      <TreeItem nodeId = "1" label = "View All Students Enrolled on Handshake">
+      
+      <Card>
+         
+       
+         <CardContent>
+             <PerfectScrollbar>
+             <div className={classes.inner}>
+                 <Table>
+                 <TableHead>
+                     <TableRow>
+                     <TableCell>Name</TableCell>
+                     <TableCell>College Name</TableCell>
+                     <TableCell>Skillset</TableCell>
+                     </TableRow>
+                 </TableHead>
+                 <TableBody>
+                     {props.state.allStudents.map(student => (
+                     <TableRow
+                         className={classes.tableRow}
+                         hover
+                         // key={user.id}
+                         // selected={selectedUsers.indexOf(user.id) !== -1}
+                         // onClick = {() => {window.location.href = `/student/${student.id}`}}
+                     >
+                         <TableCell>
+                         <div><a href = {'/student/' + student.id}>
+                             <Typography variant="body1">{student.name}</Typography>
+                             </a>
+                         </div>
+                         </TableCell>
+                         <TableCell>{student.collegeName}</TableCell>
+                         <TableCell>{student.skillset}</TableCell>
+                     </TableRow>
+                     ))}
+                 </TableBody>
+                 </Table>
+             </div>
+             </PerfectScrollbar>
+         </CardContent>
+ 
+         </Card>
+      </TreeItem>
+      </TreeView>
     <div className={classes.root}>
                 <SearchIcon className={classes.icon} />
                 <Input
@@ -93,8 +151,15 @@ function Content(props) {
                     disableUnderline
                     onChange={props.onChangeSearch}
                     value = {props.state.search}
+                /><br></br><br></br>
+            
+            <Input    
+                placeholder="Filter by major"
+                className={classes.input}
+                disableUnderline
+                onChange={props.onChangeMajor}
+                value = {props.state.major}
                 />
-
       <div className={classes.content}>
             <Card>
          

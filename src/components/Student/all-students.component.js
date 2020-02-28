@@ -13,17 +13,32 @@ export default class StudentSearch extends Component {
 
     // Setting up functions
     this.onChangeSearch = this.onChangeSearch.bind(this);
+    this.onChangeMajor = this.onChangeMajor.bind(this);
 
     // Setting up state
     this.state = {
       search: '',
-      students: []  
+      students: [],
+      allStudents: [],
+      major: ''
     }
     axios.get('http://localhost:4000/students/user')
     .then(res => {
       console.log(res.data);
       if(!res.data.isStudent){
-        window.location.href = "/studnet-signin";
+        window.location.href = "/student-signin";
+      }
+    });
+    axios.get('http://localhost:4000/students/get-all-students')
+    .then(res => {
+      console.log(res.data);
+      if(res.data.errno){
+        console.log(res.data);
+      } else {
+        this.setState({
+            allStudents : res.data
+            
+        });
       }
     });
   }
@@ -58,6 +73,40 @@ export default class StudentSearch extends Component {
     
   }
 
+  onChangeMajor(e) {
+    this.setState({major: e.target.value}, () =>{
+      console.log(this.state.major);
+      if(this.state.search.length > 0){
+          const searchObject = {
+            search : this.state.search,
+            major: this.state.major
+         };
+   
+         axios.post('http://localhost:4000/students/filterMajor', searchObject)
+         .then((response) => {
+            console.log(response.data);
+         
+            this.setState({
+                students : response.data,
+                
+            });
+                console.log(this.state.students);
+
+           });
+
+
+
+      } else {
+        this.setState({
+         jobs : [],
+          
+      });
+      }
+
+
+  } );
+  }
+
   render() {
 
 
@@ -65,7 +114,8 @@ export default class StudentSearch extends Component {
     return (  <div>
     <Navigator/>
     <Content onSubmit = {this.onSubmit} state = {this.state} 
-    onChangeSearch= {this.onChangeSearch} />
+    onChangeSearch= {this.onChangeSearch}
+    onChangeMajor= {this.onChangeMajor} />
 
         </div> 
   

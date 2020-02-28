@@ -1,11 +1,10 @@
-  
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from '../Company/companyNav.component';
+import Navigator from './studentNav.component';
 import Content from './viewProfContent.component';
 
 
-export default class ViewStudentProfile extends Component {
+export default class ViewStudentProfileFromStudent extends Component {
   constructor(props) {
     super(props)
 
@@ -20,11 +19,11 @@ export default class ViewStudentProfile extends Component {
       experience: [],
     }
 
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('http://localhost:4000/students/user')
     .then(res => {
       console.log(res.data);
-      if(!res.data.isCompany){
-        window.location.href = "/company-signin";
+      if(!res.data.isStudent){
+         window.location.href = "/student-signin";
       }
     });
 
