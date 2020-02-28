@@ -26,7 +26,9 @@ mc.connect();
 // Express Route
 const studentRoute = require('../backend/routes/student.route')
 const companyRoute = require('../backend/routes/company.route')
-
+const jobRoute = require('../backend/routes/jobs.route')
+const applicationRoute = require('../backend/routes/application.route')
+const eventRoute = require('../backend/routes/event.route')
 
 const app = express();
 app.use(bodyParser.json());
@@ -54,8 +56,9 @@ app.use(cors());
 
 app.use('/students', studentRoute)
 app.use('/companies', companyRoute)
-
-
+app.use('/jobs', jobRoute)
+app.use('/applications', applicationRoute)
+app.use('/events', eventRoute)
 
 // PORT
 const port = process.env.PORT || 4000;

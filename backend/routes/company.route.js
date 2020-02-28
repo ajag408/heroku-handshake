@@ -88,66 +88,6 @@ router.route('/login').post((req, res) => {
 });
 
 
-router.route('/create-job').post((req, res) => {
-  req.body.company = session.user.id;
-  console.log();
-  console.log(req.body);
-  sql.query("INSERT INTO jobs SET ?", req.body, (error, data) => {
-    if (error) {
-      console.log(error);
-      res.json(error)
-    } else {
-      console.log("created");
-      console.log(data)
-      res.json("Added job");
-    }
-  })
-});
-
-router.route('/get-jobs').get((req,res) =>{
-  sql.query("SELECT * FROM jobs WHERE company = ?", 
-  [session.user.id],(error,jobs) => {
-    if(error){
-      console.log(error);
-      res.json(error);
-    } else {
-      console.log("Jobs : ",JSON.stringify(jobs));
-      res.end(JSON.stringify(jobs));
-    }
-  })
-});
-
-router.route('/get-applicants').post((req,res) =>{
-  console.log(req.body)
-  sql.query("SELECT students.name, students.id, applications.resFile, applications.status, applications.id AS appID FROM applications, jobs, students WHERE jobs.id = ? AND applications.job = jobs.id AND applications.student = students.id", 
-  [req.body.id],(error,applicants) => {
-    if(error){
-      console.log(error);
-      res.json(error);
-    } else {
-      console.log("Applicants : ",JSON.stringify(applicants));
-      res.end(JSON.stringify(applicants));
-    }
-  })
-});
-
-router.route('/updateApplication').post((req,res) =>{
-  console.log(req.body)
-  sql.query("UPDATE applications SET status = ? WHERE id = ?", 
-  [req.body.status, req.body.id],(error,application) => {
-    if(error){
-      console.log(error);
-      res.json(error);
-    } else {
-      console.log(application);
-  
-      res.end("Success");
-    }
-  })
-});
-
-
-
 
 
 // Update company
@@ -226,49 +166,6 @@ router.route('/update-company').put((req, res, next) => {
 
       })
 
-
-router.route('/create-event').post((req, res) => {
-  req.body.company = session.user.id;
-
-  console.log(req.body);
-  sql.query("INSERT INTO events SET ?", req.body,(error, data) => {
-    console.log("hello");
-    if (error) {
-      res.json(error)
-    } else {
-      console.log("created");
-      console.log(data)
-      res.json("Added event");
-    }
-  })
-});
-
-
-router.route('/get-events').get((req,res) =>{
-  sql.query("SELECT * FROM events WHERE company = ?", [session.user.id], (error,events) => {
-    if(error){
-      console.log(error);
-      res.json(error);
-    } else {
-      console.log("Events : ",JSON.stringify(events));
-      res.end(JSON.stringify(events));
-    }
-  })
-});
-
-router.route('/get-registered-students').post((req,res) =>{
-  console.log(req.body)
-  sql.query("SELECT students.name, students.id FROM registered_student_event, students WHERE registered_student_event.event = ? AND registered_student_event.student = students.id",
-  [req.body.id],(error,students) => {
-    if(error){
-      console.log(error);
-      res.json(error);
-    } else {
-      console.log("Registered students : ",JSON.stringify(students));
-      res.end(JSON.stringify(students));
-    }
-  })
-});
 
 router.route('/getCompany/:id').get((req, res) => {
   console.log(req.params.id);

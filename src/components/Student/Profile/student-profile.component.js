@@ -1,12 +1,12 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './studentNav.component';
+import Navigator from '../studentNav.component';
 import Content from './studentProfContent.component';
 import { connect } from "react-redux";
-import { displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic} from "../../js/actions/index";
+import { displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic} from "../../../js/actions/index";
 // import { Student } from "../../js/actions/index";
-import store from '../../js/store/index';
+import store from '../../../js/store/index';
 class DisplayStudent extends Component {
   constructor(props) {
     super(props)

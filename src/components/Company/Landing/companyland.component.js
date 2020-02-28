@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './companyNav.component';
+import Navigator from '../companyNav.component';
 import Content from './jobPostContent.component';
 
 
@@ -51,11 +51,11 @@ export default class CompanyJobPosting extends Component {
     });
 
 
-    axios.get('http://localhost:4000/companies/get-jobs')
+    axios.get('http://localhost:4000/jobs/get-jobs')
     .then((response) => {
           (async() => {
            for( const job in response.data){
-              await axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
+              await axios.post('http://localhost:4000/applications/get-applicants',  response.data[job])
               .then((res) => {
                 response.data[job].applicants = res.data;
               })
@@ -65,10 +65,7 @@ export default class CompanyJobPosting extends Component {
                  });
                 })
             }
-            // this.setState({
-            //     jobs : this.state.jobs.concat(response.data),
-                
-            // });
+
             console.log(this.state.jobs);
             })();
             console.log(this.state.jobs);
@@ -77,25 +74,6 @@ export default class CompanyJobPosting extends Component {
   }
   
 
-    // get the jobs data from backend  
-    // componentWillMount(){
-      // axios.get('http://localhost:4000/companies/get-jobs')
-      //    .then((response) => {
-      //       for( const job in response.data){
-      //           axios.post('http://localhost:4000/companies/get-applicants',  response.data[job])
-      //           .then((res) => {
-      //             response.data[job].applicants = res.data;
-      //           })
-      //         }
-      //       this.setState({
-      //           jobs : this.state.jobs.concat(response.data),
-      //           loaded: true
-      //       });
-      //     console.log(this.state.jobs);
-      //     })
-      //     console.log(this.state.jobs);
-  // }
-  // }
   onChangeJobTitle(e) {
     this.setState({title: e.target.value})
   }
@@ -133,7 +111,7 @@ export default class CompanyJobPosting extends Component {
       status: e.target.value
     };
     // console.log(document.getElementById(1).id)
-    axios.post('http://localhost:4000/companies/updateApplication', applicationObject)
+    axios.post('http://localhost:4000/applications/updateApplication', applicationObject)
     .then(res => {
         if(res.data.errno){
           alert("Unsuccessful update");
@@ -160,7 +138,7 @@ export default class CompanyJobPosting extends Component {
       cat: this.state.cat,
     };
 
-    axios.post('http://localhost:4000/companies/create-job', jobObject)
+    axios.post('http://localhost:4000/jobs/create-job', jobObject)
       .then(res => {
           if(res.data.errno){
             alert("Unsuccessful add");

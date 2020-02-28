@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './studentNav.component';
+import Navigator from '../studentNav.component';
 import Content from './viewEventsContent.component';
 import { connect } from "react-redux";
 
@@ -33,7 +33,7 @@ export default class ViewEvents extends Component {
       } 
     });
 
-    axios.get('http://localhost:4000/students/get-registered-events')
+    axios.get('http://localhost:4000/events/get-registered-events')
     .then(res=>{
       if(res.data.errno){
         console.log(res.data);
@@ -56,7 +56,7 @@ export default class ViewEvents extends Component {
         console.log(this.state.education);
      }
     });
-    axios.get('http://localhost:4000/students/get-upcoming-events')
+    axios.get('http://localhost:4000/events/get-upcoming-events')
     .then(res => {
         console.log(res.data);
         if(res.data.errno){
@@ -80,7 +80,7 @@ export default class ViewEvents extends Component {
             const searchObject = {
               search : this.state.search,
            };
-           axios.post('http://localhost:4000/students/search-upcoming-events', searchObject)
+           axios.post('http://localhost:4000/events/search-upcoming-events', searchObject)
            .then((response) => {
            //update the state with the response data
             console.log(response.data);
@@ -92,7 +92,7 @@ export default class ViewEvents extends Component {
                console.log(this.state.students);
             });
         } else {
-            axios.get('http://localhost:4000/students/get-upcoming-events')
+            axios.get('http://localhost:4000/events/get-upcoming-events')
             .then(res => {
                 console.log(res.data);
                 if(res.data.errno){
@@ -117,16 +117,18 @@ export default class ViewEvents extends Component {
       };
 
       // console.log(document.getElementById(1).id)
-      axios.post('http://localhost:4000/students/get-event', eventObject)
+      axios.post('http://localhost:4000/events/get-event', eventObject)
       .then(res => {
           console.log(res.data[0].eligibility);
           if(res.data.errno){
             alert("Unsuccessful update");
           } else {
-            if(res.data[0].eligibilty == "All"){
+
+            if(res.data[0].eligibility == "All"){
                 this.setState({
                     regMatch : true,       
                 });
+                console.log(this.state.regMatch);
             } else {
                 for(var i = 0 ; i<this.state.education.length; i++){
                 
@@ -147,7 +149,7 @@ export default class ViewEvents extends Component {
                 const regObject = {
                     event: res.data[0].id 
                 };
-                axios.post('http://localhost:4000/students/registerEvent', regObject)
+                axios.post('http://localhost:4000/events/registerEvent', regObject)
                 .then(res => {
                     if(res.data.errno){
                         alert("You already registered for this event");

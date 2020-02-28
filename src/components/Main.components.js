@@ -6,18 +6,18 @@ import CreateStudent from './Student/create-student.component';
 import CreateCompany from './Company/create-company.component';
 import CompanySignin from './Company/company-signin.component';
 import StudentSignin from './Student/student-signin.component';
-import CompanyJobPosting from './Company/companyland.component';
-import CompanyProfile from './Company/company-profile.component';
-import CompanyStudentsTab from './Company/company-studentsTab.component';
-import MakeEvents from './Company/make-events.component';
-import JobSearch from './Student/studentland.component';
-import StudentProfile from './Student/student-profile.component';
-import ViewStudentProfileFromCompany from './Student/view-studentFromCompany.component';
-import ViewStudentProfileFromStudent from './Student/view-studentFromStudent.component';
-import ViewCompanyProfile from './Company/view-company.component';
-import Applications from './Student/applications.component';
-import ViewEvents from './Student/view-events.component';
-import StudentSearch from './Student/all-students.component';
+import CompanyJobPosting from './Company/Landing/companyland.component';
+import CompanyProfile from './Company/Profile/company-profile.component';
+import CompanyStudentsTab from './Company/StudentsTab/company-studentsTab.component';
+import MakeEvents from './Company/Events/make-events.component';
+import JobSearch from './Student/Landing/studentland.component';
+import StudentProfile from './Student/Profile/student-profile.component';
+import ViewStudentProfileFromCompany from './Student/Profile/view-studentFromCompany.component';
+import ViewStudentProfileFromStudent from './Student/Profile/view-studentFromStudent.component';
+import ViewCompanyProfile from './Company/Profile/view-company.component';
+import Applications from './Student/Applications/applications.component';
+import ViewEvents from './Student/Events/view-events.component';
+import StudentSearch from './Student/StudentSearch/all-students.component';
 
 const Main = () => {
   return (

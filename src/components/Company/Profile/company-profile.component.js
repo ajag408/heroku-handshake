@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './companyNav.component';
+import Navigator from '../companyNav.component';
 import Content from './companyProfContent.component';
 
 

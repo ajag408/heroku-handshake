@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './studentNav.component';
+import Navigator from '../studentNav.component';
 import Content from './jobSearchContent.component';
 import { connect } from "react-redux";
 
@@ -71,7 +71,7 @@ export default class JobSearch extends Component {
               loc: this.state.loc
            };
      
-           axios.post('http://localhost:4000/students/searchJobs', searchObject)
+           axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
            .then((response) => {
 
                 if(filter.length>0){
@@ -126,7 +126,7 @@ export default class JobSearch extends Component {
             loc: this.state.loc
          };
    
-         axios.post('http://localhost:4000/students/searchJobs', searchObject)
+         axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
          .then((response) => {
               this.setState({
                 jobs : [],
@@ -184,7 +184,7 @@ export default class JobSearch extends Component {
               loc: this.state.loc
            };
      
-           axios.post('http://localhost:4000/students/searchJobs', searchObject)
+           axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
            .then((response) => {
 
                 if(filter.length>0){
@@ -234,9 +234,9 @@ export default class JobSearch extends Component {
           id : e.target.value
        };
        console.log(applyObject)
-        axios.post('http://localhost:4000/students/jobApply', applyObject)
+        axios.post('http://localhost:4000/applications/jobApply', applyObject)
         // console.log(formData.getAll('resume'));
-        axios.post('http://localhost:4000/students/resume', formData)
+        axios.post('http://localhost:4000/applications/resume', formData)
         .then(res => {
             if(res.data.errno){
               alert("Unsuccessful update");

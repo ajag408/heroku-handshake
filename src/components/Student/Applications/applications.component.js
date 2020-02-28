@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './studentNav.component';
+import Navigator from '../studentNav.component';
 import Content from './applicationsContent.component';
 import { connect } from "react-redux";
 
@@ -30,7 +30,7 @@ export default class Applications extends Component {
       }
     });
 
-    axios.get('http://localhost:4000/students/jobsApplied')
+    axios.get('http://localhost:4000/jobs/jobsApplied')
     .then(res => {
       console.log(res.data);
       if(res.data.errno){
@@ -61,7 +61,7 @@ export default class Applications extends Component {
          }
        }
    
-         axios.get('http://localhost:4000/students/jobsApplied')
+         axios.get('http://localhost:4000/jobs/jobsApplied')
          .then((response) => {
             //   this.setState({
             //     applications : [],

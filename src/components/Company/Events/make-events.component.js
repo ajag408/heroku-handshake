@@ -1,7 +1,7 @@
   
 import React, { Component } from "react";
 import axios from 'axios';
-import Navigator from './companyNav.component';
+import Navigator from '../companyNav.component';
 import Content from './createEventContent.component';
 
 
@@ -50,11 +50,11 @@ export default class MakeEvents extends Component {
 
     // get the jobs data from backend  
     componentDidMount(){
-      axios.get('http://localhost:4000/companies/get-events')
+      axios.get('http://localhost:4000/events/get-events')
               .then((response) => {
                 (async() => {
                   for( const event in response.data){
-                     await axios.post('http://localhost:4000/companies/get-registered-students',  response.data[event])
+                     await axios.post('http://localhost:4000/events/get-registered-students',  response.data[event])
                      .then((res) => {
                        response.data[event].students= res.data;
                      })
@@ -120,9 +120,9 @@ export default class MakeEvents extends Component {
       eligibility: this.state.eligibility,
     };
 
-    axios.post('http://localhost:4000/companies/create-event', eventObject)
+    axios.post('http://localhost:4000/events/create-event', eventObject)
       .then(res => {
-          if(res.data.name == "MongoError"){
+          if(res.data.errno){
             alert("Unsuccessful add");
           } else {
             alert("Successfully added new event");
