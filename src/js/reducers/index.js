@@ -1,4 +1,4 @@
-import { DISPLAY_STUDENT } from "../constants/action-types";
+import { DISPLAY_STUDENT } from '../constants/action-types';
 
 const initialState = {
   name: '',
@@ -24,18 +24,16 @@ const initialState = {
   stDate: '',
   endDate: '',
   workDescription: '',
-  skillset: ''
-  };
+  skillset: '',
+};
 
-function rootReducer (state = initialState, action) {
-  
-        if (action.type === DISPLAY_STUDENT) {
-            // console.log(action.payload)
-            state = action.payload;
-            return state;
-            
-          }
-        return state;
-    }
-  
-    export default rootReducer;
+function rootReducer(state = initialState, action) {
+  if (action.type === DISPLAY_STUDENT) {
+    // console.log(action.payload)
+    state = action.payload;
+    return state;
+  }
+  return state;
+}
+
+export default rootReducer;

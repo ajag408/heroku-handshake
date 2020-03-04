@@ -1,19 +1,14 @@
-import React from "react";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
+import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import 'bootstrap/dist/css/bootstrap.css';
+import './App.css';
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import Main from "./components/Main.components";
+import Main from './components/Main.components';
 
 function App() {
   return (
-    //<Router>
+    // <Router>
     <div className="App">
       {/* <header className="App-header">
         <Navbar bg="dark" variant="dark">
@@ -38,12 +33,12 @@ function App() {
                 </Link>
               </Nav> */}
 
-              {/* <Nav>
+      {/* <Nav>
                 <Link to={"/student-list"} className="nav-link">
                   Student List
                 </Link>
               </Nav> */}
-            {/* </Nav>
+      {/* </Nav>
 
           </Container>
         </Navbar>
@@ -61,9 +56,9 @@ function App() {
           </Col>
         </Row>
       </Container> */}
-       <Navbar />
+      <Navbar />
       <Main />
-     </div>
+    </div>
   // </Router> */} */}
   );
 }

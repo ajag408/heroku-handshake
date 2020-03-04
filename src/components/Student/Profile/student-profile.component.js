@@ -1,24 +1,26 @@
-  
-import React, { Component } from "react";
+
+import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Navigator from '../studentNav.component';
 import Content from './studentProfContent.component';
-import { connect } from "react-redux";
-import { displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic} from "../../../js/actions/index";
+import {
+  displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic,
+} from '../../../js/actions/index';
 // import { Student } from "../../js/actions/index";
 import store from '../../../js/store/index';
+
 class DisplayStudent extends Component {
   constructor(props) {
-    super(props)
-
+    super(props);
 
 
     // Setting up functions
     this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeDob= this.onChangeDob.bind(this);
-    this.onChangeCity= this.onChangeCity.bind(this);
-    this.onChangeState= this.onChangeState.bind(this);
-    this.onChangeCountry= this.onChangeCountry.bind(this);
+    this.onChangeDob = this.onChangeDob.bind(this);
+    this.onChangeCity = this.onChangeCity.bind(this);
+    this.onChangeState = this.onChangeState.bind(this);
+    this.onChangeCountry = this.onChangeCountry.bind(this);
     this.onChangeCareerObjective = this.onChangeCareerObjective.bind(this);
     this.onChangeStudentEmail = this.onChangeStudentEmail.bind(this);
     this.onChangeStudentPhone = this.onChangeStudentPhone.bind(this);
@@ -68,293 +70,279 @@ class DisplayStudent extends Component {
       endDate: '',
       workDescription: '',
       skillset: '',
-    }
+    };
 
-      this.props.displayStudent(this.state);
-      
-}
-componentWillReceiveProps(newProps){
-  console.log(newProps);
+    this.props.displayStudent(this.state);
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log(newProps);
     this.setState({
       name: newProps.name,
-          dob: newProps.dob,
-    city: newProps.city,
-    state: newProps.state,
-    country: newProps.country,
-    careerObjective: newProps.careerObjective,
-    email: newProps.email,
-    phone: newProps.phone,
-    profPic: newProps.profPic,
-    education: newProps.education,
-    collegeName: newProps.collegeName,
-    educationLocation: newProps.educationLocation,
-    degree: newProps.degree,
-    major: newProps.major,
-    gradYear: newProps.gradYear,
-    gpa: newProps.gpa,
-    experience: newProps.experience,
-    companyName: newProps.companyName,
-    jobTitle: newProps.jobTitle,
-    jobLocation: newProps.jobLocation,
-    stDate: newProps.stDate,
-    endDate: newProps.endDate,
-    workDescription: newProps.workDescription,
-    skillset: newProps.skillset, 
-    })
+      dob: newProps.dob,
+      city: newProps.city,
+      state: newProps.state,
+      country: newProps.country,
+      careerObjective: newProps.careerObjective,
+      email: newProps.email,
+      phone: newProps.phone,
+      profPic: newProps.profPic,
+      education: newProps.education,
+      collegeName: newProps.collegeName,
+      educationLocation: newProps.educationLocation,
+      degree: newProps.degree,
+      major: newProps.major,
+      gradYear: newProps.gradYear,
+      gpa: newProps.gpa,
+      experience: newProps.experience,
+      companyName: newProps.companyName,
+      jobTitle: newProps.jobTitle,
+      jobLocation: newProps.jobLocation,
+      stDate: newProps.stDate,
+      endDate: newProps.endDate,
+      workDescription: newProps.workDescription,
+      skillset: newProps.skillset,
+    });
+  }
 
-}
   onChangeName(e) {
-    this.setState({name: e.target.value})
+    this.setState({ name: e.target.value });
   }
 
 
   onChangeDob(e) {
-    this.setState({dob: e.target.value})
+    this.setState({ dob: e.target.value });
   }
+
   onChangeCity(e) {
-    this.setState({city: e.target.value})
+    this.setState({ city: e.target.value });
   }
+
   onChangeState(e) {
-    this.setState({state: e.target.value})
+    this.setState({ state: e.target.value });
   }
+
   onChangeCountry(e) {
-    this.setState({country: e.target.value})
+    this.setState({ country: e.target.value });
   }
+
   onChangeCareerObjective(e) {
-    this.setState({careerObjective: e.target.value})
+    this.setState({ careerObjective: e.target.value });
   }
 
   onChangeStudentEmail(e) {
-    this.setState({email: e.target.value})
+    this.setState({ email: e.target.value });
   }
 
   onChangeStudentPhone(e) {
-    this.setState({phone: e.target.value})
+    this.setState({ phone: e.target.value });
   }
 
   onChangeCollegeName(e) {
-    this.setState({collegeName: e.target.value})
+    this.setState({ collegeName: e.target.value });
   }
 
   onChangeEducationLocation(e) {
-    this.setState({educationLocation: e.target.value})
+    this.setState({ educationLocation: e.target.value });
   }
 
   onChangeDegree(e) {
-    this.setState({degree: e.target.value})
+    this.setState({ degree: e.target.value });
   }
 
   onChangeMajor(e) {
-    this.setState({major: e.target.value})
+    this.setState({ major: e.target.value });
   }
 
   onChangeGradYear(e) {
-    this.setState({gradYear: e.target.value})
+    this.setState({ gradYear: e.target.value });
   }
 
   onChangeGPA(e) {
-    this.setState({gpa: e.target.value})
+    this.setState({ gpa: e.target.value });
   }
 
   onChangeCompanyName(e) {
-    this.setState({companyName: e.target.value})
+    this.setState({ companyName: e.target.value });
   }
 
   onChangeJobTitle(e) {
-    this.setState({jobTitle: e.target.value})
+    this.setState({ jobTitle: e.target.value });
   }
 
   onChangeJobLocation(e) {
-    this.setState({jobLocation: e.target.value})
+    this.setState({ jobLocation: e.target.value });
   }
 
   onChangeStartDate(e) {
-    this.setState({stDate: e.target.value})
+    this.setState({ stDate: e.target.value });
   }
 
   onChangeEndDate(e) {
-    this.setState({endDate: e.target.value})
+    this.setState({ endDate: e.target.value });
   }
 
   onChangeWorkDescription(e) {
-    this.setState({workDescription: e.target.value})
+    this.setState({ workDescription: e.target.value });
   }
 
   onChangeSkillset(e) {
-    this.setState({skillset: e.target.value})
+    this.setState({ skillset: e.target.value });
   }
-
-
-
 
 
   onSubmit(e) {
-
-    e.preventDefault()
+    e.preventDefault();
 
     const studentObject = {
-        name : this.state.name,
-        dob: this.state.dob,
-        city: this.state.city,
-        state: this.state.state,
-        country: this.state.country,
-        careerObjective: this.state.careerObjective,
-        email: this.state.email,
-        phone: this.state.phone,
+      name: this.state.name,
+      dob: this.state.dob,
+      city: this.state.city,
+      state: this.state.state,
+      country: this.state.country,
+      careerObjective: this.state.careerObjective,
+      email: this.state.email,
+      phone: this.state.phone,
 
     };
     this.props.updateStudent(studentObject);
-    
-}
+  }
 
 
+  onSubmitEducation(e) {
+    e.preventDefault();
 
-onSubmitEducation(e) {
-
-  e.preventDefault()
-
-  const educationObject = {
-    collegeName: this.state.collegeName,
-    loc: this.state.educationLocation,
-    degree: this.state.degree,
-    major: this.state.major,
-    gradYear: this.state.gradYear,
-    gpa: this.state.gpa
+    const educationObject = {
+      collegeName: this.state.collegeName,
+      loc: this.state.educationLocation,
+      degree: this.state.degree,
+      major: this.state.major,
+      gradYear: this.state.gradYear,
+      gpa: this.state.gpa,
 
 
-  };
-  this.props.addEducation(educationObject);
-  
-}
+    };
+    this.props.addEducation(educationObject);
+  }
 
-onSubmitExperience(e) {
-
-  e.preventDefault()
-  console.log(this.state);
-  const experienceObject = {
-    companyName: this.state.companyName,
-    loc: this.state.jobLocation,
-    title: this.state.jobTitle,
-    startDate: this.state.stDate,
-    endDate: this.state.endDate,
-    description: this.state.workDescription
+  onSubmitExperience(e) {
+    e.preventDefault();
+    console.log(this.state);
+    const experienceObject = {
+      companyName: this.state.companyName,
+      loc: this.state.jobLocation,
+      title: this.state.jobTitle,
+      startDate: this.state.stDate,
+      endDate: this.state.endDate,
+      description: this.state.workDescription,
 
 
-  };
-  this.props.addExperience(experienceObject)
-  
-}
+    };
+    this.props.addExperience(experienceObject);
+  }
 
-onSubmitSkillset(e) {
+  onSubmitSkillset(e) {
+    e.preventDefault();
+    console.log(this.state);
+    const skillsetObject = {
 
-  e.preventDefault()
-  console.log(this.state);
-  const skillsetObject = {
-
-    skillset: this.state.skillset
+      skillset: this.state.skillset,
 
 
-  };
+    };
 
-  this.props.updateSkillset(skillsetObject);
-  
-}
+    this.props.updateSkillset(skillsetObject);
+  }
 
-    onUpload(e){
-        e.preventDefault();
-        const files = document.getElementById('INPUT_TAG').files;
-        console.log(files);
-        const formData = new FormData();
-        formData.append('image', files[0]);
-        // console.log(this.props.uploadProfPic);
-        console.log(this.props);
-        this.props.uploadProfPic(formData);
-        console.log(files[0])
-    }
+  onUpload(e) {
+    e.preventDefault();
+    const { files } = document.getElementById('INPUT_TAG');
+    console.log(files);
+    const formData = new FormData();
+    formData.append('image', files[0]);
+    // console.log(this.props.uploadProfPic);
+    console.log(this.props);
+    this.props.uploadProfPic(formData);
+    console.log(files[0]);
+  }
 
   render() {
+    return (
+      <div>
+        <Navigator />
+        <Content
+          onSubmit={this.onSubmit}
+          state={this.state}
+          onChangeName={this.onChangeName}
+          onChangeDob={this.onChangeDob}
+          onChangeCity={this.onChangeCity}
+          onChangeState={this.onChangeState}
+          onChangeCountry={this.onChangeCountry}
+          onChangeCareerObjective={this.onChangeCareerObjective}
+          onChangeStudentEmail={this.onChangeStudentEmail}
+          onChangeStudentPhone={this.onChangeStudentPhone}
+          onUpload={this.onUpload}
+          onChangeCollegeName={this.onChangeCollegeName}
+          onChangeEducationLocation={this.onChangeEducationLocation}
+          onChangeDegree={this.onChangeDegree}
+          onChangeMajor={this.onChangeMajor}
+          onChangeGPA={this.onChangeGPA}
+          onChangeGradYear={this.onChangeGradYear}
+          onSubmitEducation={this.onSubmitEducation}
+          onChangeCompanyName={this.onChangeCompanyName}
+          onChangeJobLocation={this.onChangeJobLocation}
+          onChangeJobTitle={this.onChangeJobTitle}
+          onChangeStartDate={this.onChangeStartDate}
+          onChangeEndDate={this.onChangeEndDate}
+          onChangeWorkDescription={this.onChangeWorkDescription}
+          onChangeSkillset={this.onChangeSkillset}
+          onSubmitSkillset={this.onSubmitSkillset}
+          onSubmitExperience={this.onSubmitExperience}
+          onUpload={this.onUpload}
+        />
 
+      </div>
 
-
-    return (  <div>
-    <Navigator/>
-    <Content onSubmit = {this.onSubmit} state = {this.state} onChangeName= {this.onChangeName} 
-    onChangeDob= {this.onChangeDob}
-    onChangeCity= {this.onChangeCity}
-    onChangeState= {this.onChangeState}
-    onChangeCountry= {this.onChangeCountry}
-    onChangeCareerObjective= {this.onChangeCareerObjective}
-    onChangeStudentEmail = {this.onChangeStudentEmail}
-    onChangeStudentPhone = {this.onChangeStudentPhone}
-    onUpload = {this.onUpload}
-    onChangeCollegeName = {this.onChangeCollegeName}
-    onChangeEducationLocation = {this.onChangeEducationLocation}
-    onChangeDegree = {this.onChangeDegree}
-    onChangeMajor = {this.onChangeMajor}
-    onChangeGPA = {this.onChangeGPA}
-    onChangeGradYear = {this.onChangeGradYear}
-    onSubmitEducation = {this.onSubmitEducation}
-    onChangeCompanyName = {this.onChangeCompanyName}
-    onChangeJobLocation = {this.onChangeJobLocation}
-    onChangeJobTitle = {this.onChangeJobTitle}
-    onChangeStartDate = {this.onChangeStartDate}
-    onChangeEndDate = {this.onChangeEndDate}
-    onChangeWorkDescription= {this.onChangeWorkDescription}
-    onChangeSkillset= {this.onChangeSkillset}
-    onSubmitSkillset= {this.onSubmitSkillset}
-    onSubmitExperience = {this.onSubmitExperience}
-    onUpload = {this.onUpload}
-    
-    
-    
-    
-    
-    />
-
-        </div> 
-  
-    );        
+    );
   }
 }
 function mapDispatchToProps(dispatch) {
-  return { 
-    displayStudent: (student) => dispatch(displayStudent(student)),
-    updateStudent: student => dispatch(updateStudent(student)),
-    addEducation: education => dispatch(addEducation(education)),
-    addExperience: experience => dispatch(addExperience(experience)),
-    updateSkillset: skillset => dispatch(updateSkillset(skillset)),
-    uploadProfPic: formData => dispatch(uploadProfPic(formData))
-  };
-};
-const mapStateToProps = state=> {
   return {
-    name : state.name,
-    dob: state.dob,
-    city: state.city,
-    state: state.state,
-    country: state.country,
-    careerObjective: state.careerObjective,
-    email: state.email,
-    phone: state.phone,
-    profPic: state.profPic,
-    education: state.education,
-    collegeName: state.collegeName,
-    educationLocation: state.educationLocation,
-    degree: state.degree,
-    major: state.major,
-    gradYear: state.gradYear,
-    gpa: state.gpa,
-    experience: state.experience,
-    companyName: state.companyName,
-    jobTitle: state.jobTitle,
-    jobLocation: state.jobLocation,
-    stDate: state.stDate,
-    endDate: state.endDate,
-    workDescription: state.workDescription,
-    skillset: state.skillset, 
+    displayStudent: (student) => dispatch(displayStudent(student)),
+    updateStudent: (student) => dispatch(updateStudent(student)),
+    addEducation: (education) => dispatch(addEducation(education)),
+    addExperience: (experience) => dispatch(addExperience(experience)),
+    updateSkillset: (skillset) => dispatch(updateSkillset(skillset)),
+    uploadProfPic: (formData) => dispatch(uploadProfPic(formData)),
   };
-};
+}
+const mapStateToProps = (state) => ({
+  name: state.name,
+  dob: state.dob,
+  city: state.city,
+  state: state.state,
+  country: state.country,
+  careerObjective: state.careerObjective,
+  email: state.email,
+  phone: state.phone,
+  profPic: state.profPic,
+  education: state.education,
+  collegeName: state.collegeName,
+  educationLocation: state.educationLocation,
+  degree: state.degree,
+  major: state.major,
+  gradYear: state.gradYear,
+  gpa: state.gpa,
+  experience: state.experience,
+  companyName: state.companyName,
+  jobTitle: state.jobTitle,
+  jobLocation: state.jobLocation,
+  stDate: state.stDate,
+  endDate: state.endDate,
+  workDescription: state.workDescription,
+  skillset: state.skillset,
+});
 
-const StudentProfile = connect(mapStateToProps ,mapDispatchToProps)(DisplayStudent);
+const StudentProfile = connect(mapStateToProps, mapDispatchToProps)(DisplayStudent);
 
 export default StudentProfile;

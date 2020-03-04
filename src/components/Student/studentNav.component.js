@@ -16,32 +16,35 @@ import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import axios from 'axios';
-import { connect } from "react-redux";
-import { logoutStudent } from "../../js/actions/index";
+import { connect } from 'react-redux';
+import { logoutStudent } from '../../js/actions/index';
 
 const categories = [
   {
     id: 'Discover',
     children: [
-      { id: 'Profile', icon: <AccountBoxIcon />, action: () => {window.location.href = '/student/profile'} },
-      { id: 'Job Search', icon: <WorkIcon />, action: () => {{window.location.href = '/student/landing'}}},
-      { id: 'Applications', icon: <PostAddIcon />, action: () => {{window.location.href = '/student/applications'}}},
-      { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/student/events'}}},
-      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/student/students'}} },
+      { id: 'Profile', icon: <AccountBoxIcon />, action: () => { window.location.href = '/student/profile'; } },
+      { id: 'Job Search', icon: <WorkIcon />, action: () => { { window.location.href = '/student/landing'; } } },
+      { id: 'Applications', icon: <PostAddIcon />, action: () => { { window.location.href = '/student/applications'; } } },
+      { id: 'Events', icon: <EventIcon />, action: () => { { window.location.href = '/student/events'; } } },
+      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => { { window.location.href = '/student/students'; } } },
     ],
   },
   {
     id: 'Logout',
     children: [
-      { id: 'Logout', icon: <ExitToAppIcon />, action: () => {
-        console.log("setting this with redux");
-         }
-    },
+      {
+        id: 'Logout',
+        icon: <ExitToAppIcon />,
+        action: () => {
+          console.log('setting this with redux');
+        },
+      },
     ],
   },
 ];
 
-const styles = theme => ({
+const styles = (theme) => ({
   categoryHeader: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -56,7 +59,7 @@ const styles = theme => ({
     color: 'rgba(255, 255, 255, 0.7)',
     '&:hover,&:focus': {
     //   backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    backgroundColor: '#232f3e',
+      backgroundColor: '#232f3e',
     },
   },
   itemCategory: {
@@ -80,7 +83,7 @@ const styles = theme => ({
   itemIcon: {
     minWidth: 'auto',
     marginRight: theme.spacing(2),
-    color: "gray"
+    color: 'gray',
   },
   divider: {
     marginTop: theme.spacing(2),
@@ -92,8 +95,8 @@ function Nav(props) {
   console.log(categories[1].children[0].action);
   categories[1].children[0].action = () => {
     props.logoutStudent();
-  }
-  console.log(categories[1].children[0])
+  };
+  console.log(categories[1].children[0]);
   // const handleClick = (event, id) => {
   //   console.log(id);
   //   // console.log(action);
@@ -104,7 +107,7 @@ function Nav(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Handshake
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/student/landing'}}>
+        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => { window.location.href = '/student/landing'; }}>
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>
@@ -118,19 +121,22 @@ function Nav(props) {
         </ListItem>
         {categories.map(({ id, children }) => (
           <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}> 
+            <ListItem className={classes.categoryHeader}>
               <ListItemText
                 classes={{
                   primary: classes.categoryHeaderPrimary,
                 }}
-              > 
+              >
                 {id}
-              </ListItemText> 
-            </ListItem> 
-            {children.map(({ id: childId, icon, action,  active }) => (
-              <ListItem 
+              </ListItemText>
+            </ListItem>
+            {children.map(({
+              id: childId, icon, action, active,
+            }) => (
+              <ListItem
                 key={childId}
-                button onClick =  {action}
+                button
+                onClick={action}
                 className={clsx(classes.item, active && classes.itemActiveItem)}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
@@ -156,9 +162,9 @@ Nav.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 function mapDispatchToProps(dispatch) {
-  return { 
-    logoutStudent: () => dispatch(logoutStudent())
+  return {
+    logoutStudent: () => dispatch(logoutStudent()),
   };
-};
+}
 const Navigator = connect(null, mapDispatchToProps)(Nav);
 export default withStyles(styles)(Navigator);

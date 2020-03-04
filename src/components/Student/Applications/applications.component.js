@@ -1,14 +1,12 @@
-  
-import React, { Component } from "react";
+
+import React, { Component } from 'react';
 import axios from 'axios';
 import Navigator from '../studentNav.component';
 import Content from './applicationsContent.component';
-import { connect } from "react-redux";
 
 export default class Applications extends Component {
   constructor(props) {
-    super(props)
-
+    super(props);
 
 
     // Setting up functions
@@ -20,87 +18,86 @@ export default class Applications extends Component {
       applications: [],
       pending: false,
       reviewed: false,
-      declined: false
-    }
+      declined: false,
+    };
     axios.get('http://localhost:4000/students/user')
-    .then(res => {
-      console.log(res.data);
-      if(!res.data.isStudent){
-        window.location.href = "/student-signin";
-      }
-    });
+      .then((res) => {
+        console.log(res.data);
+        if (!res.data.isStudent) {
+          window.location.href = '/student-signin';
+        }
+      });
 
     axios.get('http://localhost:4000/jobs/jobsApplied')
-    .then(res => {
-      console.log(res.data);
-      if(res.data.errno){
-        console.log("can't load apps");
-       } else {
-        this.setState({
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.errno) {
+          console.log("can't load apps");
+        } else {
+          this.setState({
             applications: res.data,
-        });
-       }
-    });
-
+          });
+        }
+      });
   }
 
-   
 
-  onChangeStatusFilter(e) {  
-        var filter = [];
-        const filterObject = {
-          "Pending" : this.state.pending,
-          "Reviewed": this.state.reviewed,
-          "Declined" : this.state.declined
-       };
-       console.log(filterObject);
-       for( const filterName in filterObject){
-         if(filterObject[filterName] == true){
-           console.log(filterName);
-           filter.push(filterName);
-         }
-       }
-   
-         axios.get('http://localhost:4000/jobs/jobsApplied')
-         .then((response) => {
-            //   this.setState({
-            //     applications : [],
-                
-            //     });
-              if(filter.length>0){
-                var filtered = [];
-                for(var i =0;i<response.data.length; i++){
-                  if(filter.includes(response.data[i].status)){
-                    filtered.push(response.data[i]);
-                  }
-                }
-                this.setState({
-                  applications : filtered,
-                  
-                  });
-              }
-              else {
-                 this.setState({
-                  applications : response.data,
-                  
-                   });
-              }
-              console.log(this.state.applications);
-           });
+  onChangeStatusFilter() {
+    const filter = [];
+    const { pending } = this.state;
+    const { reviewed } = this.state;
+    const { declined } = this.state;
+    const filterObject = {
+
+      Pending: pending,
+      Reviewed: reviewed,
+      Declined: declined,
+    };
+    console.log(filterObject);
+    const entries = Object.entries(filterObject);
+    for (const [status, bool] of entries) {
+      if (bool == true) {
+        console.log(status);
+        filter.push(status);
       }
-    
+    }
+
+    axios.get('http://localhost:4000/jobs/jobsApplied')
+      .then((response) => {
+        //   this.setState({
+        //     applications : [],
+
+        //     });
+        if (filter.length > 0) {
+          const filtered = [];
+          for (let i = 0; i < response.data.length; i++) {
+            if (filter.includes(response.data[i].status)) {
+              filtered.push(response.data[i]);
+            }
+          }
+          this.setState({
+            applications: filtered,
+
+          });
+        } else {
+          this.setState({
+            applications: response.data,
+
+          });
+        }
+        console.log(this.state.applications);
+      });
+  }
 
 
   render() {
+    return (
+      <div>
+        <Navigator />
+        <Content state={this.state} onChangeStatusFilter={this.onChangeStatusFilter} />
 
+      </div>
 
-
-    return (  <div>
-    <Navigator/>
-    <Content state = {this.state}  onChangeStatusFilter = {this.onChangeStatusFilter}/>
-
-        </div> 
-  
-    );        
+    );
   }
 }

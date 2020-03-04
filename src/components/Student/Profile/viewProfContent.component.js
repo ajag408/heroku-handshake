@@ -24,169 +24,174 @@ import {
   Divider,
   Button,
   LinearProgress,
-  TextField
+  TextField,
 } from '@material-ui/core';
 
 
-const styles = theme => ({
-    root: {
-        padding: theme.spacing(4)
-    },
-      details: {
-        display: 'flex'
-      },
-      avatar: {
-        marginLeft: 'auto',
-        height: 110,
-        width: 100,
-        flexShrink: 0,
-        flexGrow: 0
-      },
-      progress: {
-        marginTop: theme.spacing(2)
-      },
-      uploadButton: {
-        marginRight: theme.spacing(2)
-      },
-      paper: {
-        maxWidth: '80%',
-        margin: 'auto',
-        marginLeft: '15%',
-        marginRight: '5%',
-        overflow: 'hidden',
-      },
-      contentWrapper: {
-        margin: '40px 16px',
-      }
+const styles = (theme) => ({
+  root: {
+    padding: theme.spacing(4),
+  },
+  details: {
+    display: 'flex',
+  },
+  avatar: {
+    marginLeft: 'auto',
+    height: 110,
+    width: 100,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  progress: {
+    marginTop: theme.spacing(2),
+  },
+  uploadButton: {
+    marginRight: theme.spacing(2),
+  },
+  paper: {
+    maxWidth: '80%',
+    margin: 'auto',
+    marginLeft: '15%',
+    marginRight: '5%',
+    overflow: 'hidden',
+  },
+  contentWrapper: {
+    margin: '40px 16px',
+  },
 
 });
 
 function Content(props) {
-    const { className, ...rest } = props;
-    const { classes } = props;
-    const [treeExpanded, treeSetExpanded] = React.useState([]);
-    const handleChange = (event, nodes) => {
-      treeSetExpanded(nodes);
-    };
-    var i = -1;
-    const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
-    const handleExpandClick = i => {
-      cardSetExpandedID(cardExpandedID == i ? -1: i);
-    };
-  
+  const { className, ...rest } = props;
+  const { classes } = props;
+  const [treeExpanded, treeSetExpanded] = React.useState([]);
+  const handleChange = (event, nodes) => {
+    treeSetExpanded(nodes);
+  };
+  const i = -1;
+  const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
+  const handleExpandClick = (i) => {
+    cardSetExpandedID(cardExpandedID == i ? -1 : i);
+  };
+
 
   return (
     <Paper className={classes.paper}>
 
-        <div className={classes.contentWrapper}>
-    <div className={classes.root}>
-      <Grid
-        container
-        spacing={4}
-      >
-        <Grid
+      <div className={classes.contentWrapper}>
+        <div className={classes.root}>
+          <Grid
+            container
+            spacing={4}
+          >
+            <Grid
         //   item
         //   lg={4}
         //   md={6}
         //   xl={4}
-          xs={12}
-        >
-            {props.state.student.map((student, i) => (
+              xs={12}
+            >
+              {props.state.student.map((student, i) => (
                 <Card
-                {...rest}
-                className={clsx(classes.root, className)}
+                  {...rest}
+                  className={clsx(classes.root, className)}
                 >
-                <CardContent>
+                  <CardContent>
                     <div className={classes.details}>
-                    <div>
+                      <div>
                         <Typography
-                        gutterBottom
-                        variant="h2"
+                          gutterBottom
+                          variant="h2"
                         >
-                        {student.name}
+                          {student.name}
                         </Typography>
                         <Typography
-                        className={classes.locationText}
-                        color="textSecondary"
-                        variant="body1"
+                          className={classes.locationText}
+                          color="textSecondary"
+                          variant="body1"
                         >
-                        {student.city}, {student.state}, {student.country}
-                
+                          {student.city}
+                          ,
+                          {student.state}
+                          ,
+                          {student.country}
+
                         </Typography>
-                        <br></br>
+                        <br />
                         <Typography
-                        className={classes.dateText}
-                        color="textSecondary"
-                        variant="body1"
+                          className={classes.dateText}
+                          color="textSecondary"
+                          variant="body1"
                         >
-                        {student.careerObjective}
+                          {student.careerObjective}
                         </Typography>
-                    </div>
-                    <Avatar
+                      </div>
+                      <Avatar
                         className={classes.avatar}
                         src={`http://localhost:4000/students/profPicBlind/${student.id}`}
-                    />
+                      />
                     </div>
-                </CardContent>
-                <Divider />
+                  </CardContent>
+                  <Divider />
                 </Card>
-                 ))}
-        </Grid>
-        <TreeView
-      defaultCollapseIcon={<ExpandMoreIcon />}
-      defaultExpandIcon={<ChevronRightIcon />}
-      expanded={treeExpanded}
-      onNodeToggle={handleChange}
-     >
-         <br></br><br></br>
-      <TreeItem nodeId = "1" label = "View Basic Details">
-        <Grid
+              ))}
+            </Grid>
+            <TreeView
+              defaultCollapseIcon={<ExpandMoreIcon />}
+              defaultExpandIcon={<ChevronRightIcon />}
+              expanded={treeExpanded}
+              onNodeToggle={handleChange}
+            >
+              <br />
+              <br />
+              <TreeItem nodeId="1" label="View Basic Details">
+                <Grid
         //   item
         //   lg={8}
         //   md={6}
         //   xl={8}
-          xs={12}
-        >
-            {props.state.student.map((student, i) => (
+                  xs={12}
+                >
+                  {props.state.student.map((student, i) => (
                     <Card
-                    {...rest}
-                    className={clsx(classes.root, className)}
+                      {...rest}
+                      className={clsx(classes.root, className)}
                     >
-                    <form
+                      <form
                         autoComplete="off"
                         noValidate
-                    >
+                      >
                         <CardHeader
-                        title="Profile"
+                          title="Profile"
                         />
                         <Divider />
                         <CardContent>
-                        <Grid
+                          <Grid
                             container
                             spacing={3}
-                        >
+                          >
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Name"
                                 margin="dense"
                                 name="name"
-                                disabled 
+                                disabled
                                 value={student.name}
                                 variant="outlined"
-                            />
+                              />
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            Date of Birth
-                            <TextField
+                              Date of Birth
+                              <TextField
                                 fullWidth
                                 // label="Date of Birth"
                                 type="date"
@@ -195,47 +200,47 @@ function Content(props) {
                                 disabled
                                 value={student.dob}
                                 variant="outlined"
-                            />
+                              />
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="City"
-                               
+
                                 margin="dense"
                                 name="city"
                                 disabled
                                 value={student.city}
                                 variant="outlined"
-                            />
-                          </Grid>
-                          <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              />
+                            </Grid>
+                            <Grid
+                              item
+                              md={6}
+                              xs={12}
                             >
-                           <TextField
+                              <TextField
                                 fullWidth
                                 label="State"
                                 margin="dense"
                                 name="state"
                                 disabled
-                                
+
                                 value={student.state}
                                 variant="outlined"
-                            />
-                         </Grid>
+                              />
+                            </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
 
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Country"
                                 margin="dense"
@@ -243,32 +248,32 @@ function Content(props) {
                                 disabled
                                 value={student.country}
                                 variant="outlined"
-                            />
+                              />
 
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Email Address"
                                 margin="dense"
                                 name="email"
                                 disabled
-                                
+
 
                                 value={student.email}
                                 variant="outlined"
-                            />
+                              />
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Phone Number"
                                 margin="dense"
@@ -277,165 +282,202 @@ function Content(props) {
                                 type="number"
                                 value={student.phone}
                                 variant="outlined"
-                            />
+                              />
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Career Objective"
                                 margin="dense"
                                 name="careerObjective"
                                 multiline
                                 rows={15}
-                                style = {{width: 300}}
+                                style={{ width: 300 }}
                                 disabled
                                 // eslint-disable-next-line react/jsx-sort-props
                                 SelectProps={{ native: true }}
                                 value={student.careerObjective}
                                 variant="outlined"
-                            >
-                            </TextField>
+                              />
                             </Grid>
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
-                            >
-                            
-                            </Grid>
-                        </Grid>
+                              item
+                              md={6}
+                              xs={12}
+                            />
+                          </Grid>
                         </CardContent>
-                    </form>
+                      </form>
                     </Card>
-                ))}
-        </Grid>
-        </TreeItem>
-        <br></br><br></br>
-        <TreeItem nodeId = "2" label = "View Education">
-        <Grid
+                  ))}
+                </Grid>
+              </TreeItem>
+              <br />
+              <br />
+              <TreeItem nodeId="2" label="View Education">
+                <Grid
         //   item
         //   lg={8}
         //   md={6}
         //   xl={8}
-          xs={12}
-        >
-            {props.state.education.map((education, i) => (
-                <Card>
-                <CardHeader
-                
-                    title = {education.collegeName}
-                    subheader = {education.loc}
-                />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                    Degree: {education.degree} &nbsp;&nbsp;&nbsp;   Major: {education.major} <br></br><br></br>  
-                     Graduation Year: {education.gradYear} <br></br><br></br>
-                     GPA: {education.gpa} <br></br><br></br>
+                  xs={12}
+                >
+                  {props.state.education.map((education, i) => (
+                    <Card>
+                      <CardHeader
 
-                    
-                    </Typography>
-                </CardContent>
-                </Card>
-            ))}
-        </Grid>
-        </TreeItem>
-        <br></br><br></br>
-        <TreeItem nodeId = "3" label = "View Experience">
-        <Grid
+                        title={education.collegeName}
+                        subheader={education.loc}
+                      />
+                      <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                          Degree:
+                          {' '}
+                          {education.degree}
+                          {' '}
+&nbsp;&nbsp;&nbsp;   Major:
+                          {education.major}
+                          {' '}
+                          <br />
+                          <br />
+                          Graduation Year:
+                          {' '}
+                          {education.gradYear}
+                          {' '}
+                          <br />
+                          <br />
+                          GPA:
+                          {' '}
+                          {education.gpa}
+                          {' '}
+                          <br />
+                          <br />
+
+
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Grid>
+              </TreeItem>
+              <br />
+              <br />
+              <TreeItem nodeId="3" label="View Experience">
+                <Grid
         //   item
         //   lg={8}
         //   md={6}
         //   xl={8}
-          xs={12}
-        >
-            {props.state.experience.map((experience, i) => (
-                <Card>
-                <CardHeader
-                
-                    title = {experience.companyName}
-                    subheader = {experience.title}
-                />
-                <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                    Location: {experience.loc} &nbsp;&nbsp;&nbsp;   Start Date: {experience.startDate} <br></br><br></br>  
-                     End Date: {experience.endDate} <br></br><br></br>
-                     Work Description: {experience.description} <br></br><br></br>
+                  xs={12}
+                >
+                  {props.state.experience.map((experience, i) => (
+                    <Card>
+                      <CardHeader
 
-                    
-                    </Typography>
-                </CardContent>
-                </Card>
-            ))}
-        </Grid>
-        </TreeItem>
+                        title={experience.companyName}
+                        subheader={experience.title}
+                      />
+                      <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                          Location:
+                          {' '}
+                          {experience.loc}
+                          {' '}
+&nbsp;&nbsp;&nbsp;   Start Date:
+                          {experience.startDate}
+                          {' '}
+                          <br />
+                          <br />
+                          End Date:
+                          {' '}
+                          {experience.endDate}
+                          {' '}
+                          <br />
+                          <br />
+                          Work Description:
+                          {' '}
+                          {experience.description}
+                          {' '}
+                          <br />
+                          <br />
 
-        <br></br><br></br>
-      <TreeItem nodeId = "4" label = "View Skillset">
-        <Grid
+
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Grid>
+              </TreeItem>
+
+              <br />
+              <br />
+              <TreeItem nodeId="4" label="View Skillset">
+                <Grid
         //   item
         //   lg={8}
         //   md={6}
         //   xl={8}
-          xs={12}
-        >
-            {props.state.student.map((student, i) => (
+                  xs={12}
+                >
+                  {props.state.student.map((student, i) => (
                     <Card
-                    {...rest}
-                    className={clsx(classes.root, className)}
+                      {...rest}
+                      className={clsx(classes.root, className)}
                     >
-                    <form
+                      <form
                         autoComplete="off"
                         noValidate
-                    >
+                      >
                         <CardHeader
-                        
-                        title="Skillset"
+
+                          title="Skillset"
                         />
                         <Divider />
                         <CardContent>
-                        <Grid
+                          <Grid
                             container
                             spacing={3}
-                        >
+                          >
                             <Grid
-                            item
-                            md={6}
-                            xs={12}
+                              item
+                              md={6}
+                              xs={12}
                             >
-                            <TextField
+                              <TextField
                                 fullWidth
                                 label="Skillset"
                                 margin="dense"
                                 name="skillset"
                                 multiline
                                 rows={15}
-                                style = {{width: 300}}
+                                style={{ width: 300 }}
                                 disabled
                                 required
                                 value={student.skillset}
                                 variant="outlined"
-                            />
+                              />
                             </Grid>
-                           
-                        </Grid>
+
+                          </Grid>
                         </CardContent>
-                    </form>
+                      </form>
                     </Card>
-            ))}
-        </Grid>
-        </TreeItem>
-        <br></br><br></br>
-        </TreeView>
-      </Grid>
-    </div>
-    </div>
+                  ))}
+                </Grid>
+              </TreeItem>
+              <br />
+              <br />
+            </TreeView>
+          </Grid>
+        </div>
+      </div>
     </Paper>
   );
-};
+}
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,
