@@ -44,10 +44,11 @@ export default class StudentSearch extends Component {
 
   onChangeSearch(e) {
     this.setState({ search: e.target.value }, () => {
-      console.log(this.state.search);
-      if (this.state.search.length > 0) {
+      // console.log(this.state.search);
+      const { search } = this.state;
+      if (search.length > 0) {
         const searchObject = {
-          search: this.state.search,
+          search,
         };
         axios.post('http://localhost:4000/students/search', searchObject)
           .then((response) => {
@@ -58,7 +59,7 @@ export default class StudentSearch extends Component {
               students: response.data,
 
             });
-            console.log(this.state.students);
+            // console.log(this.state.students);
           });
       } else {
         this.setState({
@@ -71,11 +72,12 @@ export default class StudentSearch extends Component {
 
   onChangeMajor(e) {
     this.setState({ major: e.target.value }, () => {
-      console.log(this.state.major);
-      if (this.state.search.length > 0) {
+      // console.log(this.state.major);
+      const { search, major } = this.state;
+      if (search.length > 0) {
         const searchObject = {
-          search: this.state.search,
-          major: this.state.major,
+          search,
+          major,
         };
 
         axios.post('http://localhost:4000/students/filterMajor', searchObject)
@@ -86,7 +88,7 @@ export default class StudentSearch extends Component {
               students: response.data,
 
             });
-            console.log(this.state.students);
+            // console.log(this.state.students);
           });
       } else {
         this.setState({

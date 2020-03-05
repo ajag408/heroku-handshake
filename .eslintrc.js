@@ -26,7 +26,10 @@ module.exports = {
     "no-console": "off",
     "no-param-reassign": "off",
     "func-names": "off",
-    "no-alert": "off"
+    "no-alert": "off",
+    "react/no-unused-state": "off",
+    "camelcase": "off",
+    "react/jsx-props-no-spreading": "off"
     
   },
 };

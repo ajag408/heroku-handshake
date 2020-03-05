@@ -3,27 +3,24 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
+
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/styles';
+
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 
-import Moment from 'react-moment';
+
 import {
   Card,
   CardHeader,
-  CardActions,
+
   CardContent,
   Avatar,
   Typography,
   Divider,
-  Button,
-  LinearProgress,
+
   TextField,
 } from '@material-ui/core';
 
@@ -63,16 +60,16 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { className, ...rest } = props;
-  const { classes } = props;
+  const { classes, state } = props;
   const [treeExpanded, treeSetExpanded] = React.useState([]);
   const handleChange = (event, nodes) => {
     treeSetExpanded(nodes);
   };
-  const i = -1;
-  const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
-  const handleExpandClick = (i) => {
-    cardSetExpandedID(cardExpandedID == i ? -1 : i);
-  };
+
+  // const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
+  // const handleExpandClick = (i) => {
+  //   cardSetExpandedID(cardExpandedID == i ? -1 : i);
+  // };
 
 
   return (
@@ -91,7 +88,7 @@ function Content(props) {
         //   xl={4}
               xs={12}
             >
-              {props.state.student.map((student, i) => (
+              {state.student.map((student) => (
                 <Card
                   {...rest}
                   className={clsx(classes.root, className)}
@@ -152,7 +149,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.student.map((student, i) => (
+                  {state.student.map((student) => (
                     <Card
                       {...rest}
                       className={clsx(classes.root, className)}
@@ -326,7 +323,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.education.map((education, i) => (
+                  {state.education.map((education) => (
                     <Card>
                       <CardHeader
 
@@ -374,7 +371,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.experience.map((experience, i) => (
+                  {state.experience.map((experience) => (
                     <Card>
                       <CardHeader
 
@@ -423,7 +420,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.student.map((student, i) => (
+                  {state.student.map((student) => (
                     <Card
                       {...rest}
                       className={clsx(classes.root, className)}
@@ -480,7 +477,9 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  className: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Content);

@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
 import Navigator from '../studentNav.component';
 import Content from './viewEventsContent.component';
 
@@ -52,7 +51,7 @@ export default class ViewEvents extends Component {
           this.setState({
             education: res.data,
           });
-          console.log(this.state.education);
+        //   console.log(this.state.education);
         }
       });
     axios.get('http://localhost:4000/events/get-upcoming-events')
@@ -71,10 +70,11 @@ export default class ViewEvents extends Component {
 
   onChangeSearchInput(e) {
     this.setState({ search: e.target.value }, () => {
-      console.log(this.state.search);
-      if (this.state.search.length > 0) {
+      // console.log(this.state.search);
+      const { search} = this.state;
+      if (search.length > 0) {
         const searchObject = {
-          search: this.state.search,
+          search: search,
         };
         axios.post('http://localhost:4000/events/search-upcoming-events', searchObject)
           .then((response) => {
@@ -85,7 +85,7 @@ export default class ViewEvents extends Component {
               events: response.data,
 
             });
-            console.log(this.state.students);
+            // console.log(this.state.students);
           });
       } else {
         axios.get('http://localhost:4000/events/get-upcoming-events')
@@ -116,15 +116,16 @@ export default class ViewEvents extends Component {
         if (res.data.errno) {
           alert('Unsuccessful update');
         } else {
-          if (res.data[0].eligibility == 'All') {
+          if (res.data[0].eligibility === 'All') {
             this.setState({
               regMatch: true,
             });
-            console.log(this.state.regMatch);
+            // console.log(this.state.regMatch);
           } else {
-            for (let i = 0; i < this.state.education.length; i++) {
-              console.log(this.state.education[i].major);
-              if (res.data[0].eligibility == this.state.education[i].major) {
+            const { education } = this.state;
+            for (let i = 0; i < education.length; i += 1) {
+              console.log(education[i].major);
+              if (res.data[0].eligibility === education[i].major) {
                 console.log('yee');
                 this.setState({
                   regMatch: true,
@@ -132,7 +133,8 @@ export default class ViewEvents extends Component {
               }
             }
           }
-          if (!this.state.regMatch) {
+          const { regMatch } = this.state;
+          if (!regMatch) {
             alert('You are not eligible to register for this event, based on your educational background');
           } else {
             console.log('in final else');
@@ -141,8 +143,8 @@ export default class ViewEvents extends Component {
               event: res.data[0].id,
             };
             axios.post('http://localhost:4000/events/registerEvent', regObject)
-              .then((res) => {
-                if (res.data.errno) {
+              .then((responseL) => {
+                if (responseL.data.errno) {
                   alert('You already registered for this event');
                 } else {
                   alert('Successful registration');

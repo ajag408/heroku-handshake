@@ -15,7 +15,6 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import EventIcon from '@material-ui/icons/Event';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { logoutStudent } from '../../js/actions/index';
 
@@ -24,10 +23,10 @@ const categories = [
     id: 'Discover',
     children: [
       { id: 'Profile', icon: <AccountBoxIcon />, action: () => { window.location.href = '/student/profile'; } },
-      { id: 'Job Search', icon: <WorkIcon />, action: () => { { window.location.href = '/student/landing'; } } },
-      { id: 'Applications', icon: <PostAddIcon />, action: () => { { window.location.href = '/student/applications'; } } },
-      { id: 'Events', icon: <EventIcon />, action: () => { { window.location.href = '/student/events'; } } },
-      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => { { window.location.href = '/student/students'; } } },
+      { id: 'Job Search', icon: <WorkIcon />, action: () => { window.location.href = '/student/landing'; } },
+      { id: 'Applications', icon: <PostAddIcon />, action: () => { window.location.href = '/student/applications'; } },
+      { id: 'Events', icon: <EventIcon />, action: () => { window.location.href = '/student/events'; } },
+      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => { window.location.href = '/student/students'; } },
     ],
   },
   {
@@ -91,10 +90,10 @@ const styles = (theme) => ({
 });
 
 function Nav(props) {
-  const { classes, ...other } = props;
+  const { classes, logoutStudent: logout, ...other } = props;
   console.log(categories[1].children[0].action);
   categories[1].children[0].action = () => {
-    props.logoutStudent();
+    logout();
   };
   console.log(categories[1].children[0]);
   // const handleClick = (event, id) => {
@@ -159,7 +158,8 @@ function Nav(props) {
 }
 
 Nav.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  logoutStudent: PropTypes.func.isRequired,
 };
 function mapDispatchToProps(dispatch) {
   return {

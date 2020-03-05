@@ -1,11 +1,8 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
+
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -17,13 +14,9 @@ import {
   Card,
   CardActions,
   CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+
   Typography,
-  TablePagination,
+
 } from '@material-ui/core';
 import Moment from 'react-moment';
 import Collapse from '@material-ui/core/Collapse';
@@ -84,15 +77,19 @@ const styles = (theme) => ({
 });
 
 function Content(props) {
-  const { classes } = props;
+  const {
+    classes, state, onChangeSearchInput, onChangeSearchFilter, onChangeSearchLoc,
+    onUpload,
+  } = props;
+  const { search, loc, jobs } = state;
   const [selectedFT, setSelectedFT] = React.useState(false);
   const [selectedPT, setSelectedPT] = React.useState(false);
   const [selectedON, setSelectedON] = React.useState(false);
   const [selectedIN, setSelectedIN] = React.useState(false);
-  const i = -1;
+  // const i = -1;
   const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
   const handleExpandClick = (i) => {
-    cardSetExpandedID(cardExpandedID == i ? -1 : i);
+    cardSetExpandedID(cardExpandedID === i ? -1 : i);
   };
 
 
@@ -108,8 +105,8 @@ function Content(props) {
             placeholder="Search jobs by company name or job title"
             className={classes.input}
             disableUnderline
-            onChange={props.onChangeSearchInput}
-            value={props.state.search}
+            onChange={onChangeSearchInput}
+            value={search}
           />
           <br />
           <br />
@@ -120,9 +117,9 @@ function Content(props) {
               setSelectedFT(!selectedFT);
               console.log(!selectedFT);
               props.state.selectedFT = !selectedFT;
-              console.log(props.state.selectedFT);
+              // console.log(props.state.selectedFT);
             }}
-            onChange={props.onChangeSearchFilter}
+            onChange={onChangeSearchFilter}
           >
             Full Time
           </ToggleButton>
@@ -136,7 +133,7 @@ function Content(props) {
               props.state.selectedPT = !selectedPT;
               console.log(props.state.selectedPT);
             }}
-            onChange={props.onChangeSearchFilter}
+            onChange={onChangeSearchFilter}
           >
             Part Time
           </ToggleButton>
@@ -150,7 +147,7 @@ function Content(props) {
               props.state.selectedON = !selectedON;
               console.log(props.state.selectedON);
             }}
-            onChange={props.onChangeSearchFilter}
+            onChange={onChangeSearchFilter}
           >
             On Campus
           </ToggleButton>
@@ -164,7 +161,7 @@ function Content(props) {
               props.state.selectedIN = !selectedIN;
               console.log(props.state.selectedIN);
             }}
-            onChange={props.onChangeSearchFilter}
+            onChange={onChangeSearchFilter}
           >
             Intern
           </ToggleButton>
@@ -176,11 +173,11 @@ function Content(props) {
             placeholder="Filter by location"
             className={classes.input}
             disableUnderline
-            onChange={props.onChangeSearchLoc}
-            value={props.state.loc}
+            onChange={onChangeSearchLoc}
+            value={loc}
           />
           <div className={classes.content}>
-            {props.state.jobs.map((job, i) => (
+            {jobs.map((job, i) => (
               <Card>
                 <CardHeader
 
@@ -258,12 +255,13 @@ function Content(props) {
                       />
                     </Button>
                     <button
+                      type="submit"
                       className={classes.uploadButton}
                 // onClick = {props.onUpload}
                       color="primary"
                       variant="contained"
                       component="label"
-                      onClick={props.onUpload}
+                      onClick={onUpload}
                       value={job.jobID}
                       key={job.jobID}
                     >
@@ -282,7 +280,12 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onChangeSearchInput: PropTypes.func.isRequired,
+  onChangeSearchFilter: PropTypes.func.isRequired,
+  onChangeSearchLoc: PropTypes.func.isRequired,
+  onUpload: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Content);

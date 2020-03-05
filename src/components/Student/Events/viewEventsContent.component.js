@@ -1,33 +1,26 @@
 
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
+
+
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Button from '@material-ui/core/Button';
-import ToggleButton from '@material-ui/lab/ToggleButton';
+
 import {
   Paper,
   Input,
   Card,
   CardActions,
   CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+
   Typography,
-  TablePagination,
+
 } from '@material-ui/core';
 import Moment from 'react-moment';
 import Collapse from '@material-ui/core/Collapse';
@@ -89,10 +82,12 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { classes } = props;
-  const i = -1;
+  const { onChangeSearchInput, onRegister } = props;
+  const { state } = props;
+  const { search, registered, events } = state;
   const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
   const handleExpandClick = (i) => {
-    cardSetExpandedID(cardExpandedID == i ? -1 : i);
+    cardSetExpandedID(cardExpandedID === i ? -1 : i);
   };
 
   const [treeExpanded, treeSetExpanded] = React.useState([]);
@@ -113,7 +108,7 @@ function Content(props) {
         >
           <TreeItem nodeId="1" label="View Registered Events">
             <h1> Registered</h1>
-            {props.state.registered.map((event, i) => (
+            {registered.map((event, i) => (
               <Card>
                 <CardHeader
 
@@ -178,14 +173,14 @@ function Content(props) {
             placeholder="Search events by name"
             className={classes.input}
             disableUnderline
-            onChange={props.onChangeSearchInput}
-            value={props.state.search}
+            onChange={onChangeSearchInput}
+            value={search}
           />
           <br />
           <br />
 
           <div className={classes.content}>
-            {props.state.events.map((event, i) => (
+            {events.map((event, i) => (
               <Card>
                 <CardHeader
 
@@ -234,13 +229,14 @@ function Content(props) {
                       {event.description}
                     </Typography>
                     <button
+                      type="submit"
                       className={classes.uploadButton}
                 // onClick = {props.onUpload}
                       color="primary"
                       variant="contained"
                       component="label"
                       id={event.id}
-                      onClick={props.onRegister}
+                      onClick={onRegister}
                     >
                       Register
                     </button>
@@ -256,7 +252,10 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onChangeSearchInput: PropTypes.func.isRequired,
+  onRegister: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Content);

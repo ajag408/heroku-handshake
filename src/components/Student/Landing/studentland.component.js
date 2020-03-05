@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
 import Navigator from '../studentNav.component';
 import Content from './jobSearchContent.component';
 
@@ -39,7 +38,7 @@ export default class JobSearch extends Component {
             studentName: res.data.user.name,
 
           });
-          console.log(this.state.studentName);
+          // console.log(this.state.studentName);
         }
       });
   }
@@ -50,31 +49,35 @@ export default class JobSearch extends Component {
     console.log('etargetval');
     console.log(e.target.value);
     this.setState({ search: e.target.value }, () => {
-      console.log(this.state.search);
-      if (this.state.search.length > 0) {
+      // console.log(this.state.search);
+      const {
+        search, selectedFT, selectedPT, selectedON, selectedIN, loc,
+        jobs,
+      } = this.state;
+      if (search.length > 0) {
         const filter = [];
         const filterObject = {
-          'Full Time': this.state.selectedFT,
-          'Part Time': this.state.selectedPT,
-          'On Campus': this.state.selectedON,
-          Intern: this.state.selectedIN,
+          'Full Time': selectedFT,
+          'Part Time': selectedPT,
+          'On Campus': selectedON,
+          Intern: selectedIN,
         };
-        for (const [name, value] in filterObject) {
-          if (value == true) {
-            filter.push(name);
+        Object.keys(filterObject).forEach((key) => {
+          if (filterObject[key] === true) {
+            filter.push(key);
           }
-        }
+        });
         const searchObject = {
-          search: this.state.search,
-          loc: this.state.loc,
+          search,
+          loc,
         };
 
         axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
           .then((response) => {
             if (filter.length > 0) {
-              for (let i = 0; i < response.data.length; i++) {
+              for (let i = 0; i < response.data.length; i += 1) {
                 if (filter.includes(response.data[i].cat)) {
-                  this.state.jobs.push(response.data[i]);
+                  jobs.push(response.data[i]);
                 }
               }
             } else {
@@ -83,7 +86,7 @@ export default class JobSearch extends Component {
 
               });
             }
-            console.log(this.state.jobs);
+            // console.log(this.state.jobs);
           });
       } else {
         this.setState({
@@ -95,25 +98,28 @@ export default class JobSearch extends Component {
   }
   // } else {
 
-  onChangeSearchFilter(e) {
-    if (this.state.search.length > 0) {
+  onChangeSearchFilter() {
+    const {
+      search, selectedFT, selectedPT, selectedON, selectedIN, loc,
+    } = this.state;
+    if (search.length > 0) {
       const filter = [];
       const filterObject = {
-        'Full Time': this.state.selectedFT,
-        'Part Time': this.state.selectedPT,
-        'On Campus': this.state.selectedON,
-        Intern: this.state.selectedIN,
+        'Full Time': selectedFT,
+        'Part Time': selectedPT,
+        'On Campus': selectedON,
+        Intern: selectedIN,
       };
       console.log(filterObject);
-      for (const filterName in filterObject) {
-        if (filterObject[filterName] == true) {
-          console.log(filterName);
-          filter.push(filterName);
+      Object.keys(filterObject).forEach((key) => {
+        if (filterObject[key] === true) {
+          console.log(key);
+          filter.push(key);
         }
-      }
+      });
       const searchObject = {
-        search: this.state.search,
-        loc: this.state.loc,
+        search,
+        loc,
       };
 
       axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
@@ -124,7 +130,7 @@ export default class JobSearch extends Component {
           });
           if (filter.length > 0) {
             const filtered = [];
-            for (let i = 0; i < response.data.length; i++) {
+            for (let i = 0; i < response.data.length; i += 1) {
               if (filter.includes(response.data[i].cat)) {
                 filtered.push(response.data[i]);
               }
@@ -139,7 +145,7 @@ export default class JobSearch extends Component {
 
             });
           }
-          console.log(this.state.jobs);
+          // console.log(this.state.jobs);
         });
     } else {
       this.setState({
@@ -151,31 +157,33 @@ export default class JobSearch extends Component {
 
   onChangeSearchLoc(e) {
     this.setState({ loc: e.target.value }, () => {
-      console.log(this.state.loc);
-      if (this.state.search.length > 0) {
+      const {
+        search, selectedFT, selectedPT, selectedON, selectedIN, loc, jobs,
+      } = this.state;
+      if (search.length > 0) {
         const filter = [];
         const filterObject = {
-          'Full Time': this.state.selectedFT,
-          'Part Time': this.state.selectedPT,
-          'On Campus': this.state.selectedON,
-          Intern: this.state.selectedIN,
+          'Full Time': selectedFT,
+          'Part Time': selectedPT,
+          'On Campus': selectedON,
+          Intern: selectedIN,
         };
-        for (const [name, value] in filterObject) {
-          if (value == true) {
-            filter.push(name);
+        Object.keys(filterObject).forEach((key) => {
+          if (filterObject[key] === true) {
+            filter.push(key);
           }
-        }
+        });
         const searchObject = {
-          search: this.state.search,
-          loc: this.state.loc,
+          search,
+          loc,
         };
 
         axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
           .then((response) => {
             if (filter.length > 0) {
-              for (let i = 0; i < response.data.length; i++) {
+              for (let i = 0; i < response.data.length; i += 1) {
                 if (filter.includes(response.data[i].cat)) {
-                  this.state.jobs.push(response.data[i]);
+                  jobs.push(response.data[i]);
                 }
               }
             } else {
@@ -184,7 +192,7 @@ export default class JobSearch extends Component {
 
               });
             }
-            console.log(this.state.jobs);
+            // console.log(this.state.jobs);
           });
       } else {
         this.setState({
@@ -196,12 +204,13 @@ export default class JobSearch extends Component {
   }
 
   onUpload(e) {
+    console.log(this);
     console.log(e.target.value);
     // console.log(e._dispatchListeners);
     e.preventDefault();
     const { files } = document.getElementById('INPUT_TAG');
     console.log(files.length);
-    if (files.length == 0) {
+    if (files.length === 0) {
       alert('Please upload a resume to submit your application');
     } else {
       const formData = new FormData();

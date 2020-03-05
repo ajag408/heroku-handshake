@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { addStudent } from '../../js/actions/index';
 
 class CreateStudents extends Component {
@@ -60,14 +61,19 @@ class CreateStudents extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
+    const {
+      name, email, password, collegeName,
+    } = this.state;
+    const {
+      addStudent: add,
+    } = this.props;
     const studentObject = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      collegeName: this.state.collegeName,
+      name,
+      email,
+      password,
+      collegeName,
     };
-    this.props.addStudent(studentObject);
+    add(studentObject);
     // axios.post('http://localhost:4000/students/create-student', studentObject)
     //   .then(res => {
     //       if(res.data.errno){
@@ -84,28 +90,31 @@ class CreateStudents extends Component {
   }
 
   render() {
+    const {
+      name, email, password, collegeName,
+    } = this.state;
     return (
       <div className="form-wrapper">
         <h1>Student Sign Up</h1>
         <Form onSubmit={this.onSubmit}>
           <Form.Group controlId="Name">
             <Form.Label>Name</Form.Label>
-            <Form.Control required type="text" value={this.state.name} onChange={this.onChangeStudentName} />
+            <Form.Control required type="text" value={name} onChange={this.onChangeStudentName} />
           </Form.Group>
 
           <Form.Group controlId="Email">
             <Form.Label>Email</Form.Label>
-            <Form.Control required type="email" value={this.state.email} onChange={this.onChangeStudentEmail} />
+            <Form.Control required type="email" value={email} onChange={this.onChangeStudentEmail} />
           </Form.Group>
 
           <Form.Group controlId="Password">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" value={this.state.password} onChange={this.onChangeStudentPassword} />
+            <Form.Control required type="password" value={password} onChange={this.onChangeStudentPassword} />
           </Form.Group>
 
           <Form.Group controlId="CollegeName">
             <Form.Label>College Name</Form.Label>
-            <Form.Control required type="text" value={this.state.collegeName} onChange={this.onChangeStudentCollegeName} />
+            <Form.Control required type="text" value={collegeName} onChange={this.onChangeStudentCollegeName} />
           </Form.Group>
 
 
@@ -125,6 +134,10 @@ class CreateStudents extends Component {
     );
   }
 }
+CreateStudents.propTypes = {
+  addStudent: PropTypes.func.isRequired,
+
+};
 function mapDispatchToProps(dispatch) {
   return {
     addStudent: (student) => dispatch(addStudent(student)),

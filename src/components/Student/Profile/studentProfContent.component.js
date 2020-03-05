@@ -3,17 +3,15 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
+
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/styles';
+
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
-import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
 
-import Moment from 'react-moment';
+
 import {
   Card,
   CardHeader,
@@ -23,7 +21,6 @@ import {
   Typography,
   Divider,
   Button,
-  LinearProgress,
   TextField,
 } from '@material-ui/core';
 
@@ -63,16 +60,42 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { className, ...rest } = props;
-  const { classes } = props;
+  const {
+    classes, state, onUpload, onChangeName,
+    onChangeDob, onChangeCity, onChangeState,
+    onChangeCountry, onChangeStudentEmail, onChangeStudentPhone,
+    onChangeCareerObjective, onSubmit, onChangeCollegeName,
+    onChangeEducationLocation,
+    onChangeDegree,
+    onChangeMajor,
+    onChangeGPA,
+    onChangeGradYear,
+    onSubmitEducation,
+    onChangeCompanyName,
+    onChangeJobLocation,
+    onChangeJobTitle,
+    onChangeStartDate,
+    onChangeEndDate,
+    onChangeWorkDescription,
+    onChangeSkillset,
+    onSubmitSkillset,
+    onSubmitExperience,
+
+  } = props;
+  const {
+    name, city, state: countryState, country, careerObjective,
+    profPic, dob, email, phone, education: pastEdu,
+
+    collegeName, educationLocation, degree, major,
+  } = state;
   const [treeExpanded, treeSetExpanded] = React.useState([]);
   const handleChange = (event, nodes) => {
     treeSetExpanded(nodes);
   };
-  const i = -1;
-  const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
-  const handleExpandClick = (i) => {
-    cardSetExpandedID(cardExpandedID == i ? -1 : i);
-  };
+  // const [cardExpandedID, cardSetExpandedID] = React.useState(-1);
+  // const handleExpandClick = (i) => {
+  //   cardSetExpandedID(cardExpandedID == i ? -1 : i);
+  // };
 
 
   return (
@@ -102,18 +125,18 @@ function Content(props) {
                         gutterBottom
                         variant="h2"
                       >
-                        {props.state.name}
+                        {name}
                       </Typography>
                       <Typography
                         className={classes.locationText}
                         color="textSecondary"
                         variant="body1"
                       >
-                        {props.state.city}
+                        {city}
                         ,
-                        {props.state.state}
+                        {countryState}
                         ,
-                        {props.state.country}
+                        {country}
 
                       </Typography>
                       <br />
@@ -122,12 +145,12 @@ function Content(props) {
                         color="textSecondary"
                         variant="body1"
                       >
-                        {props.state.careerObjective}
+                        {careerObjective}
                       </Typography>
                     </div>
                     <Avatar
                       className={classes.avatar}
-                      src={props.state.profPic}
+                      src={profPic}
                     />
                   </div>
                 </CardContent>
@@ -136,7 +159,7 @@ function Content(props) {
 
                   <Button
                     className={classes.uploadButton}
-                    // onClick = {props.onUpload}
+                    // onClick = {onUpload}
                     color="primary"
                     variant="contained"
                     component="label"
@@ -146,7 +169,7 @@ function Content(props) {
                       type="file"
                       id="INPUT_TAG"
                       style={{ display: 'none' }}
-                      onChange={props.onUpload}
+                      onChange={onUpload}
                       required
                     />
                   </Button>
@@ -198,9 +221,9 @@ function Content(props) {
                               label="Name"
                               margin="dense"
                               name="name"
-                              onChange={props.onChangeName}
+                              onChange={onChangeName}
                               required
-                              value={props.state.name}
+                              value={name}
                               variant="outlined"
                             />
                           </Grid>
@@ -216,8 +239,8 @@ function Content(props) {
                               type="date"
                               margin="dense"
                               name="dob"
-                              onChange={props.onChangeDob}
-                              value={props.state.dob}
+                              onChange={onChangeDob}
+                              value={dob}
                               variant="outlined"
                             />
                           </Grid>
@@ -232,8 +255,8 @@ function Content(props) {
 
                               margin="dense"
                               name="city"
-                              onChange={props.onChangeCity}
-                              value={props.state.city}
+                              onChange={onChangeCity}
+                              value={city}
                               variant="outlined"
                             />
                           </Grid>
@@ -247,8 +270,8 @@ function Content(props) {
                               label="State"
                               margin="dense"
                               name="state"
-                              onChange={props.onChangeState}
-                              value={props.state.state}
+                              onChange={onChangeState}
+                              value={countryState}
                               variant="outlined"
                             />
                           </Grid>
@@ -263,8 +286,8 @@ function Content(props) {
                               label="Country"
                               margin="dense"
                               name="country"
-                              onChange={props.onChangeCountry}
-                              value={props.state.country}
+                              onChange={onChangeCountry}
+                              value={country}
                               variant="outlined"
                             />
 
@@ -279,9 +302,9 @@ function Content(props) {
                               label="Email Address"
                               margin="dense"
                               name="email"
-                              onChange={props.onChangeStudentEmail}
+                              onChange={onChangeStudentEmail}
                               required
-                              value={props.state.email}
+                              value={email}
                               variant="outlined"
                             />
                           </Grid>
@@ -295,9 +318,9 @@ function Content(props) {
                               label="Phone Number"
                               margin="dense"
                               name="phone"
-                              onChange={props.onChangeStudentPhone}
+                              onChange={onChangeStudentPhone}
                               type="number"
-                              value={props.state.phone}
+                              value={phone}
                               variant="outlined"
                             />
                           </Grid>
@@ -314,10 +337,10 @@ function Content(props) {
                               multiline
                               rows={15}
                               style={{ width: 300 }}
-                              onChange={props.onChangeCareerObjective}
+                              onChange={onChangeCareerObjective}
                                 // eslint-disable-next-line react/jsx-sort-props
                               SelectProps={{ native: true }}
-                              value={props.state.careerObjective}
+                              value={careerObjective}
                               variant="outlined"
                             />
                           </Grid>
@@ -333,7 +356,7 @@ function Content(props) {
                         <Button
                           color="primary"
                           variant="contained"
-                          onClick={props.onSubmit}
+                          onClick={onSubmit}
                         >
                           Save details
                         </Button>
@@ -352,7 +375,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.education.map((education, i) => (
+                  {pastEdu.map((education) => (
                     <Card>
                       <CardHeader
 
@@ -428,9 +451,9 @@ function Content(props) {
                               label="College Name"
                               margin="dense"
                               name="name"
-                              onChange={props.onChangeCollegeName}
+                              onChange={onChangeCollegeName}
                               required
-                              value={props.state.collegeName}
+                              value={collegeName}
                               variant="outlined"
                             />
                           </Grid>
@@ -446,8 +469,8 @@ function Content(props) {
 
                               margin="dense"
                               name="location"
-                              onChange={props.onChangeEducationLocation}
-                              value={props.state.educationLocation}
+                              onChange={onChangeEducationLocation}
+                              value={educationLocation}
                               variant="outlined"
                             />
                           </Grid>
@@ -462,8 +485,8 @@ function Content(props) {
 
                               margin="dense"
                               name="degree"
-                              onChange={props.onChangeDegree}
-                              value={props.state.degree}
+                              onChange={onChangeDegree}
+                              value={degree}
                               variant="outlined"
                             />
                           </Grid>
@@ -477,8 +500,8 @@ function Content(props) {
                               label="Major"
                               margin="dense"
                               name="major"
-                              onChange={props.onChangeMajor}
-                              value={props.state.major}
+                              onChange={onChangeMajor}
+                              value={major}
                               variant="outlined"
                             />
                           </Grid>
@@ -493,8 +516,8 @@ function Content(props) {
                               label="Graduation Year"
                               margin="dense"
                               name="Graduation Year"
-                              onChange={props.onChangeGradYear}
-                              value={props.state.gradYear}
+                              onChange={onChangeGradYear}
+                              value={state.gradYear}
                               variant="outlined"
                             />
 
@@ -509,9 +532,9 @@ function Content(props) {
                               label="Cumulative GPA"
                               margin="dense"
                               name="gpa"
-                              onChange={props.onChangeGPA}
+                              onChange={onChangeGPA}
                               required
-                              value={props.state.gpa}
+                              value={state.gpa}
                               variant="outlined"
                             />
                           </Grid>
@@ -523,7 +546,7 @@ function Content(props) {
                         <Button
                           color="primary"
                           variant="contained"
-                          onClick={props.onSubmitEducation}
+                          onClick={onSubmitEducation}
                         >
                           Add
                         </Button>
@@ -542,7 +565,7 @@ function Content(props) {
         //   xl={8}
                   xs={12}
                 >
-                  {props.state.experience.map((experience, i) => (
+                  {state.experience.map((experience) => (
                     <Card>
                       <CardHeader
 
@@ -618,9 +641,9 @@ function Content(props) {
                               label="Company Name"
                               margin="dense"
                               name="name"
-                              onChange={props.onChangeCompanyName}
+                              onChange={onChangeCompanyName}
                               required
-                              value={props.state.companyName}
+                              value={state.companyName}
                               variant="outlined"
                             />
                           </Grid>
@@ -636,8 +659,8 @@ function Content(props) {
 
                               margin="dense"
                               name="title"
-                              onChange={props.onChangeJobTitle}
-                              value={props.state.jobTitle}
+                              onChange={onChangeJobTitle}
+                              value={state.jobTitle}
                               variant="outlined"
                             />
                           </Grid>
@@ -652,8 +675,8 @@ function Content(props) {
 
                               margin="dense"
                               name="location"
-                              onChange={props.onChangeJobLocation}
-                              value={props.state.jobLocation}
+                              onChange={onChangeJobLocation}
+                              value={state.jobLocation}
                               variant="outlined"
                             />
                           </Grid>
@@ -669,8 +692,8 @@ function Content(props) {
                               type="date"
                               margin="dense"
                               name="startDate"
-                              onChange={props.onChangeStartDate}
-                              value={props.state.stDate}
+                              onChange={onChangeStartDate}
+                              value={state.stDate}
                               variant="outlined"
                             />
                           </Grid>
@@ -686,8 +709,8 @@ function Content(props) {
                               margin="dense"
                               name="endDate"
                               type="date"
-                              onChange={props.onChangeEndDate}
-                              value={props.state.endDate}
+                              onChange={onChangeEndDate}
+                              value={state.endDate}
                               variant="outlined"
                             />
 
@@ -702,11 +725,11 @@ function Content(props) {
                               label="Work Description"
                               margin="dense"
                               name="description"
-                              onChange={props.onChangeWorkDescription}
+                              onChange={onChangeWorkDescription}
                               multiline
                               rows={15}
                               style={{ width: 300 }}
-                              value={props.state.workDescription}
+                              value={state.workDescription}
                               variant="outlined"
                             />
                           </Grid>
@@ -718,7 +741,7 @@ function Content(props) {
                         <Button
                           color="primary"
                           variant="contained"
-                          onClick={props.onSubmitExperience}
+                          onClick={onSubmitExperience}
                         >
                           Add
                         </Button>
@@ -768,9 +791,9 @@ function Content(props) {
                               multiline
                               rows={15}
                               style={{ width: 300 }}
-                              onChange={props.onChangeSkillset}
+                              onChange={onChangeSkillset}
                               required
-                              value={props.state.skillset}
+                              value={state.skillset}
                               variant="outlined"
                             />
                           </Grid>
@@ -782,7 +805,7 @@ function Content(props) {
                         <Button
                           color="primary"
                           variant="contained"
-                          onClick={props.onSubmitSkillset}
+                          onClick={onSubmitSkillset}
                         >
                           Save skills
                         </Button>
@@ -802,7 +825,35 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  className: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onUpload: PropTypes.func.isRequired,
+  onChangeName: PropTypes.func.isRequired,
+  onChangeDob: PropTypes.func.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
+  onChangeState: PropTypes.func.isRequired,
+  onChangeCountry: PropTypes.func.isRequired,
+  onChangeStudentEmail: PropTypes.func.isRequired,
+  onChangeStudentPhone: PropTypes.func.isRequired,
+  onChangeCareerObjective: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChangeCollegeName: PropTypes.func.isRequired,
+  onChangeEducationLocation: PropTypes.func.isRequired,
+  onChangeDegree: PropTypes.func.isRequired,
+  onChangeMajor: PropTypes.func.isRequired,
+  onChangeGPA: PropTypes.func.isRequired,
+  onChangeGradYear: PropTypes.func.isRequired,
+  onSubmitEducation: PropTypes.func.isRequired,
+  onChangeCompanyName: PropTypes.func.isRequired,
+  onChangeJobLocation: PropTypes.func.isRequired,
+  onChangeJobTitle: PropTypes.func.isRequired,
+  onChangeStartDate: PropTypes.func.isRequired,
+  onChangeEndDate: PropTypes.func.isRequired,
+  onChangeWorkDescription: PropTypes.func.isRequired,
+  onChangeSkillset: PropTypes.func.isRequired,
+  onSubmitSkillset: PropTypes.func.isRequired,
+  onSubmitExperience: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Content);

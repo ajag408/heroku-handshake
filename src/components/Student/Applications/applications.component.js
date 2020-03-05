@@ -54,13 +54,13 @@ export default class Applications extends Component {
       Declined: declined,
     };
     console.log(filterObject);
-    const entries = Object.entries(filterObject);
-    for (const [status, bool] of entries) {
-      if (bool == true) {
-        console.log(status);
-        filter.push(status);
+    // const entries = Object.entries(filterObject);
+    Object.keys(filterObject).forEach((key) => {
+      if (filterObject[key] === true) {
+        console.log(key);
+        filter.push(key);
       }
-    }
+    });
 
     axios.get('http://localhost:4000/jobs/jobsApplied')
       .then((response) => {
@@ -70,7 +70,7 @@ export default class Applications extends Component {
         //     });
         if (filter.length > 0) {
           const filtered = [];
-          for (let i = 0; i < response.data.length; i++) {
+          for (let i = 0; i < response.data.length; i += 1) {
             if (filter.includes(response.data[i].status)) {
               filtered.push(response.data[i]);
             }
@@ -85,7 +85,8 @@ export default class Applications extends Component {
 
           });
         }
-        console.log(this.state.applications);
+        const { applications } = this.state;
+        console.log(applications);
       });
   }
 

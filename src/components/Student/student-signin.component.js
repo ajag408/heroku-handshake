@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -48,12 +49,13 @@ class StudentSigninForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
+    const { email, password } = this.state;
+    const { signinStudent: signin } = this.props;
     const studentObject = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
-    this.props.signinStudent(studentObject);
+    signin(studentObject);
     // axios.post('http://localhost:4000/students/login', studentObject)
     // .then(res => {
     //     if(res.data.isStudent){
@@ -66,6 +68,7 @@ class StudentSigninForm extends Component {
   }
 
   render() {
+    const { email, password } = this.state;
     return (
       <div className="form-wrapper">
 
@@ -74,12 +77,12 @@ class StudentSigninForm extends Component {
 
           <Form.Group controlId="Email">
             <Form.Label>Email</Form.Label>
-            <Form.Control required type="email" value={this.state.email} onChange={this.onChangeStudentEmail} />
+            <Form.Control required type="email" value={email} onChange={this.onChangeStudentEmail} />
           </Form.Group>
 
           <Form.Group controlId="Password">
             <Form.Label>Password</Form.Label>
-            <Form.Control required type="password" value={this.state.password} onChange={this.onChangeStudentPassword} />
+            <Form.Control required type="password" value={password} onChange={this.onChangeStudentPassword} />
           </Form.Group>
 
           <Button variant="danger" size="lg" block="block" type="submit">
@@ -89,7 +92,7 @@ class StudentSigninForm extends Component {
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="/signup-student" variant="body2">
-                Don't have an account? Sign up
+                Don&apos;t have an account? Sign up
               </Link>
             </Grid>
           </Grid>
@@ -98,6 +101,11 @@ class StudentSigninForm extends Component {
     );
   }
 }
+StudentSigninForm.propTypes = {
+  signinStudent: PropTypes.func.isRequired,
+  // state: PropTypes.node.isRequired,
+  // onChangeStatusFilter: PropTypes.func.isRequired,
+};
 function mapDispatchToProps(dispatch) {
   return {
     signinStudent: (student) => dispatch(signinStudent(student)),

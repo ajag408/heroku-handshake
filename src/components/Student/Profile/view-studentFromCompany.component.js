@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Navigator from '../../Company/companyNav.component';
 import Content from './viewProfContent.component';
 
@@ -73,3 +74,9 @@ export default class ViewStudentProfileFromCompany extends Component {
     );
   }
 }
+
+
+ViewStudentProfileFromCompany.propTypes = {
+  match: PropTypes.node.isRequired,
+
+};

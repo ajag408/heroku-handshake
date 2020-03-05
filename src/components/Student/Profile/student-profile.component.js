@@ -1,14 +1,13 @@
 
 import React, { Component } from 'react';
-import axios from 'axios';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Navigator from '../studentNav.component';
 import Content from './studentProfContent.component';
 import {
   displayStudent, updateStudent, addEducation, addExperience, updateSkillset, uploadProfPic,
 } from '../../../js/actions/index';
-// import { Student } from "../../js/actions/index";
-import store from '../../../js/store/index';
+
 
 class DisplayStudent extends Component {
   constructor(props) {
@@ -71,11 +70,13 @@ class DisplayStudent extends Component {
       workDescription: '',
       skillset: '',
     };
-
-    this.props.displayStudent(this.state);
+    const {
+      displayStudent: display,
+    } = this.props;
+    display(this.state);
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     console.log(newProps);
     this.setState({
       name: newProps.name,
@@ -193,76 +194,90 @@ class DisplayStudent extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-
+    const {
+      name, dob, city, state, country, careerObjective, email, phone,
+    } = this.state;
+    const { updateStudent: update } = this.props;
     const studentObject = {
-      name: this.state.name,
-      dob: this.state.dob,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      careerObjective: this.state.careerObjective,
-      email: this.state.email,
-      phone: this.state.phone,
+      name,
+      dob,
+      city,
+      state,
+      country,
+      careerObjective,
+      email,
+      phone,
 
     };
-    this.props.updateStudent(studentObject);
+    update(studentObject);
   }
 
 
   onSubmitEducation(e) {
     e.preventDefault();
-
+    const {
+      collegeName, educationLocation, degree, major, gradYear, gpa,
+    } = this.state;
+    const { addEducation: educate } = this.props;
     const educationObject = {
-      collegeName: this.state.collegeName,
-      loc: this.state.educationLocation,
-      degree: this.state.degree,
-      major: this.state.major,
-      gradYear: this.state.gradYear,
-      gpa: this.state.gpa,
+      collegeName,
+      loc: educationLocation,
+      degree,
+      major,
+      gradYear,
+      gpa,
 
 
     };
-    this.props.addEducation(educationObject);
+    educate(educationObject);
   }
 
   onSubmitExperience(e) {
     e.preventDefault();
     console.log(this.state);
+    const {
+      companyName, jobLocation, jobTitle, stDate, endDate, workDescription,
+    } = this.state;
+    const { addExperience: experience } = this.props;
     const experienceObject = {
-      companyName: this.state.companyName,
-      loc: this.state.jobLocation,
-      title: this.state.jobTitle,
-      startDate: this.state.stDate,
-      endDate: this.state.endDate,
-      description: this.state.workDescription,
+      companyName,
+      loc: jobLocation,
+      title: jobTitle,
+      startDate: stDate,
+      endDate,
+      description: workDescription,
 
 
     };
-    this.props.addExperience(experienceObject);
+    experience(experienceObject);
   }
 
   onSubmitSkillset(e) {
     e.preventDefault();
-    console.log(this.state);
+    const {
+      skillset,
+    } = this.state;
+    const { updateSkillset: skillz } = this.props;
     const skillsetObject = {
 
-      skillset: this.state.skillset,
+      skillset,
 
 
     };
 
-    this.props.updateSkillset(skillsetObject);
+    skillz(skillsetObject);
   }
 
   onUpload(e) {
     e.preventDefault();
+    const { uploadProfPic: prof } = this.props;
     const { files } = document.getElementById('INPUT_TAG');
     console.log(files);
     const formData = new FormData();
     formData.append('image', files[0]);
     // console.log(this.props.uploadProfPic);
     console.log(this.props);
-    this.props.uploadProfPic(formData);
+    prof(formData);
     console.log(files[0]);
   }
 
@@ -298,7 +313,7 @@ class DisplayStudent extends Component {
           onChangeSkillset={this.onChangeSkillset}
           onSubmitSkillset={this.onSubmitSkillset}
           onSubmitExperience={this.onSubmitExperience}
-          onUpload={this.onUpload}
+
         />
 
       </div>
@@ -306,6 +321,14 @@ class DisplayStudent extends Component {
     );
   }
 }
+DisplayStudent.propTypes = {
+  displayStudent: PropTypes.func.isRequired,
+  updateStudent: PropTypes.func.isRequired,
+  addEducation: PropTypes.func.isRequired,
+  addExperience: PropTypes.func.isRequired,
+  updateSkillset: PropTypes.func.isRequired,
+  uploadProfPic: PropTypes.func.isRequired,
+};
 function mapDispatchToProps(dispatch) {
   return {
     displayStudent: (student) => dispatch(displayStudent(student)),

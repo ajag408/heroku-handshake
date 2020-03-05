@@ -1,11 +1,10 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import moment from 'moment';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
+
 import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -14,7 +13,7 @@ import {
   Paper,
   Input,
   Card,
-  CardActions,
+
   CardContent,
   Table,
   TableBody,
@@ -22,7 +21,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination,
+
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -80,7 +79,9 @@ const styles = (theme) => ({
 });
 
 function Content(props) {
-  const { classes } = props;
+  const {
+    classes, state, onChangeMajor, onChangeSearch,
+  } = props;
   const [treeExpanded, treeSetExpanded] = React.useState([]);
   const handleChange = (event, nodes) => {
     treeSetExpanded(nodes);
@@ -114,7 +115,7 @@ function Content(props) {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {props.state.allStudents.map((student) => (
+                        {state.allStudents.map((student) => (
                           <TableRow
                             className={classes.tableRow}
                             hover
@@ -147,8 +148,8 @@ function Content(props) {
             placeholder="Search students by name, college name, or skillset"
             className={classes.input}
             disableUnderline
-            onChange={props.onChangeSearch}
-            value={props.state.search}
+            onChange={onChangeSearch}
+            value={state.search}
           />
           <br />
           <br />
@@ -157,8 +158,8 @@ function Content(props) {
             placeholder="Filter by major"
             className={classes.input}
             disableUnderline
-            onChange={props.onChangeMajor}
-            value={props.state.major}
+            onChange={onChangeMajor}
+            value={state.major}
           />
           <div className={classes.content}>
             <Card>
@@ -176,7 +177,7 @@ function Content(props) {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {props.state.students.map((student) => (
+                        {state.students.map((student) => (
                           <TableRow
                             className={classes.tableRow}
                             hover
@@ -217,7 +218,10 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onChangeSearch: PropTypes.node.isRequired,
+  onChangeMajor: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Content);

@@ -1,34 +1,18 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import moment from 'moment';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
 import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import {
   Paper,
-  Input,
-  Card,
-  CardActions,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-  TablePagination,
-} from '@material-ui/core';
-import Moment from 'react-moment';
-import Collapse from '@material-ui/core/Collapse';
 
-import SearchIcon from '@material-ui/icons/Search';
+  Card,
+
+  CardContent,
+
+  Typography,
+
+} from '@material-ui/core';
 
 
 const styles = (theme) => ({
@@ -85,11 +69,12 @@ const styles = (theme) => ({
 
 function Content(props) {
   const { classes } = props;
-
+  const { onChangeStatusFilter } = props;
+  const { state } = props;
+  const { applications } = state;
   const [pending, setpending] = React.useState(false);
   const [reviewed, setreviewed] = React.useState(false);
   const [declined, setdeclined] = React.useState(false);
-  const [selectedIN, setSelectedIN] = React.useState(false);
 
 
   return (
@@ -102,11 +87,11 @@ function Content(props) {
             selected={pending}
             onClick={() => {
               setpending(!pending);
-              console.log(!pending);
+              // console.log(!pending);
               props.state.pending = !pending;
-              console.log(props.state.pending);
+              // console.log(props.state.pending);
             }}
-            onChange={props.onChangeStatusFilter}
+            onChange={onChangeStatusFilter}
           >
             Pending
           </ToggleButton>
@@ -120,7 +105,7 @@ function Content(props) {
               props.state.reviewed = !reviewed;
               console.log(props.state.reviewed);
             }}
-            onChange={props.onChangeStatusFilter}
+            onChange={onChangeStatusFilter}
           >
             Reviewed
           </ToggleButton>
@@ -134,14 +119,14 @@ function Content(props) {
               props.state.declined = !declined;
               console.log(props.state.declined);
             }}
-            onChange={props.onChangeStatusFilter}
+            onChange={onChangeStatusFilter}
           >
             Declined
           </ToggleButton>
 &nbsp;&nbsp;
 
           <div className={classes.content}>
-            {props.state.applications.map((application, i) => (
+            {applications.map((application) => (
               <Card>
                 <CardHeader
 
@@ -170,7 +155,9 @@ function Content(props) {
 }
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onChangeStatusFilter: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Content);
