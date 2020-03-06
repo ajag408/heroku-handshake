@@ -20,10 +20,10 @@ const categories = [
   {
     id: 'Manage',
     children: [
-      { id: 'Job Postings', icon: <WorkIcon />, action: () => {{window.location.href = '/company/landing'}}},
-      { id: 'Profile', icon: <AccountBoxIcon />, action: () => {{window.location.href = '/company/profile'}} },
-      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => {{window.location.href = '/company/students'}} },
-      { id: 'Events', icon: <EventIcon />, action: () => {{window.location.href = '/company/events'}}},
+      { id: 'Job Postings', icon: <WorkIcon />, action: () => { window.location.href = '/company/landing'; } },
+      { id: 'Profile', icon: <AccountBoxIcon />, action: () => { window.location.href = '/company/profile'; } },
+      { id: 'Students', icon: <EmojiPeopleIcon />, action: () => { window.location.href = '/company/students'; } },
+      { id: 'Events', icon: <EventIcon />, action: () => { window.location.href = '/company/events'; } },
     //   { id: 'Functions', icon: <SettingsEthernetIcon /> },
     //   { id: 'ML Kit', icon: <SettingsInputComponentIcon /> },
     ],
@@ -31,21 +31,24 @@ const categories = [
   {
     id: 'Logout',
     children: [
-      { id: 'Logout', icon: <ExitToAppIcon />, action: () => {
-        axios.get('http://localhost:4000/companies/logout')
-        .then(res => {
-            console.log(res);
-            window.location.href = "/";
-        });
-         }
-    },
+      {
+        id: 'Logout',
+        icon: <ExitToAppIcon />,
+        action: () => {
+          axios.get('http://localhost:4000/companies/logout')
+            .then((res) => {
+              console.log(res);
+              window.location.href = '/';
+            });
+        },
+      },
     //   { id: 'Performance', icon: <TimerIcon /> },
     //   { id: 'Test Lab', icon: <PhonelinkSetupIcon /> },
     ],
   },
 ];
 
-const styles = theme => ({
+const styles = (theme) => ({
   categoryHeader: {
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
@@ -60,7 +63,7 @@ const styles = theme => ({
     color: 'rgba(255, 255, 255, 0.7)',
     '&:hover,&:focus': {
     //   backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    backgroundColor: '#232f3e',
+      backgroundColor: '#232f3e',
     },
   },
   itemCategory: {
@@ -84,7 +87,7 @@ const styles = theme => ({
   itemIcon: {
     minWidth: 'auto',
     marginRight: theme.spacing(2),
-    color: "gray"
+    color: 'gray',
   },
   divider: {
     marginTop: theme.spacing(2),
@@ -100,7 +103,7 @@ function Navigator(props) {
         <ListItem className={clsx(classes.firebase, classes.item, classes.itemCategory)}>
           Handshake
         </ListItem>
-        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => {window.location.href = '/company/landing'}}>
+        <ListItem className={clsx(classes.item, classes.itemCategory)} button onClick={() => { window.location.href = '/company/landing'; }}>
           <ListItemIcon className={classes.itemIcon}>
             <HomeIcon />
           </ListItemIcon>
@@ -114,19 +117,22 @@ function Navigator(props) {
         </ListItem>
         {categories.map(({ id, children }) => (
           <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}> 
+            <ListItem className={classes.categoryHeader}>
               <ListItemText
                 classes={{
                   primary: classes.categoryHeaderPrimary,
                 }}
-              > 
+              >
                 {id}
-              </ListItemText> 
-            </ListItem> 
-            {children.map(({ id: childId, icon, action,  active }) => (
-              <ListItem 
+              </ListItemText>
+            </ListItem>
+            {children.map(({
+              id: childId, icon, action, active,
+            }) => (
+              <ListItem
                 key={childId}
-                button onClick =  {action}
+                button
+                onClick={action}
                 className={clsx(classes.item, active && classes.itemActiveItem)}
               >
                 <ListItemIcon className={classes.itemIcon}>{icon}</ListItemIcon>
@@ -149,7 +155,7 @@ function Navigator(props) {
 }
 
 Navigator.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Navigator);

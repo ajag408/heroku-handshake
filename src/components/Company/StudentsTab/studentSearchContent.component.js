@@ -1,140 +1,137 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import moment from 'moment';
+
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { makeStyles } from '@material-ui/styles';
+
 import {
-    Paper,
-    Input,
-    Card,
-    CardActions,
-    CardContent,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    Typography,
-    TablePagination
+  Paper,
+  Input,
+  Card,
+
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
 
-const styles = theme => ({
-    root: {
-        padding: theme.spacing(3),
+const styles = (theme) => ({
+  root: {
+    padding: theme.spacing(3),
 
-      },
-      content: {
-        marginTop: theme.spacing(2)
-      },
-      icon: {
-        marginRight: theme.spacing(1),
-        color: theme.palette.text.secondary,
-      },
-      inner: {
-        minWidth: 1050
-      },
-      input: {
-        flexGrow: 1,
-        fontSize: '14px',
-        lineHeight: '16px',
-        letterSpacing: '-0.05px',
-        width: '60%',
+  },
+  content: {
+    marginTop: theme.spacing(2),
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+    color: theme.palette.text.secondary,
+  },
+  inner: {
+    minWidth: 1050,
+  },
+  input: {
+    flexGrow: 1,
+    fontSize: '14px',
+    lineHeight: '16px',
+    letterSpacing: '-0.05px',
+    width: '60%',
 
-      },
-      details: {
-        display: 'flex'
-      },
-      avatar: {
-        marginLeft: 'auto',
-        height: 110,
-        width: 100,
-        flexShrink: 0,
-        flexGrow: 0
-      },
-      progress: {
-        marginTop: theme.spacing(2)
-      },
-      uploadButton: {
-        marginRight: theme.spacing(2)
-      },
-      paper: {
-        maxWidth: '80%',
-        margin: 'auto',
-        marginLeft: '15%',
-        marginRight: '5%',
-        overflow: 'hidden',
-      },
-      contentWrapper: {
-        margin: '40px 16px',
-      }
+  },
+  details: {
+    display: 'flex',
+  },
+  avatar: {
+    marginLeft: 'auto',
+    height: 110,
+    width: 100,
+    flexShrink: 0,
+    flexGrow: 0,
+  },
+  progress: {
+    marginTop: theme.spacing(2),
+  },
+  uploadButton: {
+    marginRight: theme.spacing(2),
+  },
+  paper: {
+    maxWidth: '80%',
+    margin: 'auto',
+    marginLeft: '15%',
+    marginRight: '5%',
+    overflow: 'hidden',
+  },
+  contentWrapper: {
+    margin: '40px 16px',
+  },
 
 });
 
 function Content(props) {
-    const { classes } = props;
+  const { classes, state, onChangeSearch } = props;
 
 
   return (
     <Paper className={classes.paper}>
 
-        <div className={classes.contentWrapper}>
-    <div className={classes.root}>
-                <SearchIcon className={classes.icon} />
-                <Input
+      <div className={classes.contentWrapper}>
+        <div className={classes.root}>
+          <SearchIcon className={classes.icon} />
+          <Input
 
-                    
-                    placeholder="Search students by name, college name, or skillset"
-                    className={classes.input}
-                    disableUnderline
-                    onChange={props.onChangeSearch}
-                    value = {props.state.search}
-                />
 
-      <div className={classes.content}>
+            placeholder="Search students by name, college name, or skillset"
+            className={classes.input}
+            disableUnderline
+            onChange={onChangeSearch}
+            value={state.search}
+          />
+
+          <div className={classes.content}>
             <Card>
-         
-       
-            <CardContent>
+
+
+              <CardContent>
                 <PerfectScrollbar>
-                <div className={classes.inner}>
+                  <div className={classes.inner}>
                     <Table>
-                    <TableHead>
+                      <TableHead>
                         <TableRow>
-                        <TableCell>Name</TableCell>
-                        <TableCell>College Name</TableCell>
-                        <TableCell>Skillset</TableCell>
+                          <TableCell>Name</TableCell>
+                          <TableCell>College Name</TableCell>
+                          <TableCell>Skillset</TableCell>
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {props.state.students.map(student => (
-                        <TableRow
+                      </TableHead>
+                      <TableBody>
+                        {state.students.map((student) => (
+                          <TableRow
                             className={classes.tableRow}
                             hover
-                            // key={user.id}
-                            // selected={selectedUsers.indexOf(user.id) !== -1}
-                            // onClick = {() => {window.location.href = `/student/${student.id}`}}
-                        >
+                          >
                             <TableCell>
-                            <div><a href = {'/company/student/' + student.id}>
-                                <Typography variant="body1">{student.name}</Typography>
+                              <div>
+                                <a href={`/company/student/${student.id}`}>
+                                  <Typography variant="body1">{student.name}</Typography>
                                 </a>
-                            </div>
+                              </div>
                             </TableCell>
                             <TableCell>{student.collegeName}</TableCell>
                             <TableCell>{student.skillset}</TableCell>
-                        </TableRow>
+                          </TableRow>
                         ))}
-                    </TableBody>
+                      </TableBody>
                     </Table>
-                </div>
+                  </div>
                 </PerfectScrollbar>
-            </CardContent>
-            {/* <CardActions className={classes.actions}>
+              </CardContent>
+              {/* <CardActions className={classes.actions}>
                 <TablePagination
                 component="div"
                 count={users.length}
@@ -146,15 +143,17 @@ function Content(props) {
                 />
             </CardActions> */}
             </Card>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
     </Paper>
   );
-};
+}
 
 Content.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.node.isRequired,
+  state: PropTypes.node.isRequired,
+  onChangeSearch: PropTypes.node.isRequired,
 };
 
 export default withStyles(styles)(Content);

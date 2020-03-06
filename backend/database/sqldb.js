@@ -1,18 +1,17 @@
-'use strict';
 
-var mysql = require('mysql');
+const mysql = require('mysql');
 
-//local mysql db connection
-var connection = mysql.createConnection({
-    host     : 'localhost',
-    port: '8889',
-    user     : 'root',
-    password : 'root',
-    database : 'reactHandshake'
+// local mysql db connection
+const connection = mysql.createConnection({
+  host: 'localhost',
+  port: '8889',
+  user: 'root',
+  password: 'root',
+  database: 'reactHandshake',
 });
 
-connection.connect(function(err) {
-    if (err) throw err;
+connection.connect((err) => {
+  if (err) throw err;
 });
 
 module.exports = connection;
