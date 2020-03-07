@@ -3,7 +3,7 @@ const createError = require('createerror');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-
+const path = require("path")
 
 const mysql = require('mysql');
 // var multer = require('multer');
@@ -14,21 +14,21 @@ const mysql = require('mysql');
 //   limits: {fileSize: 1000000, files: 5}
 // })
 const mc = mysql.createConnection({
-  host: 'localhost',
-  port: '8889',
-  user: 'root',
-  password: 'root',
-  database: 'handshake',
+  host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+  port: '3306',
+  user: 'pvgt0ikkvj7xf93e',
+  password: 'lf71yxojh35mybjz',
+  database: 'rqxyzqga475wwky1',
 });
 
 mc.connect();
 
 // Express Route
-const studentRoute = require('../backend/routes/student.route');
-const companyRoute = require('../backend/routes/company.route');
-const jobRoute = require('../backend/routes/jobs.route');
-const applicationRoute = require('../backend/routes/application.route');
-const eventRoute = require('../backend/routes/event.route');
+const studentRoute = require('./routes/student.route');
+const companyRoute = require('./routes/company.route');
+const jobRoute = require('./routes/jobs.route');
+const applicationRoute = require('./routes/application.route');
+const eventRoute = require('./routes/event.route');
 
 const app = express();
 app.use(bodyParser.json());
@@ -59,9 +59,12 @@ app.use('/companies', companyRoute);
 app.use('/jobs', jobRoute);
 app.use('/applications', applicationRoute);
 app.use('/events', eventRoute);
-
+app.use(express.static(path.join(__dirname, "client", "build")))
 // PORT
 const port = process.env.PORT || 4000;
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 app.listen(port, () => {
   console.log(`Connected to port ${port}`);
 });
