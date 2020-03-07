@@ -4,8 +4,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require("path")
-
+// require("dotenv").config();
 const mysql = require('mysql');
+require("dotenv").config()
 // var multer = require('multer');
 // const path = require('path')
 // const UPLOAD_PATH = path.resolve(__dirname, 'path/to/uploadedFiles')
