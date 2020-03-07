@@ -16,7 +16,7 @@ export default function studentMiddleware() {
     return function (action) {
       if (action.type === ADD_STUDENT) {
         console.log(action.payload);
-        axios.post('http://localhost:4000/students/create-student', action.payload)
+        axios.post('/students/create-student', action.payload)
           .then((res) => {
             if (res.data.errno) {
               alert('Unsuccessful signup; make sure email is unique');
@@ -26,7 +26,7 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === SIGNIN_STUDENT) {
-        axios.post('http://localhost:4000/students/login', action.payload)
+        axios.post('/students/login', action.payload)
           .then((res) => {
             if (res.data.isStudent) {
               window.location.href = '/student/landing';
@@ -35,13 +35,13 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === LOGOUT_STUDENT) {
-        axios.get('http://localhost:4000/students/logout')
+        axios.get('/students/logout')
           .then((res) => {
             console.log(res);
             window.location.href = '/';
           });
       } else if (action.type === DISPLAY_STUDENT) {
-        axios.get('http://localhost:4000/students/user')
+        axios.get('/students/user')
           .then((res) => {
             console.log(res.data);
             if (!res.data.isStudent) {
@@ -56,12 +56,12 @@ export default function studentMiddleware() {
                 careerObjective: res.data.user.careerObjective,
                 email: res.data.user.email,
                 phone: res.data.user.phone,
-                profPic: 'http://localhost:4000/students/profPic/',
+                profPic: '/students/profPic/',
                 skillset: res.data.user.skillset,
               };
             }
           });
-        axios.get('http://localhost:4000/students/education')
+        axios.get('/students/education')
           .then((res) => {
             console.log(res.data);
             if (res.data.errno) {
@@ -71,7 +71,7 @@ export default function studentMiddleware() {
             }
           });
 
-        axios.get('http://localhost:4000/students/experience')
+        axios.get('/students/experience')
           .then((res) => {
             console.log(res.data);
             if (res.data.errno) {
@@ -82,7 +82,7 @@ export default function studentMiddleware() {
           })
           .then(() => { next(action); });
       } else if (action.type === UPDATE_STUDENT) {
-        axios.put('http://localhost:4000/students/update-student-basic', action.payload)
+        axios.put('/students/update-student-basic', action.payload)
           .then((res) => {
             console.log(res);
             if (res.data.errno) {
@@ -93,7 +93,7 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === ADD_EDUCATION) {
-        axios.post('http://localhost:4000/students/add-education', action.payload)
+        axios.post('/students/add-education', action.payload)
           .then((res) => {
             console.log(res);
             if (res.data.errno) {
@@ -104,7 +104,7 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === ADD_EXPERIENCE) {
-        axios.post('http://localhost:4000/students/add-experience', action.payload)
+        axios.post('/students/add-experience', action.payload)
           .then((res) => {
             console.log(res);
             if (res.data.errno) {
@@ -115,7 +115,7 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === UPDATE_SKILLSET) {
-        axios.put('http://localhost:4000/students/update-skillset', action.payload)
+        axios.put('/students/update-skillset', action.payload)
           .then((res) => {
             console.log(res);
             if (res.data.errno) {
@@ -126,7 +126,7 @@ export default function studentMiddleware() {
             }
           });
       } else if (action.type === UPLOAD_PROFPIC) {
-        axios.post('http://localhost:4000/students/profPic', action.payload)
+        axios.post('/students/profPic', action.payload)
           .then((res) => {
             if (res.data.errno) {
               alert('Unsuccessful update');

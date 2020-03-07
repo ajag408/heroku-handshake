@@ -13,14 +13,14 @@ class StudentSigninForm extends Component {
   constructor(props) {
     super(props);
 
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (res.data.isCompany) {
           window.location.href = '/company/landing';
         }
       });
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (res.data.isStudent) {
