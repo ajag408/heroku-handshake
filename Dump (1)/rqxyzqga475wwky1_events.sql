@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.6.33, for osx10.9 (x86_64)
 --
--- Host: 127.0.0.1    Database: reactHandshake
+-- Host: fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com    Database: rqxyzqga475wwky1
 -- ------------------------------------------------------
--- Server version	5.6.33
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,38 +14,46 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- Table structure for table `education`
+-- GTID state at the beginning of the backup 
 --
 
-DROP TABLE IF EXISTS `education`;
+SET @@GLOBAL.GTID_PURGED='';
+
+--
+-- Table structure for table `events`
+--
+
+DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `education` (
+CREATE TABLE `events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `collegeName` varchar(255) DEFAULT NULL,
+  `company` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  `time` varchar(255) DEFAULT NULL,
+  `date` varchar(255) DEFAULT NULL,
   `loc` varchar(255) DEFAULT NULL,
-  `degree` varchar(255) DEFAULT NULL,
-  `major` varchar(255) DEFAULT NULL,
-  `gradYear` varchar(255) DEFAULT NULL,
-  `gpa` varchar(255) DEFAULT NULL,
-  `student` int(11) NOT NULL,
+  `eligibility` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `student` (`student`),
-  CONSTRAINT `education_ibfk_1` FOREIGN KEY (`student`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  KEY `company` (`company`),
+  CONSTRAINT `events_ibfk_1` FOREIGN KEY (`company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `education`
+-- Dumping data for table `events`
 --
 
-LOCK TABLES `education` WRITE;
-/*!40000 ALTER TABLE `education` DISABLE KEYS */;
-INSERT INTO `education` VALUES (1,'UCSD','La Jolla','B.S. with Honors','Cognitive Science','2015','3.5',1),(2,'','','','','','',1),(3,'SJSU','San Jose, CA','M.s.','Software Engineering','2022','3.0',1);
-/*!40000 ALTER TABLE `education` ENABLE KEYS */;
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -56,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 20:32:12
+-- Dump completed on 2020-03-06 21:23:50

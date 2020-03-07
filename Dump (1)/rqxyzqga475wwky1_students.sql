@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.6.33, for osx10.9 (x86_64)
 --
--- Host: 127.0.0.1    Database: reactHandshake
+-- Host: fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com    Database: rqxyzqga475wwky1
 -- ------------------------------------------------------
--- Server version	5.6.33
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED='';
 
 --
 -- Table structure for table `students`
@@ -47,9 +55,9 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES (1,'Akash Jagannathan','akash.jagannathan@sjsu.edu','$2b$12$mXHoyWCyfjlEAJ2rZxiOaO/lKGE7BqvoXf6XG6/VayMOjnL8Hau0q','SJSU','Node JS, React JS, Java','b41cffdd0a133081374a6caaf162ffd5','2017SCCMug.jpg','Sunnyvale','CA','1992-01-05','To own the world, for others.','USA','4086918882'),(2,'Rama','rama@rama.org','$2b$12$C5IkQyzchuhutMOK.Ff8Pem/aJfsTjV9ScruubarER9YhFp1esDpu','Ayodh',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'Mike','mike@mike.com','$2b$12$wkqAmZO.i6YYj4HVoh.LiO8IrqOEXnylelOq5kVehCsfC.KJIhVYm','NYU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -60,4 +68,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-27 20:32:20
+-- Dump completed on 2020-03-06 21:23:36

@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.6.33, for osx10.9 (x86_64)
 --
--- Host: 127.0.0.1    Database: reactHandshake
+-- Host: fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com    Database: rqxyzqga475wwky1
 -- ------------------------------------------------------
--- Server version	5.6.33
+-- Server version	5.7.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,14 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
+
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED='';
 
 --
 -- Table structure for table `companies`
@@ -42,9 +50,9 @@ CREATE TABLE `companies` (
 
 LOCK TABLES `companies` WRITE;
 /*!40000 ALTER TABLE `companies` DISABLE KEYS */;
-INSERT INTO `companies` VALUES (1,'Google','$2b$12$VfPWR/f5geNKceoi1nyhte2egl8z3fO/QJwqAYbw.Y2K/alNcUahG','Mountain View','A drug trafficking front.','4087777777','b903ac5e012e3f2cbbe488ad482f16b5','2017SCCMug.jpg','google@google.com'),(2,'Facebook','$2b$12$5.KgPbh6yDxDv5Kl/vLDw.MOde0cmXk7UGJpP2.a4/cnBrA15W502','Menlo Park','A amusement factory.','222222222','be76aa2cf76e4a557913669d005cdf4c','IMG_4443.JPG','facebook@facebook.com');
 /*!40000 ALTER TABLE `companies` ENABLE KEYS */;
 UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -55,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-26 20:32:12
+-- Dump completed on 2020-03-06 21:23:38
