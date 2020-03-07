@@ -10,7 +10,7 @@ import axios from 'axios';
 
 export default class CompanySignin extends Component {
   constructor(props) {
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (res.data.isCompany) {
@@ -34,7 +34,7 @@ export default class CompanySignin extends Component {
   }
 
   // componentWillMount(){
-  //   axios.get('http://localhost:4000/companies/user')
+  //   axios.get('/companies/user')
   //     .then(res => {
   //       console.log(res.data);
   //       if(res.data.email){
@@ -59,7 +59,7 @@ export default class CompanySignin extends Component {
     };
     // axios.defaults.withCredentials = true;
 
-    axios.post('http://localhost:4000/companies/login', companyObject)
+    axios.post('/companies/login', companyObject)
       .then((res) => {
         if (res.data.isCompany) {
           window.location.href = '/company/landing';

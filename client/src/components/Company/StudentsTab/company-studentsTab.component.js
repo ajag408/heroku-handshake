@@ -18,7 +18,7 @@ export default class CompanyStudentsTab extends Component {
       search: '',
       students: [],
     };
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isCompany) {
@@ -34,7 +34,7 @@ export default class CompanyStudentsTab extends Component {
         const searchObject = {
           search,
         };
-        axios.post('http://localhost:4000/students/search', searchObject)
+        axios.post('/students/search', searchObject)
           .then((response) => {
             // update the state with the response data
             console.log(response.data);

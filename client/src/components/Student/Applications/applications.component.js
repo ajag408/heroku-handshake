@@ -20,7 +20,7 @@ export default class Applications extends Component {
       reviewed: false,
       declined: false,
     };
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isStudent) {
@@ -28,7 +28,7 @@ export default class Applications extends Component {
         }
       });
 
-    axios.get('http://localhost:4000/jobs/jobsApplied')
+    axios.get('/jobs/jobsApplied')
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {
@@ -62,7 +62,7 @@ export default class Applications extends Component {
       }
     });
 
-    axios.get('http://localhost:4000/jobs/jobsApplied')
+    axios.get('/jobs/jobsApplied')
       .then((response) => {
         //   this.setState({
         //     applications : [],

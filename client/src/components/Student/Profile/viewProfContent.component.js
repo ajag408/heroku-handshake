@@ -125,7 +125,7 @@ function Content(props) {
                       </div>
                       <Avatar
                         className={classes.avatar}
-                        src={`http://localhost:4000/students/profPicBlind/${student.id}`}
+                        src={`/students/profPicBlind/${student.id}`}
                       />
                     </div>
                   </CardContent>

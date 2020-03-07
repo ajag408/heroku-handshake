@@ -15,7 +15,7 @@ export default class ViewCompanyProfile extends Component {
       company: [],
     };
 
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isStudent) {
@@ -27,7 +27,7 @@ export default class ViewCompanyProfile extends Component {
   componentDidMount() {
     const { match: { params } } = this.props;
 
-    axios.get(`http://localhost:4000/companies/getCompany/${params.id}`)
+    axios.get(`/companies/getCompany/${params.id}`)
       .then(({ data: user }) => {
         console.log('user', user);
 

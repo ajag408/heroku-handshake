@@ -21,14 +21,14 @@ export default class StudentSearch extends Component {
       allStudents: [],
       major: '',
     };
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isStudent) {
           window.location.href = '/student-signin';
         }
       });
-    axios.get('http://localhost:4000/students/get-all-students')
+    axios.get('/students/get-all-students')
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {
@@ -50,7 +50,7 @@ export default class StudentSearch extends Component {
         const searchObject = {
           search,
         };
-        axios.post('http://localhost:4000/students/search', searchObject)
+        axios.post('/students/search', searchObject)
           .then((response) => {
             // update the state with the response data
             console.log(response.data);
@@ -80,7 +80,7 @@ export default class StudentSearch extends Component {
           major,
         };
 
-        axios.post('http://localhost:4000/students/filterMajor', searchObject)
+        axios.post('/students/filterMajor', searchObject)
           .then((response) => {
             console.log(response.data);
 

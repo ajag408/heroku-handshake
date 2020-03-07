@@ -37,7 +37,7 @@ export default class CompanyJobPosting extends Component {
       loaded: false,
       companyName: '',
     };
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isCompany) {
@@ -53,11 +53,11 @@ export default class CompanyJobPosting extends Component {
       });
 
 
-    axios.get('http://localhost:4000/jobs/get-jobs')
+    axios.get('/jobs/get-jobs')
       .then((response) => {
         (async () => {
           for (const job in response.data) {
-            await axios.post('http://localhost:4000/applications/get-applicants', response.data[job])
+            await axios.post('/applications/get-applicants', response.data[job])
               .then((res) => {
                 response.data[job].applicants = res.data;
               })
@@ -112,7 +112,7 @@ export default class CompanyJobPosting extends Component {
       status: e.target.value,
     };
     // console.log(document.getElementById(1).id)
-    axios.post('http://localhost:4000/applications/updateApplication', applicationObject)
+    axios.post('/applications/updateApplication', applicationObject)
       .then((res) => {
         if (res.data.errno) {
           alert('Unsuccessful update');
@@ -137,7 +137,7 @@ export default class CompanyJobPosting extends Component {
       cat: this.state.cat,
     };
 
-    axios.post('http://localhost:4000/jobs/create-job', jobObject)
+    axios.post('/jobs/create-job', jobObject)
       .then((res) => {
         if (res.data.errno) {
           alert('Unsuccessful add');

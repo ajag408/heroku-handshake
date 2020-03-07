@@ -11,7 +11,7 @@ export default class CreateCompany extends Component {
   constructor(props) {
     super(props);
 
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (res.data.isCompany) {
@@ -63,7 +63,7 @@ export default class CreateCompany extends Component {
       password,
       loc,
     };
-    axios.post('http://localhost:4000/companies/create-company', companyObject)
+    axios.post('/companies/create-company', companyObject)
       .then((res) => {
         console.log(res);
         if (res.data.errno) {

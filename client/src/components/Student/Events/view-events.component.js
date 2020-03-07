@@ -23,7 +23,7 @@ export default class ViewEvents extends Component {
       education: [],
       regMatch: false,
     };
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isStudent) {
@@ -31,7 +31,7 @@ export default class ViewEvents extends Component {
         }
       });
 
-    axios.get('http://localhost:4000/events/get-registered-events')
+    axios.get('/events/get-registered-events')
       .then((res) => {
         if (res.data.errno) {
           console.log(res.data);
@@ -42,7 +42,7 @@ export default class ViewEvents extends Component {
         }
       });
 
-    axios.get('http://localhost:4000/students/education')
+    axios.get('/students/education')
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {
@@ -54,7 +54,7 @@ export default class ViewEvents extends Component {
         //   console.log(this.state.education);
         }
       });
-    axios.get('http://localhost:4000/events/get-upcoming-events')
+    axios.get('/events/get-upcoming-events')
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {
@@ -76,7 +76,7 @@ export default class ViewEvents extends Component {
         const searchObject = {
           search: search,
         };
-        axios.post('http://localhost:4000/events/search-upcoming-events', searchObject)
+        axios.post('/events/search-upcoming-events', searchObject)
           .then((response) => {
             // update the state with the response data
             console.log(response.data);
@@ -88,7 +88,7 @@ export default class ViewEvents extends Component {
             // console.log(this.state.students);
           });
       } else {
-        axios.get('http://localhost:4000/events/get-upcoming-events')
+        axios.get('/events/get-upcoming-events')
           .then((res) => {
             console.log(res.data);
             if (res.data.errno) {
@@ -110,7 +110,7 @@ export default class ViewEvents extends Component {
     };
 
     // console.log(document.getElementById(1).id)
-    axios.post('http://localhost:4000/events/get-event', eventObject)
+    axios.post('/events/get-event', eventObject)
       .then((res) => {
         console.log(res.data[0].eligibility);
         if (res.data.errno) {
@@ -142,7 +142,7 @@ export default class ViewEvents extends Component {
             const regObject = {
               event: res.data[0].id,
             };
-            axios.post('http://localhost:4000/events/registerEvent', regObject)
+            axios.post('/events/registerEvent', regObject)
               .then((responseL) => {
                 if (responseL.data.errno) {
                   alert('You already registered for this event');

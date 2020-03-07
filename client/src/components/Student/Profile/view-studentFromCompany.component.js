@@ -18,7 +18,7 @@ export default class ViewStudentProfileFromCompany extends Component {
       experience: [],
     };
 
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isCompany) {
@@ -30,14 +30,14 @@ export default class ViewStudentProfileFromCompany extends Component {
   componentDidMount() {
     const { match: { params } } = this.props;
 
-    axios.get(`http://localhost:4000/students/getStudent/${params.id}`)
+    axios.get(`/students/getStudent/${params.id}`)
       .then(({ data: user }) => {
         console.log('user', user);
 
         this.setState({ student: user });
       });
 
-    axios.get(`http://localhost:4000/students/educationBlind/${params.id}`)
+    axios.get(`/students/educationBlind/${params.id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {
@@ -49,7 +49,7 @@ export default class ViewStudentProfileFromCompany extends Component {
         }
       });
 
-    axios.get(`http://localhost:4000/students/experienceBlind/${params.id}`)
+    axios.get(`/students/experienceBlind/${params.id}`)
       .then((res) => {
         console.log(res.data);
         if (res.data.errno) {

@@ -35,7 +35,7 @@ const categories = [
         id: 'Logout',
         icon: <ExitToAppIcon />,
         action: () => {
-          axios.get('http://localhost:4000/companies/logout')
+          axios.get('/companies/logout')
             .then((res) => {
               console.log(res);
               window.location.href = '/';

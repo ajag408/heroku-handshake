@@ -27,7 +27,7 @@ export default class CompanyProfile extends Component {
       phone: '',
       profPic: '',
     };
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isCompany) {
@@ -39,12 +39,12 @@ export default class CompanyProfile extends Component {
             description: res.data.user.description,
             email: res.data.user.email,
             phone: res.data.user.phone,
-            profPic: 'http://localhost:4000/companies/profPic/',
+            profPic: '/companies/profPic/',
           });
         }
       });
 
-    // axios.get('http://localhost:4000/companies/profPic')
+    // axios.get('/companies/profPic')
     // .then(res => {
     //     console.log(res);
     //     this.setState({profPic: res});
@@ -88,7 +88,7 @@ export default class CompanyProfile extends Component {
 
     };
 
-    axios.put('http://localhost:4000/companies/update-company', companyObject)
+    axios.put('/companies/update-company', companyObject)
       .then((res) => {
         console.log(res);
         if (res.data.errno) {
@@ -108,7 +108,7 @@ export default class CompanyProfile extends Component {
     const formData = new FormData();
     formData.append('image', files[0]);
     // console.log(formData);
-    axios.post('http://localhost:4000/companies/profPic', formData)
+    axios.post('/companies/profPic', formData)
       .then((res) => {
         if (res.data.errno) {
           alert('Unsuccessful update');

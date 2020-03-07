@@ -28,7 +28,7 @@ export default class JobSearch extends Component {
       selectedON: false,
       selectedIN: false,
     };
-    axios.get('http://localhost:4000/students/user')
+    axios.get('/students/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isStudent) {
@@ -72,7 +72,7 @@ export default class JobSearch extends Component {
           loc,
         };
 
-        axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
+        axios.post('/jobs/searchJobs', searchObject)
           .then((response) => {
             if (filter.length > 0) {
               for (let i = 0; i < response.data.length; i += 1) {
@@ -122,7 +122,7 @@ export default class JobSearch extends Component {
         loc,
       };
 
-      axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
+      axios.post('/jobs/searchJobs', searchObject)
         .then((response) => {
           this.setState({
             jobs: [],
@@ -178,7 +178,7 @@ export default class JobSearch extends Component {
           loc,
         };
 
-        axios.post('http://localhost:4000/jobs/searchJobs', searchObject)
+        axios.post('/jobs/searchJobs', searchObject)
           .then((response) => {
             if (filter.length > 0) {
               for (let i = 0; i < response.data.length; i += 1) {
@@ -222,9 +222,9 @@ export default class JobSearch extends Component {
         id: e.target.value,
       };
       console.log(applyObject);
-      axios.post('http://localhost:4000/applications/jobApply', applyObject);
+      axios.post('/applications/jobApply', applyObject);
       // console.log(formData.getAll('resume'));
-      axios.post('http://localhost:4000/applications/resume', formData)
+      axios.post('/applications/resume', formData)
         .then((res) => {
           if (res.data.errno) {
             alert('Unsuccessful update');

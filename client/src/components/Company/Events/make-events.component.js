@@ -34,7 +34,7 @@ export default class MakeEvents extends Component {
       companyName: '',
       date: '',
     };
-    axios.get('http://localhost:4000/companies/user')
+    axios.get('/companies/user')
       .then((res) => {
         console.log(res.data);
         if (!res.data.isCompany) {
@@ -51,11 +51,11 @@ export default class MakeEvents extends Component {
 
   // get the jobs data from backend
   componentDidMount() {
-    axios.get('http://localhost:4000/events/get-events')
+    axios.get('/events/get-events')
       .then((response) => {
         (async () => {
           for (const event in response.data) {
-            await axios.post('http://localhost:4000/events/get-registered-students', response.data[event])
+            await axios.post('/events/get-registered-students', response.data[event])
               .then((res) => {
                 response.data[event].students = res.data;
               })
@@ -121,7 +121,7 @@ export default class MakeEvents extends Component {
       eligibility,
     };
 
-    axios.post('http://localhost:4000/events/create-event', eventObject)
+    axios.post('/events/create-event', eventObject)
       .then((res) => {
         if (res.data.errno) {
           alert('Unsuccessful add');
