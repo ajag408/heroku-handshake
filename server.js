@@ -14,15 +14,29 @@ require("dotenv").config()
 //   dest: UPLOAD_PATH,
 //   limits: {fileSize: 1000000, files: 5}
 // })
-const mc = mysql.createConnection({
+// const mc = mysql.createConnection({
+//   host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+//   port: '3306',
+//   user: 'pvgt0ikkvj7xf93e',
+//   password: 'lf71yxojh35mybjz',
+//   database: 'rqxyzqga475wwky1',
+// });
+
+// mc.connect();
+
+
+const mc = mysql.createPool({
   host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   port: '3306',
   user: 'pvgt0ikkvj7xf93e',
   password: 'lf71yxojh35mybjz',
   database: 'rqxyzqga475wwky1',
+  connectionLimit: 500, //mysql connection pool length
 });
 
-mc.connect();
+mc.getConnection((err) => {
+  if (err) throw err;
+});
 
 // Express Route
 const studentRoute = require('./routes/student.route');

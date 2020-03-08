@@ -2,17 +2,40 @@
 const mysql = require('mysql');
 
 // local mysql db connection
-const connection = mysql.createConnection({
+// const connection = mysql.createConnection({
+//   host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+//   port: '3306',
+//   user: 'pvgt0ikkvj7xf93e',
+//   password: 'lf71yxojh35mybjz',
+//   database: 'rqxyzqga475wwky1',
+// });
+
+const connection = mysql.createPool({
   host: 'fugfonv8odxxolj8.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
   port: '3306',
   user: 'pvgt0ikkvj7xf93e',
   password: 'lf71yxojh35mybjz',
   database: 'rqxyzqga475wwky1',
+  connectionLimit: 500, //mysql connection pool length
 });
 
-connection.connect((err) => {
+
+connection.getConnection((err) => {
   if (err) throw err;
 });
+
+// connection.on('connection', function (connection) {
+//   console.log('DB Connection established');
+
+//   connection.on('error', function (err) {
+//     console.error(new Date(), 'MySQL error', err.code);
+//   });
+//   connection.on('close', function (err) {
+//     console.error(new Date(), 'MySQL close', err);
+//   });
+
+// });
+
 
 module.exports = connection;
 
