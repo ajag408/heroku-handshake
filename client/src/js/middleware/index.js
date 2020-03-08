@@ -42,45 +42,70 @@ export default function studentMiddleware() {
           });
       } else if (action.type === DISPLAY_STUDENT) {
         axios.get('/students/user')
-          .then((res) => {
-            console.log(res.data);
-            if (!res.data.isStudent) {
+          .then((res1) => {
+            console.log(res1.data);
+            if (!res1.data.isStudent) {
               window.location.href = '/student-signin';
             } else {
               action.payload = {
-                name: res.data.user.name,
-                dob: res.data.user.dob,
-                city: res.data.user.city,
-                state: res.data.user.state,
-                country: res.data.user.country,
-                careerObjective: res.data.user.careerObjective,
-                email: res.data.user.email,
-                phone: res.data.user.phone,
+                name: res1.data.user.name,
+                dob: res1.data.user.dob,
+                city: res1.data.user.city,
+                state: res1.data.user.state,
+                country: res1.data.user.country,
+                careerObjective: res1.data.user.careerObjective,
+                email: res1.data.user.email,
+                phone: res1.data.user.phone,
                 profPic: '/students/profPic/',
-                skillset: res.data.user.skillset,
+                skillset: res1.data.user.skillset,
               };
             }
-          });
-        axios.get('/students/education')
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.errno) {
-              alert(res.data);
-            } else {
-              action.payload.education = res.data;
-            }
-          });
-
-        axios.get('/students/experience')
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.errno) {
-              alert(res.data);
-            } else {
-              action.payload.experience = res.data;
-            }
           })
-          .then(() => { next(action); });
+          .then(() => {
+            axios.get('/students/education')
+              .then((res2) => {
+                console.log(res2.data);
+                if (res2.data.errno) {
+                  alert(res2.data);
+                } else {
+                  action.payload.education = res2.data;
+                }
+              })
+              .then(() => {
+                axios.get('/students/experience')
+                  .then((res3) => {
+                    console.log(res3.data);
+                    if (res3.data.errno) {
+                      alert(res3.data);
+                    } else {
+                      action.payload.experience = res3.data;
+                    }
+                  })
+                  .then(() => {
+                     next(action);
+                  })
+              })
+          });
+        // axios.get('/students/education')
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     if (res.data.errno) {
+        //       alert(res.data);
+        //     } else {
+        //       action.payload.education = res.data;
+        //     }
+        //   });
+
+        // axios.get('/students/experience')
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     if (res.data.errno) {
+        //       alert(res.data);
+        //     } else {
+        //       action.payload.experience = res.data;
+        //     }
+        //   })
+          // .then(() => { next(action); });
       } else if (action.type === UPDATE_STUDENT) {
         axios.put('/students/update-student-basic', action.payload)
           .then((res) => {

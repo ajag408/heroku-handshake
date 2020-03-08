@@ -238,7 +238,7 @@ function Content(props) {
                                   </div>
                                   {/* {job.applicants} */}
                                 </TableCell>
-                                <TableCell><a href={`http://localhost:4000/applications/getResume/${student.resFile}`}>View Resume</a></TableCell>
+                                <TableCell><a href={`/applications/getResume/${student.resFile}`}>View Resume</a></TableCell>
                                 <TableCell>
                                   <Form>
                                     <Form.Group>

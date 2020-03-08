@@ -75,7 +75,7 @@ export default function Home() {
         <br />
         <h3 className={classes.homeTitle}>Students</h3>
         <h5 className={classes.homeTitle}>
-          Launch the next step in your career.
+          Launch the next step in your career.{' '}
           <a className={classes.homeLink} href="/student-signin">Sign in.</a>
           {' '}
           <a className={classes.homeLink} href="/signup-student">Sign up.</a>
@@ -84,7 +84,7 @@ export default function Home() {
         <br />
         <h3 className={classes.homeTitle}>Companies</h3>
         <h5 className={classes.homeTitle}>
-          Hire the next generation of talent.
+          Hire the next generation of talent.{' '}
           <a className={classes.homeLink} href="/company-signin">Sign in.</a>
           {' '}
           <a className={classes.homeLink} href="/signup-company">Sign up.</a>
