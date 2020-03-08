@@ -31,7 +31,7 @@ const mc = mysql.createPool({
   user: 'pvgt0ikkvj7xf93e',
   password: 'lf71yxojh35mybjz',
   database: 'rqxyzqga475wwky1',
-  connectionLimit: 500, //mysql connection pool length
+  connectionLimit: 100, //mysql connection pool length
 });
 
 mc.getConnection((err) => {
