@@ -148,6 +148,7 @@ export default class ViewEvents extends Component {
                   alert('You already registered for this event');
                 } else {
                   alert('Successful registration');
+                  window.location.href = '/student/events';
                 }
               });
           }
