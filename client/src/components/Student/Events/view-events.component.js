@@ -136,6 +136,7 @@ export default class ViewEvents extends Component {
           const { regMatch } = this.state;
           if (!regMatch) {
             alert('You are not eligible to register for this event, based on your educational background');
+            window.location.href = '/student/events';
           } else {
             console.log('in final else');
             console.log(res.data[0].id);
@@ -146,6 +147,7 @@ export default class ViewEvents extends Component {
               .then((responseL) => {
                 if (responseL.data.errno) {
                   alert('You already registered for this event');
+                  window.location.href = '/student/events';
                 } else {
                   alert('Successful registration');
                   window.location.href = '/student/events';
