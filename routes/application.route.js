@@ -90,7 +90,15 @@ router.route('/resume').post(upload.array('resume', 5), (req, res, next) => {
 router.route('/getResume/:resFile').get((req, res) => {
   console.log(UPLOAD_PATH);
   // console.log(session.user)
-  fs.createReadStream(path.resolve(UPLOAD_PATH, req.params.resFile)).pipe(res);
+  try{
+    if(fs.existsSync(path.resolve(UPLOAD_PATH, req.params.resFile))){
+      fs.createReadStream(path.resolve(UPLOAD_PATH, req.params.resFile)).pipe(res);
+    }
+  }
+  catch(err){
+    console.log("uploaded on another server");
+    alert("resume not available");
+  }
 });
 
 
